@@ -24,6 +24,7 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
+// Test modification
 
 const foo = async (value, timer) => {
   return new Promise((resolve, reject) => {
