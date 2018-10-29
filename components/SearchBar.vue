@@ -12,7 +12,8 @@
 									id="prospect" 
 									type="radio" 
 									name="radio" 
-									value="prospect" >
+									value="prospect"
+									checked >
 								<label 
 									class="slds-radio_button__label" 
 									for="prospect">
@@ -42,14 +43,17 @@
 					<label 
 						class="slds-form-element__label" 
 						for="form-element-01"/>
+					{{ searchTerm }}
 					<div class="slds-form-element__control">
 						<input 
 							id="form-element-01" 
+							v-model="searchTerm" 
 							type="text" 
-							class="slds-input" 
-							placeholder="Enter Client Search Here" 
-							onkeyup="{!c.OnTermChange}">
-
+							class="slds-input"
+							placeholder="Enter Client Search Here"
+							@blur="$emit('search-updated', $event.target.value)"
+							@keyup.enter.prevent="$emit('search-updated', $event.target.value)"
+							@keyup.backspace.prevent="$event.target.value ? '' : $emit('search-updated', $event.target.value)">
 						<button 
 							class="slds-button slds-button_icon igforms-search-button"
 						>
@@ -65,3 +69,19 @@
 	</div>
     
 </template>
+
+<script>
+export default {
+	data: function() {
+		return {
+			searchTerm: ''
+		}
+	},
+
+	methods: {
+		searchTermUpdated(event, term) {
+			this.$emit('search-updated', term)
+		}
+	}
+}
+</script>

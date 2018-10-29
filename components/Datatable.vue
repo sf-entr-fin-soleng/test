@@ -22,12 +22,23 @@
 						@click="sort($event, col.value)"
 					>
 						{{ col.label }}
-						<span 
-							v-if="col.value === sortBy && orderBy === 'asc'" 
-							class="client-table_sort">^</span>
-						<span 
-							v-if="col.value === sortBy && orderBy === 'desc'" 
-							class="client-table_sort">v</span>
+						<button 
+							v-if="col.value === sortBy && orderBy === 'asc'"
+							class="slds-button slds-button_icon"
+						>
+							<i class="slds-button__icon material-icons">
+								arrow_upward
+							</i>
+						</button>
+
+						<button 
+							v-if="col.value === sortBy && orderBy === 'desc'"
+							class="slds-button slds-button_icon"
+						>
+							<i class="slds-button__icon material-icons">
+								arrow_downward
+							</i>
+						</button>
 					</th>
 					<th 
 						aria-sort="none" 
@@ -68,11 +79,14 @@ export default {
 		rows: {
 			type: Array,
 			default: () => []
+		},
+		resultLabel: {
+			type: String,
+			default: 'Showing 0 of 0 results'
 		}
 	},
 	data: function() {
 		return {
-			resultLabel: 'Showing 0 of 0 results',
 			sortBy: '',
 			orderBy: 'asc'
 		}
@@ -82,6 +96,8 @@ export default {
 			this.sortBy = key
 			if (this.orderBy === 'asc') this.orderBy = 'desc'
 			else this.orderBy = 'asc'
+
+			this.$emit('sort-table', this.sortBy, this.orderBy)
 		}
 	}
 }

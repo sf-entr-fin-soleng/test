@@ -26,12 +26,22 @@ async function fetchProspects(req, res) {
 		}
 
 		if (constraints.filterBy && constraints.filter) {
-			prospects = prospects.filter(el =>
-				el[constraints.filterBy]
-					.toString()
-					.toLowerCase()
-					.includes(constraints.filter.toLowerCase())
-			)
+			const fields = constraints.filterBy.split(',')
+			console.log('fields', fields)
+			prospects = prospects.filter(el => {
+				for (let index in fields) {
+					const field = fields[index]
+					if (
+						el[field] &&
+						el[field]
+							.toString()
+							.toLowerCase()
+							.includes(constraints.filter.toLowerCase())
+					)
+						return true
+				}
+				return false
+			})
 		}
 
 		res.setHeader('Content-Type', 'application/json')
