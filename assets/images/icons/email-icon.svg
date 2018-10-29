@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="9px" viewBox="0 0 12 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M5.6775734,5.66292135 C5.82692206,5.81460674 6.02605361,5.81460674 6.17540227,5.66292135 L11.8008685,0.505617978 C11.9004342,0.303370787 11.8506513,0 11.5021711,0 L0.400587421,0 C0.101890102,0 -0.147024332,0.252808989 0.101890102,0.505617978 L5.6775734,5.66292135 Z M11.4026054,2.3258427 L7.02171134,6.32022472 C6.72301402,6.57303371 6.37453381,6.7247191 5.97627072,6.7247191 C5.57800763,6.7247191 5.22952742,6.57303371 4.9308301,6.32022472 L0.549936081,2.2752809 C0.350804535,2.12359551 0.0521072149,2.2247191 0.0521072149,2.47752809 C0.0521072149,2.42696629 0.0521072149,8.03932584 0.0521072149,8.03932584 C0.0521072149,8.59550562 0.500153194,9 1.04776495,9 L10.9019623,9 C11.449574,9 11.89762,8.54494382 11.89762,8.03932584 L11.89762,2.52808989 C11.9004342,2.2752809 11.6017369,2.12359551 11.4026054,2.3258427 Z" id="path-1"></path>
+    </defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Client-selected---Medium-768px-Copy-3" transform="translate(-554.000000, -418.000000)">
+            <g id="Stacked-Group" transform="translate(497.000000, 416.000000)">
+                <g id="Group-3">
+                    <g transform="translate(48.000000, 2.000000)">
+                        <g id="Group-2" transform="translate(9.000000, 0.000000)">
+                            <g id="Icon:-/Email-(copy)-Copy">
+                                <g id="Color-:-/-Primary-Brand-color-/-100%">
+                                    <mask id="mask-2" fill="white">
+                                        <use xlink:href="#path-1"></use>
+                                    </mask>
+                                    <use id="Mask" fill="#0E3253" xlink:href="#path-1"></use>
+                                    <g id="Color-:-/-Primary-Brand-color-/-Dark-80%" mask="url(#mask-2)" fill="#000911">
+                                        <rect id="Rectangle-9-Copy-10" x="0" y="0" width="12" height="9"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,455 @@
+//BEM convention
+//[namespace]-[block]__[element]--[modifier]
+//See https://seesparkbox.com/foundry/bem_by_example for details
+//Utils - contains generic classes that can used on any element, generally should contain only one property, before adding new classes here, ensure that the SLDS(https://lightningdesignsystem.com/) does not already have the class you need. 
+@each $value in $ig-breakpoints {
+
+	@media (min-width: nth($value, 2)) {
+
+		//Fonts
+		.#{getNamespace($value)}-utils__font--light {
+			font-family: $ig-whitney-light;
+		}
+
+		.#{getNamespace($value)}-utils__font--semibold {
+			font-family: $ig-whitney-semibold;
+		}
+
+		.#{getNamespace($value)}-utils__font--book {
+			font-family: $ig-whitney-book;
+		} 
+		
+		//Font Sizes
+		.#{getNamespace($value)}-utils__font-size--x-small,
+		.#{getNamespace($value)}-utils__font-size--x-mini {
+			font-size: $ig-font-size--x-mini;
+			line-height: $ig-line-height--x-mini;
+		}
+
+		.#{getNamespace($value)}-utils__font-size--mini {
+			font-size: $ig-font-size--mini;
+			line-height: $ig-line-height--mini;
+		}
+
+		.#{getNamespace($value)}-utils__font-size--small,
+		.#{getNamespace($value)}-utils__font-size--base {
+			font-size: $ig-font-size--base;
+			line-height: $ig-line-height--base;
+		}
+
+		.#{getNamespace($value)}-utils__font-size--medium {
+			font-size: $ig-font-size--medium;
+			line-height: $ig-line-height--medium;
+		}
+
+		.#{getNamespace($value)}-utils__font-size--medium-plus {
+			font-size: $ig-font-size--medium-plus;
+			line-height: $ig-line-height--medium-plus;
+		}
+
+		.#{getNamespace($value)}-utils__font-size--large {
+			font-size: $ig-font-size--large;
+			line-height: $ig-line-height--large;
+		}
+
+		.#{getNamespace($value)}-utils__font-size--x-large {
+			font-size: $ig-font-size--x-large;
+			line-height: $ig-line-height--x-large;
+		}
+
+		.#{getNamespace($value)}-utils__font-size--xx-large {
+			font-size: $ig-font-size--xx-large;
+			line-height: $ig-line-height--xx-large;
+		} 
+		
+		//Line Height
+		.#{getNamespace($value)}-utils__line-height--regular {
+			line-height: $ig-line-height--base;
+		} 
+		
+		//Text
+		.#{getNamespace($value)}-utils__text--default {
+			text-transform: none;
+		}
+
+		.#{getNamespace($value)}-utils__text--uppercase {
+			text-transform: uppercase;
+		}
+
+		.#{getNamespace($value)}-utils__text--lowercase {
+			text-transform: lowercase;
+		}
+
+		.#{getNamespace($value)}-utils__text--capitalize {
+			text-transform: capitalize;
+		}
+
+		.#{getNamespace($value)}-utils__text--underline {
+			text-decoration: underline;
+		}
+
+		.#{getNamespace($value)}-utils__text--no-underline {
+			text-decoration: none;
+		}
+
+		.#{getNamespace($value)}-utils__text-align--center {
+			text-align: center;
+		}
+
+		.#{getNamespace($value)}-utils__text-align--right {
+			text-align: right;
+		}
+
+		.#{getNamespace($value)}-utils__text-align--left {
+			text-align: left;
+		} 
+
+		//Width
+		.#{getNamespace($value)}-utils__width--25 {
+			width: 25%;
+		}
+
+		.#{getNamespace($value)}-utils__width--50 {
+			width: 50%;
+		}
+
+		.#{getNamespace($value)}-utils__width--60 {
+			width: 60%;
+		}
+
+		.#{getNamespace($value)}-utils__width--70 {
+			width: 70%;
+		}
+
+		.#{getNamespace($value)}-utils__width--75 {
+			width: 75%;
+		}
+
+		.#{getNamespace($value)}-utils__width--80 {
+			width: 80%;
+		}
+
+		.#{getNamespace($value)}-utils__width--85 {
+			width: 85%;
+		}
+
+		.#{getNamespace($value)}-utils__width--90 {
+			width: 90%;
+		}
+
+		.#{getNamespace($value)}-utils__width--full,
+		.#{getNamespace($value)}-utils__width--100 {
+			width: 100%;
+		}
+
+		.#{getNamespace($value)}-utils__width--auto {
+			width: auto;
+		} 
+
+		//Height
+		.#{getNamespace($value)}-utils__height--full,
+		.#{getNamespace($value)}-utils__height--100 {
+			height: 100%;
+		}
+
+		.#{getNamespace($value)}-utils__height--50 {
+			height: 50%;
+		}
+
+		.#{getNamespace($value)}-utils__height--auto {
+			height: auto;
+		}
+		
+		//Max-width
+		.#{getNamespace($value)}-utils__max-width--large,
+		.#{getNamespace($value)}-utils__max-width--#{$ig-large} {
+			max-width: $ig-large;
+		}
+
+		.#{getNamespace($value)}-utils__max-width--medium,
+		.#{getNamespace($value)}-utils__max-width--#{$ig-medium} {
+			max-width: $ig-medium;
+		}
+
+		.#{getNamespace($value)}-utils__max-width--small,
+		.#{getNamespace($value)}-utils__max-width--#{$ig-small} {
+			max-width: $ig-small;
+		}
+
+		.#{getNamespace($value)}-utils__max-width--100,
+		.#{getNamespace($value)}-utils__max-width--full {
+			max-width: 100%;
+		}
+
+		.#{getNamespace($value)}-utils__max-width--none {
+			max-width: none;
+		} 
+
+		//Display
+		.#{getNamespace($value)}-utils__display--none,
+		.#{getNamespace($value)}-utils__hide {
+			display: none;
+		}
+
+		.#{getNamespace($value)}-utils__display--inline,
+		.#{getNamespace($value)}-utils__show--inline {
+			display: inline;
+		}
+
+		.#{getNamespace($value)}-utils__display--block,
+		.#{getNamespace($value)}-utils__show--block {
+			display: block;
+		}
+
+		.#{getNamespace($value)}-utils__display--inline-block,
+		.#{getNamespace($value)}-utils__show--inline-block {
+			display: inline-block;
+		}
+
+		.#{getNamespace($value)}-utils__display--table-cell,
+		.#{getNamespace($value)}-utils__show--table-cell {
+			display: table-cell;
+		}
+
+		.#{getNamespace($value)}-utils__display--flex,
+		.#{getNamespace($value)}-utils__show--flex {
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -ms-flexbox;
+			display: flex;
+		} 
+
+		//Visibility
+		.#{getNamespace($value)}-utils__visibility--hidden {
+			visibility: hidden;
+		}
+
+		.#{getNamespace($value)}-utils__visibility--visible {
+			visibility: visible;
+		}
+		
+		//Bullets
+		.#{getNamespace($value)}-utils__bullets--disc {
+			list-style: disc;
+		} 
+		
+		//Animations
+		.#{getNamespace($value)}-utils__fade--in {
+			@include fadeTo();
+		}
+
+		.#{getNamespace($value)}-utils__fade--out {
+			@include fadeTo(0);
+		} //Opacity
+		.#{getNamespace($value)}-utils__opacity--0 {
+			opacity: 0;
+		}
+
+		.#{getNamespace($value)}-utils__opacity--25 {
+			opacity: 0.25;
+		}
+
+		.#{getNamespace($value)}-utils__opacity--50 {
+			opacity: 0.5;
+		}
+
+		.#{getNamespace($value)}-utils__opacity--75 {
+			opacity: 0.75;
+		}
+
+		.#{getNamespace($value)}-utils__opacity--100 {
+			opacity: 1;
+		} 
+		
+		//Margin
+		.#{getNamespace($value)}-utils__margin--zero-auto {
+			margin: 0 auto;
+		} 
+		
+		//Order
+		.#{getNamespace($value)}-utils__order--1 {
+			order: 1
+		}
+
+		.#{getNamespace($value)}-utils__order--2 {
+			order: 2
+		}
+
+		.#{getNamespace($value)}-utils__order--3 {
+			order: 3
+		}
+
+		.#{getNamespace($value)}-utils__order--4 {
+			order: 4
+		}
+
+		.#{getNamespace($value)}-utils__order--5 {
+			order: 5
+		} 
+		
+		//Overflow
+		.#{getNamespace($value)}-utils__overflow--visible {
+			overflow: visible;
+		}
+
+		.#{getNamespace($value)}-utils__overflow--hidden {
+			overflow: hidden;
+		}
+
+		.#{getNamespace($value)}-utils__overflow--scroll {
+			overflow: scroll;
+		}
+
+		.#{getNamespace($value)}-utils__overflow--auto {
+			overflow: auto;
+		} 
+		
+		//Height
+		.#{getNamespace($value)}-utils__height--zero {
+			height: 0;
+		} 
+		
+		//Colour
+		.#{getNamespace($value)}-utils__colour--link-blue,
+		.#{getNamespace($value)}-utils__color--link-blue {
+			color: $ig-link-blue;
+		}
+
+		.#{getNamespace($value)}-utils__colour--dark-blue,
+		.#{getNamespace($value)}-utils__color--dark-blue {
+			color: $ig-dark-blue;
+		}
+
+		.#{getNamespace($value)}-utils__colour--black,
+		.#{getNamespace($value)}-utils__color--black {
+			color: $ig-black;
+		}
+
+		.#{getNamespace($value)}-utils__colour--white,
+		.#{getNamespace($value)}-utils__color--white {
+			color: $ig-white;
+		} 
+
+		.#{getNamespace($value)}-utils__colour--green,
+		.#{getNamespace($value)}-utils__color--green,
+		.#{getNamespace($value)}-utils__color--ok,
+		.#{getNamespace($value)}-utils__color--success,
+		.#{getNamespace($value)}-utils__colour--ok,
+		.#{getNamespace($value)}-utils__colour--success {
+			color: $ig-system-success;
+		}
+
+		.#{getNamespace($value)}-utils__colour--red,
+		.#{getNamespace($value)}-utils__color--red,
+		.#{getNamespace($value)}-utils__color--error,
+		.#{getNamespace($value)}-utils__color--alert,
+		.#{getNamespace($value)}-utils__colour--error,
+		.#{getNamespace($value)}-utils__colour--alert {
+			color: $ig-system-error;
+		}
+		
+		//Float
+		.#{getNamespace($value)}-utils__float--left {
+			float: left;
+		}
+
+		.#{getNamespace($value)}-utils__float--right {
+			float: right;
+		}
+
+		.#{getNamespace($value)}-utils__float--none {
+			float: none;
+		} 
+
+		//Center
+		.#{getNamespace($value)}-utils__center {
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.#{getNamespace($value)}-utils__align--center{
+			align-items: center;
+			display: flex;
+			height: 100%;
+			justify-content: center;
+		    width: 100%;	
+		}
+
+		.#{getNamespace($value)}-utils__center--relative {
+			position: relative;
+			margin: 0 auto;
+		}
+		
+		.#{getNamespace($value)}-utils__center--vertical {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		.#{getNamespace($value)}-utils__position--relative {
+			position: relative;
+		}
+
+		.#{getNamespace($value)}-utils__position--absolute {
+			position: absolute;
+		}
+
+		.#{getNamespace($value)}-utils__position--fixed {
+			position: fixed;
+		}
+
+		.#{getNamespace($value)}-utils__position--static {
+			position: static;
+		}
+
+		.#{getNamespace($value)}-utils__cursor--default,
+		.#{getNamespace($value)}-utils__cursor--auto {
+			cursor: auto;
+
+			&:hover {
+				cursor: auto;
+			}
+		}
+
+		.#{getNamespace($value)}-utils__cursor--none {
+			cursor: none;
+
+			&:hover {
+				cursor: none;
+			}
+		}
+
+		.#{getNamespace($value)}-utils__cursor--initial {
+			cursor: intial;
+
+			&:hover {
+				cursor: intial;
+			}
+		}
+
+		.#{getNamespace($value)}-utils__cursor--pointer {
+			cursor: pointer;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+
+		.#{getNamespace($value)}-utils__top--zero {
+			top: 0;
+		}
+
+		.#{getNamespace($value)}-utils__bottom--zero {
+			bottom: 0;
+		}
+
+		.#{getNamespace($value)}-utils__left--zero {
+			left: 0;
+		}
+
+		.#{getNamespace($value)}-utils__right--zero {
+			right: 0;
+		}
+	}
+}

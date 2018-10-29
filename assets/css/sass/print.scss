@@ -1,0 +1,37 @@
+@media print {
+	
+	//Elemements
+	body {
+		font-family: "WhitneyBook", Arial, sans-serif;
+		font-size: $ig-font-size--base;
+		line-height: $ig-line-height--base;
+		display: block;
+		margin: $ig-space--medium;
+	}
+	
+	input, button, svg {
+		display: none;
+	}
+
+	//Classes
+	.#{$namespace}-link__print {
+		display: none;
+	}
+
+	.igforms-timeline {
+		zoom: 80%;
+	}
+	@page {
+		size: 8.5in 11in;
+		.igforms-timeline {
+			height: 100% !important;
+			width: 100% !important;
+			// overflow: visible;
+			// page-break-inside: avoid;
+			// break-inside: avoid;
+			// break-before: region;
+			page: cover;
+			zoom: 40%;
+		}
+	}
+}

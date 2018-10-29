@@ -1,0 +1,177 @@
+//Global vars - all SASS vars should be placed here, check SLDS design token for pre-existing token before adding an new vars here.
+$namespace: 'igforms';
+
+//Colours
+//Brand
+$ig-blue: #004171;
+$ig-dark-blue: #002663;
+$ig-dark-blue--90: rgba(red($ig-dark-blue), green($ig-dark-blue), blue($ig-dark-blue), 0.9);
+$ig-green: #0ed59a;
+$ig-teal: #7ec4b9;
+$ig-light-teal: #f1f7f7;
+$ig-beige: #faf7e6;
+$ig-terrible-teal: #43c1bc;
+$ig-light-blue: #b4defa;
+$ig-medium-blue: #0e75d5;
+$ig-link-blue: #0e75d5;
+$ig-overlay-blue: rgba(red(#2b4d73), green(#2b4d73), blue(#2b4d73), 0.3);
+$ig-dark-green: #008a2a;
+$ig-gold: #dedc4d;
+$ig-red: #ea051c;
+$ig-light-grey: #f8f8f9;
+$ig-darkest-grey: #6D7D8A;
+$ig-grey: #e9ecee;
+$ig-dark-grey: #d3d8dc;
+$ig-white: #fff;
+$ig-black: #000;
+
+$ig-white-50: rgba(red(#fff), green(#fff), blue(#fff), 0.5);
+$ig-white-15: rgba(255, 255, 255, 0.15);
+
+/// The Above Needs CLEANING OUT, they're not all being used
+
+
+$ig-primary: #002663;
+$ig-secondary: #0073CF; 
+$ig-tertiary: #A0CFEB;
+
+$ig-link-text: $ig-secondary;
+
+//Forms
+$ig-dark-blue-grey: #566879;
+$ig-tile-grey: #DBDBDB;
+
+$ig-primary-05: #F2F4F7;
+$ig-primary-10: #E5E9EF;
+$ig-primary-15: #D9DFE8;
+$ig-primary-30: #B2BDD0;
+$ig-primary-40: rgba(0, 38, 99, 0.4);
+$ig-primary-45: #8C9DB9;
+$ig-primary-60: #667DA1;
+$ig-primary-75: #405D8A;
+
+
+$ig-secondary-05: #F2F8FC;
+$ig-secondary-10: #E5F1FA;
+$ig-secondary-15: #D9EAF8;
+$ig-secondary-30: #B2D5F0;
+$ig-secondary-45: #8CC0E9;
+$ig-secondary-50: rgba(0, 115, 207, 0.15);
+$ig-secondary-60: #66ABE2;
+$ig-secondary-75: #4096DB;
+
+$ig-tertiary-05: #FAFCFE;
+$ig-tertiary-10: #F5FAFD;
+$ig-tertiary-15: #F1F8FC;
+$ig-tertiary-30: #E2F0F9;
+$ig-tertiary-45: #8CC0E9;
+$ig-tertiary-60: #66ABE2;
+$ig-tertiary-75: #4096DB;
+
+
+
+$ig-black-05: rgba(0, 0, 0, 0.05);
+$ig-black-10: rgba(0, 0, 0, 0.1);
+$ig-black-15: rgba(0, 0, 0, 0.15);
+$ig-black-30: rgba(0, 0, 0, 0.3);
+$ig-black-50: rgba(0, 0, 0, 0.5);
+$ig-black-60: rgba(0, 0, 0, 0.6);
+
+
+//System
+$ig-system-success: #0EC692;  //Success Primary
+$ig-system-success-bg: #0EC692; //Success Light BG
+$ig-system-ok: #0EC692;
+$ig-system-error: #D42F1A; // Error Primary
+$ig-system-alert: #D42F1A; // Error Primary
+$ig-system-informational: #0E75D5;
+
+$ig-heads-up-message: $ig-secondary; 
+$ig-heads-up-message-bg: #429EF5;
+
+//Breakpoints
+$ig-x-small: 375px;
+$ig-small: 480px;
+$ig-medium: 767px;
+$ig-large: 1024px;
+$ig-x-large: 1280px;
+
+$ig-breakpoints: (
+    default 0,
+    small $ig-small,
+    medium $ig-medium,
+    large $ig-large
+);
+
+@mixin for-phone-only() {
+    @media (max-width: $ig-medium){ @content; }
+}
+
+//Sizing - Margin/Padding/Icon Size etc.
+$ig-space--xx-large: 60px;
+$ig-space--x-large: 40px;
+$ig-space--large: 32px;
+$ig-space--medium: 24px;
+$ig-space--small: 16px;
+$ig-space--x-small: 12px;
+$ig-space--xx-small: 8px;
+$ig-space--xxx-small: 4px;
+
+$ig-sizes: (
+    xx-large $ig-space--xx-large,
+    x-large $ig-space--x-large,
+    large $ig-space--large,
+    medium $ig-space--medium,
+    small $ig-space--small,
+    x-small $ig-space--x-small,
+    xx-small $ig-space--xx-small,
+    xxx-small $ig-space--xxx-small,
+    zero 0
+);
+
+//Typography
+$ig-whitney-book: 'WhitneyBook', Arial, sans-serif;
+$ig-whitney-semibold: 'WhitneySemibold', Arial, sans-serif;
+$ig-whitney-light: 'WhitneyLight', Arial, sans-serif;
+
+//IGDS - Font Sizing and Line Height
+//X-MINI
+$ig-font-size--x-mini: 12px;
+$ig-line-height--x-mini: 16px;
+//MINI
+$ig-font-size--mini: 14px;
+$ig-line-height--mini: 24px;
+//BASE
+$ig-font-size--base: 16px;
+$ig-line-height--base: 24px;
+//MEDIUM
+$ig-font-size--medium: 20px;
+$ig-line-height--medium: 32px;
+///MEDIUM-PLUS
+$ig-font-size--medium-plus: 24px;
+$ig-line-height--medium-plus: 32px;
+//LARGE
+$ig-font-size--large: 32px;
+$ig-line-height--large: 40px;
+//X-LARGE
+$ig-font-size--x-large: 48px;
+$ig-line-height--x-large: 56px;
+//XX-LARGE
+$ig-font-size--xx-large: 72px;
+$ig-line-height--xx-large: 88px;
+//SUPER
+$ig-font-size--super: 144px;
+$ig-line-height--super: 144px;
+
+$ig-letter-spacing: 0px;
+
+//Mobile nav
+$ig-mobile-nav-left-width: 100%;
+$ig-mobile-nav-right-width: 100%;
+$ig-mobile-nav-boxshadow: rgba(red($ig-blue), green($ig-blue), blue($ig-blue), 0.7);
+
+//Modal wrapper text
+$ig-modal-wrapper-text-width: 600px;
+
+// Icon Size
+$ig-icon--xxx-small: 8px;

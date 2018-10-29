@@ -1,0 +1,389 @@
+//BEM convention
+//[namespace]-[block]__[element]--[modifier]
+//See https://seesparkbox.com/foundry/bem_by_example for details
+//Breakpoints - contains any igforms classes that are breakpoint sensitive
+//Small
+@media (min-width: $ig-small) {
+	.#{$namespace}-modal-description {
+		&.full {
+			top: 0 !important;
+		}
+		&.detect {
+			h3 {
+				font-size: $ig-font-size--medium-plus;
+				line-height: $ig-line-height--medium-plus;
+			}
+		}
+	}
+}
+//Medium
+@media (min-width: $ig-medium) {
+	//REGISTRATION
+	.#{$namespace}-registration {
+		.#{$namespace}-registration__pfa {
+			h1 {
+				font-size: $ig-font-size--medium-plus;
+				line-height: $ig-line-height--medium-plus;
+			}
+		}
+		.#{$namespace}-registration__pfa--monitor {
+			width: 360px;
+		}
+	} //FIGURE
+	.#{$namespace}-figure {
+		.#{$namespace}-figure__caption {
+			h3,
+			p {
+				text-align: left;
+			}
+		}
+	} //MODAL
+	.#{$namespace}-modal__footer {
+		margin: 0 0 0 -#{$ig-space--xx-large};
+		padding-top: 32px;
+		padding-left: 0px;
+		padding-right: 0px;
+		padding-bottom: 0px;
+	} //VALUES
+	.#{$namespace}-value--large {
+		font-size: $ig-font-size--large;
+	} //TOOLTIP
+	.#{$namespace}-tooltip {
+		&.#{$namespace}-tooltip__label--small {
+			padding-left: 0;
+			padding-top: 6px;
+		}
+	} //TABLES
+	.#{$namespace}-table {
+		&.#{$namespace}-table__holdings,
+		&.#{$namespace}-table__transactions,
+		&.#{$namespace}-table__instructions {
+			.#{$namespace}-table__row {
+				.#{$namespace}-table__header {
+					display: table-cell;
+				}
+				.#{$namespace}-table__data {
+					display: table-cell;
+				}
+			}
+		}
+	} //FOOTER
+	.#{$namespace}-footer {
+		.footer-link {
+			float: left;
+		}
+	}
+	.#{$namespace}-statement {
+		.#{$namespace}-banner {
+			background-position: right bottom -25px;
+			background-size: 50%;
+			img {
+				margin: 0;
+			}
+			.#{$namespace}-banner-copy {
+				width: auto;
+			}
+			button {
+				margin-top: 10px;
+			}
+		}
+	}
+	//MODAL
+	.#{$namespace}-modal {
+		&.#{$namespace}-modal__small {
+			background-color: $ig-dark-blue--90;
+		}
+		&.#{$namespace}-modal-foundation {
+			margin-top: $ig-space--medium;
+		}
+	}
+
+	.#{$namespace}-modal-description {
+		top: 25% !important;
+		bottom: 25%;
+		&.full {
+			top: 0 !important;
+		}
+		&.detect {
+			h3 {
+				font-size: $ig-font-size--large;
+				line-height: $ig-line-height--large;
+			}
+		}
+	}
+
+	//DROPDOWN MENU
+	.#{$namespace}-dropdown-menu {
+		.#{$namespace}-dropdown-menu__list-item--parent {
+
+			display: table-cell;
+
+			// .#{$namespace}-dropdown-menu__hover-list.menu.submenu.is-dropdown-submenu.first-sub.vertical.js-dropdown-active {
+			// 	left: -29vw;
+			// }
+
+			&.is-dropdown-submenu-parent {
+
+				.#{$namespace}-dropdown-menu__hover-list {
+
+					width: 294px;
+				}
+
+				.#{$namespace}-dropdown-menu__icon {
+					float: none;
+					padding-top: 22px;
+				}
+			}
+		}
+	}
+
+	//CHART
+	.#{$namespace}-chart-medium {
+		position: relative;
+		max-height: 405px;
+	}
+
+	.#{$namespace}-statement {
+		.#{$namespace}-document-table {
+			table tr th .slds-truncate,
+			table tr td .slds-truncate {
+				max-width: none;
+			}
+		}
+		.slds-combobox__input {
+			&[readonly] {
+				border-color: $ig-black;
+			}
+		}
+		.slds-icon-utility-down {
+			&.slds-input__icon {
+				right: .75rem;
+			}
+		}
+	}
+
+	//BUTTON
+	.#{$namespace}-utils__margin--zero-auto {
+		&.slds-medium-m-horizontal--zero {
+			&.slds-medium-m-top--zero {
+				&.slds-medium-m-bottom--zero {
+					margin: 0;
+				}
+			}
+		}
+	}
+	// CAROUSEL
+	.#{$namespace}-carousel {
+		.#{$namespace}-carousel__main {
+			&.#{$namespace}-carousel__with_copy {
+				.slick-slide, .slick-list {
+					h2 {
+						font-size: $ig-font-size--medium;
+						line-height: $ig-line-height--medium;
+					}
+				}
+				.slick-next {
+		      right: 10px;
+		    }
+		    .slick-prev {
+		      left: 10px;
+		    }
+			}
+		}
+	}
+	// DOCUMENTS
+	.#{$namespace}-documents-optin {
+		.#{$namespace}-documents-optin__section--mobile {
+			max-height: none;
+			height: 100%;
+		}
+		.#{$namespace}-documents-optin__h1 {
+			font-size: $ig-font-size--large;
+			line-height: $ig-line-height--large;
+			width: auto;
+			margin: 0;
+		}
+		img {
+			width: 100%;
+		}
+		.#{$namespace}-carousel {
+			.#{$namespace}-carousel__main {
+				&.#{$namespace}-carousel__with_copy {
+					margin-bottom: 2.25rem;
+					.slds-icon--xx-large {
+						height: 60px;
+						width: 60px;
+					}
+					.slick-next {
+						top: 50%;
+			      right: 36px;
+			    }
+			    .slick-prev {
+						top: 50%;
+			      left: 36px;
+			    }
+					.slick-dots {
+						bottom: auto;
+					}
+				}
+			}
+		}
+	}
+}
+
+//Large
+@media (min-width: $ig-large) {
+	//REGISTRATION
+	.#{$namespace}-registration {
+		.#{$namespace}-registration__pfa--monitor {
+			top: 23px;
+			height: 282px;
+			overflow: visible;
+		}
+	} //BUTTON
+	.#{$namespace}-button__chat {
+		float: none;
+		position: fixed;
+		right: 40px;
+		bottom: 40px;
+	}
+	.#{$namespace}-button__chat--sticky {
+		position: absolute;
+		right: -200px;
+		top: -160px;
+	} //VALUES
+	.#{$namespace}-value--medium {
+		line-height: $ig-line-height--base;
+		font-size: $ig-font-size--medium-plus;
+	}
+	.#{$namespace}-value--small {
+		line-height: $ig-line-height--base;
+		font-size: $ig-font-size--medium;
+	}
+	.#{$namespace}-value--x-small {
+		line-height: $ig-line-height--base;
+		font-size: $ig-font-size--base;
+	} //SEPARATOR
+	.#{$namespace}-separator--large {
+		height: $ig-space--x-small;
+	} //CARD
+	.#{$namespace}-card__image {
+		width: 100%;
+	} //MODAL
+	.#{$namespace}-modal {
+		&.#{$namespace}-modal__small {
+			.#{$namespace}-modal__small--inner {
+				@include roundCorner();
+				top: 25%;
+				left: 25%;
+				right: 25%;
+				bottom: 25%;
+			}
+		}
+		&.#{$namespace}-modal__details {
+			.#{$namespace}-modal__details--inner {
+				@include roundCorner();
+				top: 10%;
+				left: 10%;
+				right: 10%;
+				bottom: 10%;
+			}
+		}
+	} //FOOTER
+	.#{$namespace}-footer {
+		padding-top: 0;
+		.footer-copyright {
+			.footer-copyright-border-top .row {
+				border-top: none;
+				.columns ul li {
+					border-right: none;
+				}
+			}
+		}
+		.footer-navigation .columns {
+			text-align: left;
+		}
+	} //CAROUSEL
+	.#{$namespace}-carousel {
+		.#{$namespace}-carousel__main {
+			&.slick-slider {
+				margin-bottom: 0;
+			}
+		}
+		.#{$namespace}-carousel__nav {
+			&.slick-slider {
+				margin-top: 0;
+			}
+		}
+	} //MODAL
+	.#{$namespace}-modal-foundation {
+		&.large.reveal {
+			width: 75%;
+			max-width: 960px;
+		}
+	}
+
+	//DROPDOWN MENU
+	.#{$namespace}-dropdown-menu {
+		.#{$namespace}-dropdown-menu__list-item--parent {
+
+			// .#{$namespace}-dropdown-menu__hover-list.menu.submenu.is-dropdown-submenu.first-sub.vertical.js-dropdown-active {
+			// 	left: -22vw;
+			// }
+
+			&.is-dropdown-submenu-parent {
+				.#{$namespace}-dropdown-menu__icon {
+					padding-top: 20px;
+				}
+			}
+		}
+	}
+
+	//CHART
+	.#{$namespace}-chart-medium {
+		position: relative;
+		max-height: none;
+	}
+
+	//PROFILE SETTINGS
+	//PROFILE SETTINGS
+.#{$namespace}-profile-settings {
+	.#{$namespace}-profile-settings__client-info {
+		order: 1;
+	}
+
+	.#{$namespace}-profile-settings__security {
+		order: 2;
+	}
+
+	.#{$namespace}-profile-settings__notification {
+		order: 3;
+	}
+
+	.#{$namespace}-profile-settings__documents {
+		order: 4;
+	}
+}
+// DOCUMENTS
+.#{$namespace}-documents-optin {
+	.#{$namespace}-carousel {
+		.#{$namespace}-carousel__main {
+			&.#{$namespace}-carousel__with_copy {
+				.slick-next {
+					right: 75px;
+				}
+				.slick-prev {
+					left: 75px;
+				}
+			}
+		}
+	}
+}
+}
+
+//XLarge
+@media (min-width: $ig-x-large) {
+	.slick-slider {
+		padding: 20px 6vw;
+	}
+}

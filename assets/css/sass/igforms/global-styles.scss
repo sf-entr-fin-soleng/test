@@ -1,0 +1,1353 @@
+//BEM convention
+//[namespace]-[block]__[element]--[modifier]
+//See https://seesparkbox.com/foundry/bem_by_example for details
+//Global Styles - specific styles for elements that can be used globally, I may break these styles into sub categories down the road if this file gets too big
+//GENERAL
+.#{$namespace}-main {
+	//Override default padding in community page
+	.slds-col--padded {
+		padding: 0;
+	}
+}
+
+.#{$namespace}-background {
+	background-color: $ig-light-grey;
+}
+
+.#{$namespace}-background__tiled {
+	background-image: url('~/assets/images/bg-tile.jpg');
+	background-repeat: repeat;
+}
+
+.#{$namespace}-container {
+	background-color: #fff;
+	overflow: hidden;
+}
+
+.#{$namespace}-break-word {
+	word-wrap: break-word;
+}
+
+.#{$namespace}-disclaimer {
+	font-size: 0.85rem;
+}
+
+.#{$namespace}-wrapper-x-large {
+	max-width: $ig-x-large;
+	margin: 0 auto;
+}
+
+.#{$namespace}-wrapper {
+	max-width: $ig-large;
+	margin: 0 auto; //234 is the height of the footer
+	min-height: calc(100vh - 234px);
+}
+
+.#{$namespace}-wrapper-no-height {
+	max-width: $ig-large;
+	margin: 0 auto;
+}
+
+.#{$namespace}-wrapper-height {
+	//234 is the height of the footer
+	min-height: calc(100vh - 234px);
+}
+
+.#{$namespace}-horizontal-rule {
+	border-bottom: 1px solid #fff;
+	width: 100%;
+	height: $ig-space--large;
+}
+
+.#{$namespace}-separator--large {
+	width: 100%;
+	height: $ig-space--xx-small;
+	background-color: $ig-light-grey;
+}
+
+.#{$namespace}-background__gradient {
+	background: #fafafd;
+	/* Old browsers */
+	background: -moz-linear-gradient(top, #fafafd 0%, #fefefe 100%);
+	/* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #fafafd 0%, #fefefe 100%);
+	/* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #fafafd 0%, #fefefe 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafd', endColorstr='#fefefe', GradientType=0);
+	/* IE6-9 */
+}
+
+//INPUT
+.#{$namespace}-input {
+	.slds-input {
+		border-radius: 0;
+		margin-bottom: 0; //border: 1px solid $ig-black;
+		&.input,
+		&.uiInput--input.input,
+		&.uiInput--select.select {
+			border-radius: 0;
+			margin-bottom: 0;
+			border: 1px solid $ig-black;
+		}
+		&.uiInput--select.has-error.select {
+			border: none;
+		}
+	}
+
+	.input {
+		&.uiInput--input.input[disabled] {
+			border-radius: 0;
+			margin-bottom: 0;
+			border: 1px solid $ig-black;
+		}
+
+		&.uiInput--input.input[disabled]:hover {
+			cursor: pointer;
+		}
+	}
+}
+
+.#{$namespace}-input__label--error {
+	&.slds-form-element__label.input-label {
+		color: $ig-system-error;
+	}
+}
+
+.#{$namespace}-input__username,
+.#{$namespace}-input__password {
+	.has-error.uiInputDefaultError.uiInput.uiInputText.uiInput--default.uiInput--input {
+		position: relative;
+	}
+}
+
+.#{$namespace}-input__username--error,
+.#{$namespace}-input__password--error,
+.#{$namespace}-input__email--error {
+	.slds-input.input.uiInput.uiInputText.uiInput--default.uiInput--input,
+	.slds-input.input.uiInput.uiInputSecret.uiInput--default.uiInput--input {
+		border: 1px solid $ig-system-error;
+	}
+}
+
+.#{$namespace}-input__help-link {
+	font-family: $ig-whitney-book;
+	letter-spacing: $ig-letter-spacing;
+	font-size: $ig-font-size--base;
+}
+
+.#{$namespace}-input__password-icon {
+	cursor: pointer;
+	.#{$namespace}-input__password-icon--preview {
+		&.slds-icon.slds-input__icon.slds-input__icon_right {
+			top: 19%;
+		}
+	}
+	&:focus {
+		.#{$namespace}-input__password-icon--preview {
+			background-color: rgb(255, 255, 255);
+			box-shadow: rgb(0, 112, 210) 0px 0px 3px;
+			outline: 0px;
+			border-color: rgb(21, 137, 238);
+		}
+	}
+}
+
+.#{$namespace}-input__selector {
+	&.uiInput--select.select {
+		height: 38px;
+	}
+}
+
+//LINK
+.#{$namespace}-link {
+	font-family: $ig-whitney-book;
+	font-size: $ig-space--x-small;
+	letter-spacing: $ig-letter-spacing;
+}
+
+.#{$namespace}-link__cta {
+	.slds-icon_container.slds-icon-utility-chevronright,
+	.slds-icon_container.slds-icon-utility-chevronleft {
+		top: 0;
+		.slds-icon-text-default {
+			fill: $ig-link-blue;
+		}
+	}
+}
+
+.#{$namespace}-link__standalone {
+	font-family: $ig-whitney-semibold;
+	font-size: $ig-font-size--mini;
+	.slds-icon_container.slds-icon-utility-chevronright,
+	.slds-icon_container.slds-icon-utility-chevronleft {
+		top: -1px;
+		.slds-icon-text-default {
+			fill: $ig-link-blue;
+		}
+	}
+}
+
+.#{$namespace}-link__variant--a {
+	font-family: $ig-whitney-semibold;
+	font-size: $ig-space--x-small;
+	letter-spacing: $ig-letter-spacing;
+	.slds-icon-text-default {
+		fill: $ig-link-blue;
+	}
+}
+
+.#{$namespace}-link__glyph--after {
+	position: relative;
+	top: -1px;
+	padding-left: $ig-space--xxx-small;
+}
+
+.#{$namespace}-link__print {
+	.#{$namespace}-link__print--icon {
+		position: relative;
+		top: -3px;
+	}
+}
+
+//UNDERLINE
+.#{$namespace}-underline,
+.#{$namespace}-underline__regular--grey {
+	border-bottom: 2px solid $ig-grey;
+}
+
+.#{$namespace}-underline__thin--grey {
+	border-bottom: 1px solid $ig-grey;
+}
+
+.#{$namespace}-underline__thick-grey {
+	border-bottom: 3px solid $ig-grey;
+}
+
+.#{$namespace}-underline__thin--blue {
+	border-bottom: 1px solid $ig-dark-blue;
+}
+
+.#{$namespace}-underline--blue,
+.#{$namespace}-underline__regular--blue {
+	border-bottom: 2px solid $ig-dark-blue;
+}
+
+.#{$namespace}-underline__thick--blue {
+	border-bottom: $ig-space--xx-small solid $ig-dark-blue;
+	transform-origin: left bottom;
+	transform: skewX(25deg);
+}
+
+.#{$namespace}-underline__thin--white {
+	border-bottom: 1px solid $ig-white;
+}
+
+.#{$namespace}-underline--white,
+.#{$namespace}-underline__regular--white {
+	border-bottom: 2px solid $ig-white;
+}
+
+.#{$namespace}-underline__thick--white {
+	border-bottom: 3px solid $ig-white;
+}
+
+//VALUE
+.#{$namespace}-value--large {
+	font-family: $ig-whitney-light;
+	line-height: $ig-line-height--base;
+	sup {
+		font-size: 70%;
+		top: -0.25em;
+	}
+	sub {
+		font-size: 50%;
+		bottom: 0;
+	}
+}
+
+.#{$namespace}-value--medium {
+	line-height: $ig-line-height--base;
+	font-size: $ig-font-size--medium-plus;
+}
+
+.#{$namespace}-value--small {
+	line-height: $ig-line-height--base;
+	font-size: $ig-font-size--medium;
+}
+
+.#{$namespace}-value--x-small {
+	line-height: $ig-line-height--base;
+	font-size: $ig-font-size--base;
+}
+
+.#{$namespace}-value--gain {
+	top: 0;
+	color: $ig-dark-green;
+}
+
+.#{$namespace}-value--gain use {
+	fill: $ig-dark-green;
+}
+
+.#{$namespace}-value--loss {
+	top: 0;
+	color: $ig-red;
+}
+
+.#{$namespace}-value--loss use {
+	fill: $ig-red;
+}
+
+//DOLLAR SIGN
+:lang(en) {
+	.#{$namespace}-currency__dollar {
+		&:before {
+			position: relative;
+			content: '$';
+			font-size: 70%;
+			top: -0.25em;
+		}
+	}
+}
+
+:lang(fr) {
+	.#{$namespace}-currency__dollar {
+		&:after {
+			content: '$';
+			padding-left: $ig-space--xx-small;
+		}
+	}
+}
+
+//LABEL
+.#{$namespace}-label {
+	font-family: $ig-whitney-semibold;
+	font-size: $ig-space--small;
+	letter-spacing: $ig-letter-spacing;
+	color: $ig-blue;
+}
+
+.#{$namespace}-label--small {
+	font-family: $ig-whitney-semibold;
+	font-size: $ig-font-size--mini;
+	letter-spacing: $ig-letter-spacing;
+	color: $ig-blue;
+}
+
+//ACCOUNT
+.#{$namespace}-account-arrow--right {
+	position: relative;
+	left: 35px;
+}
+
+.#{$namespace}-account__total div {
+	span {
+		border-bottom: 1px solid $ig-grey;
+	}
+}
+
+.#{$namespace}-account__grand-total div {
+	font-family: $ig-whitney-semibold;
+	.#{$namespace}-account__grand-total--container {
+		width: 35%;
+		float: right;
+	}
+}
+
+.#{$namespace}-account__item,
+.#{$namespace}-account__item--static {
+	sup {
+		top: -3px;
+	}
+}
+
+.#{$namespace}-account__item--static:hover {
+	background-color: $ig-light-grey;
+}
+
+.#{$namespace}-account__item:hover {
+	cursor: pointer;
+	background-color: $ig-light-grey;
+}
+
+.#{$namespace}-account-title-dropdown {
+	.#{$namespace}-dropdown-menu {
+		.submenu {
+			.is-submenu-item {
+				.active {
+					&::before {
+						display: inline-block;
+						content: '';
+						height: 16px;
+						width: 2px;
+						background-color: $ig-blue;
+						position: relative;
+						top: 2px;
+						right: 6px;
+					}
+				}
+			}
+		}
+	}
+}
+
+//ALERT
+.#{$namespace}-alert--item {
+	border-bottom: 1px solid $ig-grey;
+	&:last-child {
+		border-bottom: none;
+		margin-bottom: 0 !important;
+		padding-bottom: 0 !important;
+	}
+}
+
+//CTA
+.#{$namespace}-cta {
+	background-color: $ig-white;
+}
+
+//CARD
+.#{$namespace}-card {
+	border: none;
+	background: transparent;
+}
+
+.#{$namespace}-card__link {
+	position: relative;
+	top: -4px;
+}
+
+// .#{$namespace}-card__image {
+// 	height: 190px;
+// }
+//PROGRESS INDICATOR
+.#{$namespace}-progress-indicator {
+	.#{$namespace}-progress-indicator__step {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -15px;
+		margin-left: -3px;
+		font-family: $ig-whitney-semibold;
+		font-size: $ig-font-size--mini;
+	}
+	.#{$namespace}-progress-indicator__step--complete {
+		margin-top: -16px;
+		margin-left: -10px;
+	}
+}
+
+//LIST
+.#{$namespace}-list {
+	.#{$namespace}-list__item-label--a {
+		padding-top: 0;
+	}
+	.#{$namespace}-list__item-label--b {
+		font-family: $ig-whitney-book;
+		font-weight: normal;
+		text-transform: capitalize;
+		width: 50%;
+	}
+	.#{$namespace}-list__item-detail--b {
+		font-family: $ig-whitney-semibold;
+		font-weight: normal;
+		width: 50%;
+		text-align: right;
+	}
+	.#{$namespace}-list__item-label--c {
+		font-family: $ig-whitney-book;
+		font-weight: normal;
+		margin-bottom: 0;
+	}
+	.#{$namespace}-list__item-detail--c {
+		font-family: $ig-whitney-semibold;
+		font-weight: normal;
+	}
+}
+
+//BUTTON
+.#{$namespace}-button__chat {
+	float: right;
+	padding-top: $ig-space--xx-small;
+	padding-bottom: $ig-space--xx-small;
+	border-radius: $ig-space--medium;
+	background-clip: padding-box;
+	.slds-icon_container {
+		top: -2px;
+		position: relative;
+	}
+	svg {
+		fill: $ig-white;
+	}
+}
+
+//MODAL
+.#{$namespace}-modal {
+	display: none;
+	position: fixed;
+	z-index: 1000;
+	overflow-y: scroll;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	&.#{$namespace}-modal--show {
+		display: inline-block;
+	}
+	.#{$namespace}-modal__wrapper {
+		max-width: $ig-large;
+		margin: 0 auto;
+	}
+	.#{$namespace}-modal__wrapper--text {
+		max-width: $ig-modal-wrapper-text-width;
+		margin: 0 auto 200px;
+		z-index: 2000;
+	}
+	.#{$namespace}-modal__button--close {
+		position: relative;
+		float: right;
+		border-radius: 50px;
+		z-index: 4;
+		top: 1rem;
+	}
+	&.#{$namespace}-modal__full {
+		background-color: $ig-white;
+	}
+	&.#{$namespace}-modal__small {
+		background-color: $ig-white;
+		.#{$namespace}-modal__small--inner {
+			position: fixed;
+			background-color: $ig-white;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			border: 10px solid $ig-grey;
+			overflow-y: scroll;
+		}
+	} //details
+	&.#{$namespace}-modal__details {
+		background-color: $ig-dark-blue--90;
+		.#{$namespace}-modal__details--inner {
+			position: fixed;
+			background-color: $ig-white;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+	}
+}
+
+//Footer
+.#{$namespace}-modal__footer {
+	background-color: #f8f8f8;
+	position: fixed;
+	height: 175px;
+	bottom: 0;
+	margin: 0 0 0 -#{$ig-space--medium};
+	padding: $ig-space--small;
+	z-index: 3000;
+	.#{$namespace}-modal__footer-wrapper {
+		margin: 0 auto;
+		max-width: $ig-large;
+	}
+	.#{$namespace}-modal__footer-wrapper--text {
+		margin: 0 auto;
+		max-width: $ig-modal-wrapper-text-width;
+	}
+}
+
+//FOUNDATION MODAL
+.#{$namespace}-modal-foundation {
+	.#{$namespace}-modal-foundation__button--close {
+		position: relative;
+		float: right;
+		border-radius: 50px;
+		z-index: 2000;
+	}
+}
+
+.#{$namespace}-modal-foundation__overlay {
+	background-color: $ig-overlay-blue;
+}
+
+//MODAL DESCRIPTION
+.#{$namespace}-modal-description {
+	overflow: hidden;
+
+	.#{$namespace}-modal-description__button--close {
+		position: relative;
+		float: right;
+		border-radius: 50px;
+		z-index: 2000;
+	}
+	.#{$namespace}-modal-description__inner-wrapper {
+		margin: $ig-space--x-large;
+		height: 70%;
+		overflow: auto;
+	}
+	&.detect {
+		h3 {
+			font-family: $ig-whitney-book;
+			font-size: $ig-font-size--base;
+			line-height: $ig-line-height--base;
+			letter-spacing: $ig-letter-spacing;
+			text-transform: inherit;
+			text-transform: initial;
+		}
+	}
+}
+
+.#{$namespace}-modal-description__overlay {
+	background-color: $ig-overlay-blue;
+}
+
+//TOOLTIP
+.#{$namespace}-tooltip {
+	position: relative;
+	display: inline-block;
+	width: $ig-space--small;
+	height: $ig-space--small;
+	margin-left: $ig-space--xx-small;
+	.#{$namespace}-tooltip-container {
+		position: absolute;
+		left: 0;
+		top: 1px;
+		margin: 0;
+		width: $ig-space--small;
+		height: $ig-space--small;
+	}
+	&.#{$namespace}-tooltip__label--small {
+		padding-left: 0;
+		padding-top: 3px;
+	}
+	.#{$namespace}-tooltip__tip {
+		&.has-tip {
+			border: none;
+			margin: 0;
+			width: $ig-space--small;
+			height: $ig-space--small;
+		}
+		.slds-icon_container.slds-icon-utility-info {
+			margin: 0;
+			span {
+				margin: 0;
+			}
+		}
+	}
+}
+
+.#{$namespace}-tooltip__opened {
+	position: absolute; //top: calc(100% + .6495rem);
+	z-index: 1200;
+	max-width: 10rem;
+	padding: 0.75rem;
+	border-radius: 5px;
+	font-size: 80%;
+	color: $ig-white;
+	background-color: $ig-dark-blue;
+}
+
+//FIGURE
+.#{$namespace}-figure {
+	.#{$namespace}-figure__caption {
+		margin: 0;
+	}
+}
+
+//STATUS
+.#{$namespace}-text__success,
+.#{$namespace}-text__ok {
+	color: $ig-system-success;
+}
+
+.#{$namespace}-text__error,
+.#{$namespace}-text__alert {
+	color: $ig-system-error;
+}
+
+.#{$namespace}-text__informational {
+	color: $ig-system-informational;
+}
+
+//TOAST
+.#{$namespace}-toast {
+	.#{$namespace}-toast__icon {
+		position: relative;
+		top: 1px;
+		svg {
+			fill: $ig-white;
+		}
+	}
+	.#{$namespace}-toast__message {
+		color: $ig-white;
+	}
+}
+
+//BORDER
+.#{$namespace}-border--double {
+	border-bottom: 4px double $ig-grey;
+}
+
+//EDIT PAGES
+.#{$namespace}-edit-notifications {
+	.slds-checkbox--faux {
+		position: absolute;
+		top: 5px;
+		left: -8px;
+		& + .slds-form-element__label {
+			left: 20px;
+		}
+	}
+	.#{$namespace}-mobile-number {
+		margin-left: 28px;
+		font-weight: bold;
+		font-size: 14px;
+	}
+}
+
+.#{$namespace}-edit-documents {
+	.#{$namespace}-client-details {
+		font-size: 12px;
+		color: $ig-black;
+	}
+	.slds-grid .slds-col {
+		height: 60px;
+	}
+	.slds-checkbox_toggle {
+		margin-top: 2px;
+	}
+	.slds-form-element__label {
+		font-size: 14px;
+		padding-left: 10px;
+	}
+	.#{$namespace}-document-section {
+		.slds-grid:last-child {
+			margin-bottom: -30px;
+		}
+		.#{$namespace}-tooltip .#{$namespace}-tooltip__tip.has-tip {
+			margin-left: 0;
+		}
+		.slds-checkbox_toggle {
+			float: right;
+			width: auto;
+		}
+		.slds-checkbox_off,
+		.slds-checkbox_on {
+			top: -2px;
+			left: -45px;
+		}
+	}
+	.#{$namespace}-label--with-tooltip {
+		float: right;
+		.#{$namespace}-label--small {
+			color: $ig-dark-grey;
+			font-family: $ig-whitney-book;
+		}
+	}
+	.slds-checkbox--toggle .slds-checkbox--faux,
+	.slds-checkbox--toggle .slds-checkbox_faux,
+	.slds-checkbox_toggle .slds-checkbox--faux,
+	.slds-checkbox_toggle .slds-checkbox_faux {
+		height: 1.3rem;
+		width: 2.8rem;
+		border: 1px solid $ig-darkest-grey;
+		background-color: $ig-darkest-grey;
+	}
+	.slds-checkbox_off,
+	.slds-checkbox_on {
+		display: block;
+		position: absolute;
+		top: -2px;
+		left: 53px;
+		font-size: 14px;
+		font-weight: bold;
+	}
+	.slds-checkbox_off {
+		color: $ig-darkest-grey;
+	}
+	.slds-checkbox_on {
+		color: $ig-link-blue;
+	}
+	.slds-checkbox--toggle .slds-checkbox--faux:after,
+	.slds-checkbox--toggle .slds-checkbox_faux:after,
+	.slds-checkbox_toggle .slds-checkbox--faux:after,
+	.slds-checkbox_toggle .slds-checkbox_faux:after,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox--faux:before,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox--faux_container
+		.slds-checkbox--faux:before,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox_faux:before,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox_faux_container
+		.slds-checkbox_faux:before,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		~ .slds-checkbox--faux:before,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		~ .slds-checkbox_faux:before,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox--faux:before,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox--faux_container
+		.slds-checkbox--faux:before,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox_faux:before,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox_faux_container
+		.slds-checkbox_faux:before,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		~ .slds-checkbox--faux:before,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		~ .slds-checkbox_faux:before {
+		background-color: #fff;
+	}
+	.slds-checkbox--toggle .slds-checkbox--faux:after,
+	.slds-checkbox--toggle .slds-checkbox_faux:after,
+	.slds-checkbox_toggle .slds-checkbox--faux:after,
+	.slds-checkbox_toggle .slds-checkbox_faux:after {
+		top: 3.5px;
+		left: 3px;
+		width: 0.7rem;
+		height: 0.7rem;
+	}
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox--faux:before,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox--faux_container
+		.slds-checkbox--faux:before,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox_faux:before,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox_faux_container
+		.slds-checkbox_faux:before,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		~ .slds-checkbox--faux:before,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		~ .slds-checkbox_faux:before,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox--faux:before,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox--faux_container
+		.slds-checkbox--faux:before,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox_faux:before,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox_faux_container
+		.slds-checkbox_faux:before,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		~ .slds-checkbox--faux:before,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		~ .slds-checkbox_faux:before {
+		top: 3.5px;
+		right: 3px;
+		width: 0.7rem;
+		height: 0.7rem;
+	}
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox--faux:after,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox--faux_container
+		.slds-checkbox--faux:after,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox_faux:after,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox_faux_container
+		.slds-checkbox_faux:after,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		~ .slds-checkbox--faux:after,
+	.slds-checkbox--toggle
+		[type='checkbox']:checked
+		~ .slds-checkbox_faux:after,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox--faux:after,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox--faux_container
+		.slds-checkbox--faux:after,
+	.slds-checkbox_toggle [type='checkbox']:checked + .slds-checkbox_faux:after,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		+ .slds-checkbox_faux_container
+		.slds-checkbox_faux:after,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		~ .slds-checkbox--faux:after,
+	.slds-checkbox_toggle
+		[type='checkbox']:checked
+		~ .slds-checkbox_faux:after {
+		display: none;
+	}
+}
+
+//RADIO GROUPS
+.#{$namespace}-radio-group,
+.#{$namespace}-radio-group2 {
+	.slds-form-element__legend {
+		color: $ig-black;
+		font-size: 13px;
+		font-family: $ig-whitney-book;
+	}
+	.slds-radio {
+		float: left;
+		input + label {
+			margin-left: 0;
+		}
+	}
+	.slds-radio_faux {
+		border: 1px solid $ig-black !important;
+	}
+	.slds-radio_faux:after {
+		background: $ig-black !important;
+	}
+
+	.form-element__label.uiLabel {
+		display: none;
+	}
+}
+
+//TABLES
+.#{$namespace}-table {
+	width: 100%;
+	.#{$namespace}-table__row {
+		.#{$namespace}-table__header {
+			font-family: $ig-whitney-semibold;
+			font-size: $ig-font-size--mini;
+			letter-spacing: $ig-letter-spacing;
+			color: $ig-blue;
+		}
+	}
+	.#{$namespace}-table__row--link:hover {
+		cursor: pointer;
+		background-color: $ig-light-grey;
+	}
+	&.#{$namespace}-table__holdings {
+		.#{$namespace}-table__row {
+			.#{$namespace}-table__header {
+				display: none;
+			}
+			.#{$namespace}-table__data {
+				display: none;
+			}
+			.#{$namespace}-table__header:first-child,
+			.#{$namespace}-table__header:last-child,
+			.#{$namespace}-table__data:first-child,
+			.#{$namespace}-table__data:last-child {
+				display: table-cell;
+			}
+			.#{$namespace}-table__data:nth-child(1) {
+				color: $ig-medium-blue;
+			}
+		}
+	}
+	&.#{$namespace}-table__transactions,
+	&.#{$namespace}-table__instructions {
+		.#{$namespace}-table__row {
+			.#{$namespace}-table__header {
+				display: none;
+			}
+			.#{$namespace}-table__data {
+				display: none;
+			}
+			.#{$namespace}-table__header:first-child,
+			.#{$namespace}-table__header:last-child,
+			.#{$namespace}-table__header:nth-child(3),
+			.#{$namespace}-table__data:first-child,
+			.#{$namespace}-table__data:last-child,
+			.#{$namespace}-table__data:nth-child(3) {
+				display: table-cell;
+			}
+		}
+		.#{$namespace}-table__row--link {
+			&:hover {
+				cursor: default;
+				background-color: inherit;
+			}
+		}
+	}
+}
+
+//ADDRESS
+.#{$namespace}-address {
+	p {
+		line-height: 20px;
+	}
+}
+
+//STATEMENT
+.#{$namespace}-statement {
+	.#{$namespace}-document-tabs {
+		background: transparent;
+		position: relative;
+		.slds-tabs--default__nav,
+		.slds-tabs_default__nav {
+			list-style-type: none;
+			margin: 0 0 5px 0;
+			border-bottom: 1px solid #ddd;
+		}
+		.slds-dropdown-trigger {
+			position: absolute;
+			top: -40px;
+			right: 0;
+		}
+		.slds-tabs_default__link,
+		thead tr th {
+			font-size: 13px;
+			font-weight: bold !important;
+			color: $ig-blue;
+			text-transform: capitalize;
+			font-family: $ig-whitney-book;
+		}
+	}
+	.#{$namespace}-document-table {
+		background: #fff;
+		table {
+			padding: 20px 20px 30px 20px;
+			font-size: 14px;
+		}
+		table tr {
+			background-color: #fff !important;
+		}
+		thead tr th,
+		thead tr td {
+			border-top: none !important;
+		}
+		table tr th,
+		table tr td {
+			padding-left: 0 !important;
+			border: none;
+			border-top: 1px solid #ddd;
+		}
+		table tr th .slds-truncate,
+		table tr td .slds-truncate {
+			max-width: 100px;
+		}
+	}
+	.#{$namespace}-banner {
+		background-color: $ig-white;
+		display: block;
+		padding: 0 24px;
+		overflow: hidden;
+		position: relative;
+		margin-top: -15px;
+		background-position: right -51px bottom 0;
+		height: 220px;
+		background-size: 80%;
+		background-repeat: no-repeat;
+		.#{$namespace}-banner-heading {
+			color: $ig-blue;
+		}
+		.#{$namespace}-banner-text {
+			z-index: 1000;
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		.#{$namespace}-banner-copy {
+			width: 69%;
+		}
+		button {
+			background: transparent;
+			border: 1px solid $ig-blue;
+			width: 150px;
+			margin-top: 17px;
+			font-size: $ig-font-size--base;
+			letter-spacing: 0px;
+			font-weight: bold !important;
+			color: $ig-blue;
+			text-transform: initial;
+			font-family: $ig-whitney-book;
+		}
+		img {
+			width: auto;
+			margin: 0 auto;
+			display: block;
+			z-index: 1;
+		}
+		.#{$namespace}-banner-text-img {
+			position: relative;
+		}
+	}
+}
+
+// Statement filters
+.#{$namespace}-statement {
+	.slds-combobox__input {
+		margin-bottom: 0;
+		cursor: default;
+		color: $ig-blue;
+		font-family: $ig-whitney-semibold;
+		border-color: transparent;
+		box-shadow: none;
+		&:disabled,
+		&[readonly] {
+			cursor: default;
+		}
+	}
+	.#{$namespace}-icon-calibration {
+		position: relative;
+		top: 40px;
+		right: 8px;
+		.slds-icon-standard-calibration {
+			background-color: transparent;
+			.slds-icon {
+				fill: $ig-blue;
+			}
+		}
+	}
+	.slds-icon-utility-down {
+		&.slds-input__icon {
+			top: 24px;
+			right: 105px;
+		}
+	}
+	select {
+		border: 0;
+		text-align-last: center;
+		text-align: center;
+		-ms-text-align-last: center;
+		-moz-text-align-last: center;
+		text-align: -webkit-center;
+		font-family: $ig-whitney-semibold;
+		color: $ig-blue;
+	}
+	.#{$namespace}-statement-filters {
+		ul {
+			margin-left: 0;
+			background-color: $ig-white;
+			list-style: none;
+		}
+	}
+}
+
+//Loading Icon
+.#{$namespace}-loading-icon {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+	z-index: 15000;
+	&.#{$namespace}-loading-icon__background {
+		@include transparentBG($ig-light-grey, 0.75);
+	}
+}
+
+//Forgot User Name
+.#{$namespace}-forgot-user__step--1 {
+	max-height: 240px;
+}
+
+//ICON
+.#{$namespace}-icon {
+	use {
+		fill: $ig-system-informational;
+	}
+}
+
+//Investments/mortgages/insurance
+.#{$namespace}-overview {
+	.#{$namespace}-overview__investments,
+	.#{$namespace}-overview__mortgages,
+	.#{$namespace}-overview__insurance {
+		.#{$namespace}-overview__table {
+			min-height: 100px;
+		}
+	}
+}
+
+.#{$namespace}-overview__insurance {
+	.#{$namespace}-account__item--static {
+		background-color: transparent;
+	}
+	.#{$namespace}-account__item--static {
+		&:hover {
+			background-color: transparent;
+		}
+		.#{$namespace}-utils__colour--link-blue {
+			color: $ig-black;
+		}
+	}
+}
+
+//Drop down menu
+.#{$namespace}-dropdown-menu {
+	a {
+		color: $ig-black;
+	}
+	&.dropdown.menu > li.is-dropdown-submenu-parent > a:after {
+		display: none;
+	}
+	.#{$namespace}-dropdown-menu__list-item--parent {
+		width: 100%;
+		display: inline-block;
+		&.is-dropdown-submenu-parent {
+			.#{$namespace}-dropdown-menu__hover-list {
+				top: 80%;
+				width: 96vw;
+				border: 1px solid $ig-dark-grey;
+				border-radius: 0;
+			}
+		}
+		.#{$namespace}-dropdown-menu__icon {
+			float: right;
+			padding-top: 16px;
+			padding-left: 4px;
+			padding-right: 20px;
+		}
+	}
+}
+
+//GRAPHS
+//Line
+.#{$namespace}-graph__line {
+	.#{$namespace}-graph__line--tooltip {
+		background-color: $ig-grey;
+		margin: 0;
+		padding: $ig-space--small;
+		table {
+			margin: 0;
+			tbody {
+				border: none;
+				tr {
+					background-color: $ig-grey;
+					td {
+						padding-bottom: $ig-space--xxx-small;
+					}
+					td:last-child {
+						padding-bottom: 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+.#{$namespace}-graph__line--no-data {
+	position: relative;
+
+	.#{$namespace}-graph__no-data {
+		position: absolute;
+		text-align: center;
+		top: 37%;
+		left: 0;
+		width: 100%;
+	}
+}
+
+//PROFILE SETTINGS
+.#{$namespace}-profile-settings {
+	.#{$namespace}-profile-settings__client-info {
+		order: 1;
+	}
+
+	.#{$namespace}-profile-settings__security {
+		order: 3;
+	}
+
+	.#{$namespace}-profile-settings__notification {
+		order: 4;
+	}
+
+	.#{$namespace}-profile-settings__documents {
+		order: 2;
+	}
+}
+
+// DOCUMENTS
+.#{$namespace}-documents-optin {
+	.#{$namespace}-documents-optin__section--mobile {
+		max-height: calc(95vh - 260px);
+		height: 100%;
+	}
+	.#{$namespace}-documents-optin__h1 {
+		font-size: $ig-font-size--medium;
+		line-height: $ig-line-height--medium;
+		width: 83.33333%;
+		margin: 0 auto;
+	}
+	img {
+		max-width: 350px;
+		width: 80%;
+	}
+	.#{$namespace}-carousel {
+		.#{$namespace}-carousel__main {
+			&.#{$namespace}-carousel__with_copy {
+				margin-bottom: 0;
+				.slds-icon--xx-large {
+					height: 45px;
+					width: 45px;
+				}
+				h2 {
+					color: $ig-black;
+				}
+				.slick-next,
+				.slick-prev {
+					top: 40px;
+				}
+				.slick-dots {
+					position: relative;
+					bottom: 12px;
+				}
+			}
+		}
+	}
+}
+
+// Google Material Design Icon Fonts
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px; /* Preferred icon size */
+	display: inline-block;
+	line-height: 1;
+	text-transform: none;
+	letter-spacing: normal;
+	word-wrap: normal;
+	white-space: nowrap;
+	direction: ltr;
+
+	/* Support for all WebKit browsers. */
+	-webkit-font-smoothing: antialiased;
+	/* Support for Safari and Chrome. */
+	text-rendering: optimizeLegibility;
+
+	/* Support for Firefox. */
+	-moz-osx-font-smoothing: grayscale;
+
+	/* Support for IE. */
+	font-feature-settings: 'liga';
+}

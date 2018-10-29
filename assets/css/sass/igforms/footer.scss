@@ -1,0 +1,149 @@
+//BEM convention
+//[namespace]-[block]__[element]--[modifier]
+//See https://seesparkbox.com/foundry/bem_by_example for details
+//Footer - all styling for global footer goes in here, much of the styling here now is a carry over from IG.com
+.#{$namespace}-footer {
+	position: relative;
+	bottom: 0;
+	width: 100%;
+	padding-top: 0;
+	padding-bottom: $ig-space--large;
+	background-color: $ig-dark-blue;
+	margin-top: 36px;
+
+	&.#{$namespace}-footer--basic {
+		background-color: #FFF;
+		bottom: 0;
+		color: #545454;
+		font-size: 11px;
+		left: 0;
+		position: absolute;
+		right: 0;
+		text-align: center;
+	}
+
+	.row {
+		max-width: 1024px;
+	}
+
+	a {
+		color: $ig-white;
+	}
+
+	.footer-link {
+		float: none;
+		position: relative;
+		top: 48px;
+		padding-top: $ig-space--xxx-small;
+		padding-bottom: $ig-space--xxx-small;
+		padding-right: 20px;
+	}
+
+	.footer-link a {
+		font-family: $ig-whitney-book;
+		letter-spacing: $ig-letter-spacing;
+		font-size: $ig-font-size--base;
+		text-decoration: none;
+		text-transform: inherit;
+		color: $ig-white;
+	}
+
+	.footer-link a:first-child {
+		padding-left: 0;
+	}
+
+	.footer-back-to-top-button {
+		padding-left: $ig-space--large;
+		padding-right: $ig-space--large;
+		margin-bottom: 0;
+	}
+
+	.footer-navigation {
+		padding-left: $ig-space--large;
+		padding-right: $ig-space--large;
+
+		.menu {
+			margin-top: -32px;
+			margin-bottom: $ig-space--small;
+		}
+	}
+
+	&.site-footer .footer-copyright .footer-copyright-border-top .row .columns {
+		text-align: left;
+		border: 0;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	&.site-footer .footer-back-to-top-button .columns {
+		border-bottom: 1px solid #acb7c0;
+		padding-bottom: 8px;
+	}
+}
+
+// Temp Placement {
+.#{$namespace}-app {
+	>div:nth-last-child(2):not(.igforms-priority):not(.igforms-client-header_navigation) {
+		margin-bottom: 100px;
+	}
+
+	div.igforms-priority {
+		margin-bottom: 0;
+		background: $ig-secondary-05;
+	}
+}
+
+// Footer
+.#{$namespace}-footer__container {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 1000;
+	width: 100%;
+	margin: 0;
+	border-top: 1px solid $ig-primary-15;
+	width: 100%;
+	background: $ig-secondary-15;
+
+	>div {
+	}
+
+	.igforms-footer__back-button button {
+		background: none;
+		color: $ig-primary;
+		border: 1px solid $ig-primary-30;
+	}
+
+	.igforms-footer__next-button button {
+		background: $ig-primary;
+		color: $ig-white;
+	}
+
+	.slds-button {
+		font-family: $ig-whitney-book;
+		padding: 0 30px;
+	}
+
+	.#{$namespace}-footer__family-tree__actions {
+		display: inline-block;
+		margin-right: 10px;
+
+		>a {
+			display: inline-block;
+			text-decoration: none;
+			padding: 0 10px;
+			color: $ig-secondary;
+			font-family: $ig-whitney-semibold;
+			line-height: 1;
+		}
+
+		>a:first-child {
+			border-right: 1px solid $ig-secondary;
+		}
+
+		a:focus,
+		a:hover {
+			text-decoration: none;
+		}
+	}
+}

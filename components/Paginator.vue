@@ -1,0 +1,81 @@
+<template>
+	<!-- Body markup -->
+	<div 
+		v-if="recordCount > 0" 
+		class="igforms-paginator igforms-link__print slds-grid slds-grid_align-center">
+		<div class="slds-wrap slds-col slds-size_12-of-12 slds-grid_align-center">
+			<div>
+				<button 
+					class="slds-button slds-button_icon"
+					@click="clickPrevious"><i class="slds-button__icon material-icons">
+						navigate_before
+					</i>
+				</button>
+
+				<button 
+					v-for="n in totalPages"
+					:key="`key-${n}`" 
+					:class="['slds-button', n == currentPage ? 'active' : '']"
+					@click="clickPage(n)">{{ n }}</button>
+				<button 
+					class="slds-button slds-button_icon"
+					@click="clickNext"><i class="slds-button__icon material-icons">
+						navigate_next
+					</i>
+				</button>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script>
+function clamp(value, min, max) {
+	if (value < min) value = min
+	if (value > max) value = max
+
+	return value
+}
+
+export default {
+	props: {
+		perPage: {
+			type: Number,
+			default: 5
+		},
+		recordCount: {
+			type: Number,
+			default: 50
+		}
+	},
+
+	data: function() {
+		return { currentPage: 1, totalPages: 5 }
+	},
+
+	mounted: function() {
+		this.$nextTick(function() {
+			this.totalPages = Math.ceil(this.recordCount / this.perPage)
+		})
+	},
+
+	methods: {
+		clickPage: function(pageNumber) {
+			this.currentPage = pageNumber
+			this.$emit(
+				'page-change',
+				this.currentPage,
+				this.totalPages,
+				this.perPage
+			)
+		},
+
+		clickNext: function() {
+			this.clickPage(clamp(++this.currentPage, 1, this.totalPages))
+		},
+
+		clickPrevious: function() {
+			this.clickPage(clamp(--this.currentPage, 1, this.totalPages))
+		}
+	}
+}
+</script>

@@ -1,0 +1,439 @@
+// Family Tree Modules Styles
+
+.family-tree_header {
+    .questionnaire-header {
+        margin-bottom: 26px;
+    }
+}
+
+.family-tree_clients {
+    background: $ig-primary-05;
+    text-align: auto;
+    padding: 1rem 0;
+    border-top: 1px solid $ig-primary-15;
+    border-bottom: 1px solid $ig-primary-15;
+}
+
+.family-tree_intro {
+
+    // background: $ig-secondary-05;
+    p {
+        margin-bottom: 30px;
+    }
+}
+
+//Add button
+.family-tree_add-member {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 24px 0;
+
+    >div {
+        padding-left: 250px;
+    }
+
+    //for 2 parent buttons:
+    >div:not(:only-child) {
+        justify-content: flex-start;
+        padding-left: 0;
+    }
+
+    p {
+        margin-bottom: 0;
+        font-size: $ig-font-size--x-mini;
+        display: inline-block;
+        color: $ig-black;
+    }
+
+    .slds-button {
+        border-radius: 19px;
+        margin-right: 20px;
+        margin: 10px 10px 10px 0;
+        display: inline-block;
+    }
+
+    .slds-button_neutral {
+        background-color: $ig-black-05;
+        color: $ig-black;
+        font-family: $ig-whitney-book;
+    }
+}
+
+// Lower Add Children/Family/External button section
+.family-tree_add-member_section-extra {
+
+    // border-top: 1px solid $ig-black-10;
+    .family-tree_add-member {
+        border-bottom: 1px solid $ig-black-10;
+        padding: 10px 0;
+    }
+
+    &.family-member-parent {
+        border: none;
+
+        .family-tree_add-member {
+            border: none;
+        }
+    }
+}
+
+// Client picture
+.family-tree_clients-picture-container {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+
+    a {
+        display: inline-block;
+        text-align: center;
+        margin: 0 32px;
+        text-decoration: none;
+        color: $ig-black;
+        position: relative;
+    }
+
+    a:nth-child(2):after {
+        content: '';
+        width: 54%;
+        height: 20px;
+        position: absolute;
+        border-top: 1px solid $ig-primary-15;
+        top: 50%;
+        left: -54%;
+        margin-top: -20px;
+    }
+
+    p {
+        font-size: $ig-font-size--mini;
+        line-height: 1.4;
+        margin-top: 5px;
+        text-transform: capitalize;
+    }
+
+    .family-tree_clients-picture {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: $ig-white;
+        display: inline-flex;
+        border: 1px solid $ig-white;
+        background: $ig-secondary;
+        color: $ig-white;
+
+        p {
+            // font-family: $ig-whitney-semibold;
+            font-size: 24px;
+
+        }
+    }
+
+    .family-tree_clients-picture-border {
+        border: 8px solid $ig-primary-15;
+        width: 116px;
+        height: 116px;
+        border-radius: 50%;
+    }
+}
+
+// Form Inputs
+.cFamilyTreeInputForm {
+
+    .slds-select {
+        border-radius: 0;
+    }
+
+    input[type="date"] {
+        background: none;
+    }
+
+    legend {
+        padding: 0;
+        font-size: $ig-font-size--mini;
+        width: 100%;
+    }
+
+    .slds-form-element {
+        width: 100%;
+    }
+
+    .family-tree-form_legend {
+        padding: 1rem;
+        color: $ig-primary;
+        font-family: $ig-whitney-semibold;
+        background-color: $ig-secondary-15;
+        cursor: pointer;
+        position: relative;
+
+        .slds-icon {
+            width: 20px;
+        }
+
+        .slds-icon-text-default {
+            fill: $ig-primary;
+        }
+
+        span {
+            font-family: $ig-whitney-book;
+        }
+    }
+
+    .slds-accordion {
+        width: 100%;
+    }
+
+    .slds-checkbox {
+        margin-top: 14px;
+    }
+
+    .slds-icon_container {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        margin-top: -13px;
+    }
+
+    // Family Tree Form Header Picture
+    .family-tree-form__add-picture-container {
+        position: relative;
+
+        .slds-icon_container {
+            margin: 0;
+            position: relative;
+            left: 0;
+            top: -2px;
+        }
+    }
+
+    .family-tree-form__add-picture {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: $ig-secondary;
+    }
+
+    .family-tree-form__add-plus {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #97A6B6;
+        position: absolute;
+        right: 0;
+        bottom: 5px;
+        border: 1px solid $ig-white;
+    }
+
+    // date picker icon
+    .slds-input__icon {
+        margin-bottom: -7px;
+    }
+
+    .slds-notify_toast .slds-icon_container {
+        margin-top: 0;
+
+        .slds-icon-utility-error,
+        //it is not notify
+        .slds-icon-utility-notify {
+            top: -10px;
+            right: 1.5rem;
+        }
+    }
+}
+
+//Family Tree Offspring
+.family-tree_member-cols {
+    padding: 38px 0;
+    background: $ig-secondary-05;
+
+    a {
+        color: $ig-black;
+        display: block;
+        // color: red;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    .family-tree_add-member {
+        justify-content: flex-start;
+        // border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+    }
+
+    .slds-medium-size_6-of-12 .family-tree_add-member {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 6px 0;
+    }
+
+    .family-tree_add-member>div {
+        padding-left: 0;
+        text-transform: capitalize;
+    }
+
+    .family-tree_member-container {
+        padding: 10px 0;
+        display: flex;
+        line-height: 1;
+    }
+
+    .family-tree-member_letter-container {
+        margin-right: 20px;
+    }
+
+    .family-tree-member_letter_icon {
+        width: 31px;
+        height: 31px;
+        background: $ig-secondary;
+        border: 1px solid #b2bdc9;
+        border-radius: 50%;
+        margin-right: 10px;
+        color: $ig-white;
+        font-size: $ig-font-size--mini;
+        position: relative;
+        text-transform: uppercase;
+    }
+
+    .info-icon {
+        position: absolute;
+        top: -5px;
+    }
+
+    .spouse-icon {
+        left: -12px;
+    }
+
+    .beneficiary-icon {
+        left: 23px;
+    }
+
+    .family-tree-member_label {
+        font-size: $ig-font-size--x-mini;
+        color: $ig-black-60;
+    }
+
+    .family-tree-member_grandchild {
+        position: static;
+        width: 41px;
+
+        .info-icon {
+            position: static;
+        }
+    }
+}
+
+.cFamilyTreeOverview {
+    legend {
+        padding: 0;
+        font-size: $ig-font-size--mini;
+        width: 100%;
+        text-transform: capitalize;
+    }
+
+    .family-tree-form_legend {
+        padding: 1rem;
+        color: $ig-primary;
+        font-family: $ig-whitney-semibold;
+        background-color: $ig-secondary-15;
+        cursor: pointer;
+        position: relative;
+
+        .slds-icon {
+            width: 20px;
+        }
+
+        .slds-icon-text-default {
+            fill: $ig-primary;
+        }
+    }
+
+    .slds-accordion {
+        width: 100%;
+    }
+
+    .family-tree-member_name-age-container {
+        line-height: 1.4;
+    }
+
+    .family-tree_accordion-member-block {
+        padding: 5px 0;
+        border-bottom: 1px solid $ig-black-10;
+        color: $ig-black-60;
+
+        p {
+            line-height: 1.4;
+        }
+
+        .family-tree-member_name-age {
+            font-size: $ig-font-size--x-mini;
+        }
+
+        strong {
+            color: $ig-black;
+            font-size: $ig-font-size--mini;
+        }
+    }
+
+    .family-tree_relation {
+        text-transform: capitalize;
+        font-family: $ig-whitney-semibold;
+    }
+
+    .family-tree-member_name-age {
+        text-transform: capitalize;
+        line-height: 1.4;
+        font-family: $ig-whitney-semibold;
+        font-size: $ig-font-size--mini;
+
+        span {
+            font-family: $ig-whitney-book;
+            font-size: $ig-font-size--x-mini;
+            color: $ig-black-60;
+        }
+    }
+
+    .family-tree-member_label {
+        font-size: $ig-font-size--x-mini;
+        color: $ig-black-60;
+        line-height: 1.4;
+    }
+
+    .family-tree_accordion-icon-block {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-flow: column wrap;
+        align-content: stretch;
+        height: 50px;
+        width: 45px;
+
+        .info-icon {
+            padding: 3px 3px 3px 0;
+        }
+        img {
+            margin: 0;
+        }
+    }
+}
+
+// Accordion
+.family-tree-accordion_container {
+
+    fieldset {
+        background: white;
+    }
+
+    .family-tree_add-member {
+        padding-top: 24px;
+    }
+
+    .family-tree_add-member>div {
+        padding-left: 0;
+    }
+
+    legend .slds-icon_container {
+        position: absolute;
+        right: 24px;
+        top: 10px;
+    }
+}

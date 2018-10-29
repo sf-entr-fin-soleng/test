@@ -1,0 +1,15 @@
+//Overrides to neutralizes unwanted community theme styling
+.DESKTOP, .TABLET, .PHONE {
+	&.uiContainerManager.siteforcePanelsContainer,
+	&.uiPanelManager2.onePanelManager.siteforcePanelManager.siteforcePanelsContainer {
+		display: none;
+	}
+}
+
+.slds-col,
+.slds-col--padded,
+.cb-drop-container {
+	.ui-widget {
+		margin: 0;
+	}
+}

@@ -1,0 +1,219 @@
+.igforms-utils__background--secondary-15 {
+    background: $ig-secondary-05;
+}
+.igforms-utils__left-padding-20px {
+    padding-left: 20px;
+}
+
+// Dark primary Blue Knowledge Scale component
+.investment-knowledge-scale {
+    background: $ig-primary;
+    color: $ig-white-50;
+
+    .investment-knowledge-scale_background {
+        background: rgba(160, 207, 235, 0.05);
+
+    }
+
+    .investment-knowledge-scale_header p {
+        color: $ig-white;
+        font-family: $ig-whitney-semibold;
+        display: inline-block;
+    }
+
+    img {
+        margin: 0 12px;
+    }
+
+    .slds-text-heading_large {
+        color: $ig-white-50;
+    }
+
+    .investment-knowledge-scale_item {
+        padding: 40px;
+        cursor: pointer;
+
+        .slds-text-heading--large,
+        .slds-text-heading_large {
+            font-size: 1.75rem;
+        }
+
+        p {
+            font-size: $ig-font-size--mini;
+            line-height: 17px;
+        }
+    }
+
+    .investment-knowledge-scale_underline {
+        height: 1px;
+        width: 100px;
+        background: $ig-white-50;
+
+        &.full-underline {
+            width: 100%;
+        }
+    }
+
+    // active class to be applied on .investment-knowledge-scale_item element
+    .active {
+        color: $ig-white;
+        border-top: 4px solid $ig-tertiary;
+        background: #A0CFEB;
+        background: rgba(160, 207, 235, 0.15);
+
+        .slds-text-heading_large {
+            color: $ig-white;
+        }
+
+        .investment-knowledge-scale_underline {
+            background: $ig-white;
+        }
+    }
+}
+
+// Pop up on KYC Overview
+.investment-knowledge-popup {
+    background: $ig-white;
+    width: 374px;
+    position: absolute;
+    top: -160px;
+    right: -150px;
+    font-size: $ig-font-size--mini;
+    -webkit-box-shadow: 0px 10px 34px 0px rgba(0, 38, 99, 0.55);
+    -moz-box-shadow: 0px 10px 34px 0px rgba(0, 38, 99, 0.55);
+    box-shadow: 0px 10px 34px 0px rgba(0, 38, 99, 0.55);
+    z-index: 500;
+
+    .investment-knowledge-popup_wrapper {
+        padding: 20px;
+    }
+
+    .investment-knowledge-popup_wrapper::after {
+        position: absolute;
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 13px 11.5px 0 11.5px;
+        border-color: $ig-white transparent transparent transparent;
+        left: 55%;
+        margin-left: -9.9905px;
+        bottom: -10px;
+        z-index: 200;
+    }
+
+    .slds-button {
+        position: absolute;
+        right: 20px;
+
+        &.popup-close {
+            padding: 0;
+        }
+    }
+}
+
+.test-test {
+    div div {
+        min-height: 54px;
+    }
+}
+
+.kyc-client-details_block {
+
+    //Essentially utility classes:
+    .kyc-client-details_block_highlight-block {
+        // border-bottom: 1px solid $ig-primary-15;
+
+        .kyc-client-details_block-wrapper {
+            position: relative;
+        }
+
+        .kyc-client-details_block-wrapper::after {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 1px;
+            background: $ig-primary-15;
+            bottom: -14px;
+        }
+    }
+
+    &:last-child {
+        .kyc-client-details_block-wrapper::after {
+            content: none;
+        }
+    }
+
+    .kyc-utils__border--left {
+        border-left: 1px solid $ig-black-15;
+    }
+
+    .kyc-utils__border--bottom {
+        border-bottom: 1px solid $ig-black-15;
+    }
+
+    &:last-child {
+        border-bottom: none;
+    }
+    // KYC Overview table
+
+    p {
+        padding: 3px;
+        font-size: $ig-font-size--mini;
+    }
+
+    strong {
+        font-family: $ig-whitney-semibold;
+        font-weight: 400;
+    }
+}
+
+
+
+.cPage_KYC {
+    .slds-select {
+        height: 40px;
+    }
+
+    //i icon
+    .investment-knowledge-icon {
+        margin: 0 10px;
+    }
+
+    .slds-button img {
+        margin: 0;
+        width: 25px;
+    }
+
+    .igforms-utils__font-size--base {
+        font-size: 16px;
+    }
+}
+
+// Highlighted blue portion in Plan Details
+.highlighted {
+    border-left: 3px solid $ig-tertiary;
+    background: $ig-tertiary-15;
+}
+
+
+// Update/No change buttons
+.kyc-client-details_group {
+    .slds-button:not(.popup-close) {
+        font-family: $ig-whitney-book;
+        font-size: $ig-font-size--mini;
+        // padding: 3px 30px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        width: 142px;
+    }
+
+    .slds-button_neutral {
+        color: #282828;
+    }
+
+    .slds-button+.slds-button {
+        margin-left: 14px;
+    }
+
+}

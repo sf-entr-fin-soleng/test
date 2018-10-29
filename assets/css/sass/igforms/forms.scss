@@ -1,0 +1,982 @@
+.scroller.actionBarPlugin {
+    //Turns off annoying scroll bounce
+    transform: none !important;
+}
+
+// .#{$namespace}-app {
+//     touch-action: none;
+//     -webkit-overflow-scrolling: touch;
+//     overscroll-behavior-y: contain;
+// }
+.#{$namespace}-priority {
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    // created to hide the white at the bottom of container between it and the footer
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: -100px;
+        // border: 1px solid blue;
+        width: 100%;
+        height: 100px;
+        background: $ig-tertiary-15;
+        overflow: hidden;
+
+    }
+
+    //Priority title
+
+    .#{$namespace}-priority__high-title,
+    .#{$namespace}-priority__medium-title,
+    .#{$namespace}-priority__low-title {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        top: $ig-space--medium;
+        font-family: $ig-whitney-semibold;
+
+        &.#{$namespace}-priority__high-title--populated,
+        &.#{$namespace}-priority__medium-title--populated,
+        &.#{$namespace}-priority__low-title--populated {
+            top: 0;
+            text-align: left;
+            padding-left: $ig-space--medium !important;
+        }
+    }
+
+    .#{$namespace}-priority__high-title-big,
+    .#{$namespace}-priority__medium-title-big,
+    .#{$namespace}-priority__low-title-big {
+        position: absolute;
+        @include verticalAlignCenter(absolute);
+        padding-right: $ig-space--x-small;
+        opacity: 0;
+        width: 100%;
+        text-align: right;
+        font-size: 200px;
+        color: $ig-primary-40;
+        font-family: $ig-whitney-semibold;
+
+        :before {
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        &.#{$namespace}-priority__high-title-big--show,
+        &.#{$namespace}-priority__medium-title-big--show,
+        &.#{$namespace}-priority__low-title-big--show {
+            @include fadeTo(0.1, 0.5s);
+        }
+    }
+
+    //DROP AREA
+    .#{$namespace}-priority__drop-area {
+        position: relative;
+        padding: $ig-space--small;
+        top: 15px;
+        top: 20px;
+
+        &.#{$namespace}-priority__drop-area--hover {
+            background: $ig-dark-blue-grey;
+        }
+
+        .#{$namespace}-priority__drop-area--placeholder {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .igforms-priority__card {
+            margin-top: 1rem;
+        }
+
+    }
+
+    // .#{$namespace}-priority__drop-area:focus,
+    // .#{$namespace}-priority__drop-area:active {
+    //     background: #cecece;
+    //     background-color: #666;
+    // }
+    //CARD
+    .#{$namespace}-priority__card {
+        position: relative; // @include widthTo(25%);
+        cursor: pointer;
+        z-index: 100;
+        -webkit-box-shadow: 0px 10px 34px 0px rgba(0, 38, 99, 0.55);
+        -moz-box-shadow: 0px 10px 34px 0px rgba(0, 38, 99, 0.55);
+        box-shadow: 0px 10px 34px 0px rgba(0, 38, 99, 0.55);
+        img {
+            margin: 0;
+            // max-height: 207px;
+            // overflow: hidden;
+        }
+
+        .#{$namespace}-priority__card--title {
+            background-color: $ig-primary-75;
+            text-align: left;
+            width: 100%;
+            min-height: 31px;
+            color: $ig-white;
+            padding: 10px;
+            font-size: $ig-font-size--x-mini;
+            line-height: 0.875rem;
+            position: relative;
+            left: 0;
+            bottom: 0px;
+        }
+
+        span {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            bottom: -0.5px;
+            width: 100%;
+            background: $ig-white;
+        }
+    }
+
+    // .#{$namespace}-priority__card--low {
+    //     @include widthTo(14.28%);
+    // }
+    // .#{$namespace}-priority__card--medium {
+    //     @include widthTo(20%);
+    // }
+    // .#{$namespace}-priority__card--high {
+    //     @include widthTo(25%);
+    // }
+}
+
+.#{$namespace}-tile-checkmark {
+    background: #0073CF;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -24px;
+    margin-top: -24px;
+    z-index: 300;
+
+    .slds-icon {
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+// General & Reset
+// Error states need to be fine-tuned
+abbr {
+    display: none;
+}
+
+.slds-textarea {
+    resize: none;
+}
+
+.slds-form-element__label {
+    font-family: $ig-whitney-book;
+    font-size: $ig-font-size--medium;
+    line-height: $ig-line-height--medium;
+    margin-bottom: 8px;
+}
+
+.slds-textarea {
+    border-radius: 0;
+    height: 70px;
+    border: 1px solid #a6a6a6;
+}
+
+.slds-textarea::placeholder {
+    color: #bebebe;
+    font-size: 1rem;
+}
+
+.textarea-input {
+    flex-grow: 1;
+}
+
+.slds-select,
+.slds-input {
+    border-radius: 0;
+    border: 1px solid #A6A6A6;
+
+    // color: #BEBEBE;
+    &:active,
+    &:focus {
+        border: 1px solid $ig-system-informational;
+        border-bottom: 3px solid $ig-system-informational;
+    }
+
+    &::placeholder {
+        color: #BEBEBE;
+    }
+}
+
+.slds-has-error .slds-input,
+.slds-has-error .slds-select {
+    border-color: $ig-system-alert;
+    box-shadow: $ig-system-alert 0 0 0 1px inset;
+    border-bottom: 3px solid $ig-system-alert;
+}
+
+.slds-form--compound .slds-form-element__row,
+.slds-form_compound .slds-form-element__row {
+    margin-bottom: 1rem;
+}
+
+.slds-form_compound .slds-form-element__row,
+.slds-form--compound .slds-form-element__row {
+    align-items: flex-start;
+}
+
+.slds-form_compound .slds-form-element__row legend.slds-form-element__label {
+    padding-top: 1rem;
+}
+
+//testing changing dropdown
+// .slds-select {
+//     option {
+//         color: red;
+//     }
+// }
+//Quesionnaire Header
+.questionnaire-header {
+    margin-top: 31px;
+    margin-bottom: 24px;
+    text-align: center;
+    position: relative;
+
+    h1 {
+        font-size: $ig-font-size--medium-plus;
+        line-height: 1.75rem;
+        color: $ig-black;
+        display: block;
+    }
+
+    div {
+        width: 80px;
+        height: 1px;
+        display: inline-block;
+        text-align: center;
+        background: $ig-primary-15;
+    }
+
+    a {
+        position: absolute;
+        right: 50px;
+        top: -30px;
+        color: $ig-primary-40;
+        font-size: $ig-font-size--mini;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.questionnaire-progress {
+    margin-top: 24px;
+
+    div {
+        margin: 5px;
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #C6CED7;
+    }
+
+    .active {
+        background: $ig-secondary;
+    }
+}
+
+// Blue Input Field Headers
+.cQuestionnaire_Inquiry {
+    .slds-form-element legend.slds-form-element__label {
+        font-family: $ig-whitney-book;
+        width: 100%;
+        font-size: $ig-font-size--medium;
+        line-height: 1.8125rem;
+
+    }
+
+    fieldset {
+        margin-top: 1rem;
+    }
+}
+
+.slds-form-element .slds-form-element__label {
+    font-size: $ig-font-size--mini;
+    color: $ig-black;
+    font-family: $ig-whitney-book;
+    line-height: $ig-line-height--mini;
+}
+
+// Contact Detail Input
+.igforms-client-details {
+    .igforms-client-details-header_container {
+        border-bottom: 1px solid $ig-secondary-15;
+    }
+
+    .slds-form-element legend.slds-form-element__label {
+        &.igforms-client-details-header {
+            font-size: $ig-font-size--medium-plus;
+            padding-top: 1.25rem;
+            padding-bottom: 1.25rem;
+            font-weight: 400;
+        }
+
+        +div {
+            margin-top: 30px;
+        }
+    }
+
+    .slds-form-element__group {
+        margin: 0 auto;
+    }
+
+    .slds-input {
+        height: 40px;
+    }
+
+    // Married Checkbox on KYC
+    .checkbox-married {
+        display: inline-block;
+    }
+
+    .slds-radio .slds-radio--faux,
+    .slds-radio .slds-radio_faux {
+        border: 1px solid $ig-black;
+    }
+
+    .slds-form-element__label {
+        margin-left: 0;
+    }
+
+    .slds-radio [type=radio]:checked+.slds-radio--faux:after,
+    .slds-radio [type=radio]:checked+.slds-radio__label .slds-radio--faux:after,
+    .slds-radio [type=radio]:checked+.slds-radio__label .slds-radio_faux:after,
+    .slds-radio [type=radio]:checked+.slds-radio_faux:after,
+    .slds-radio [type=radio]:checked~.slds-radio--faux:after,
+    .slds-radio [type=radio]:checked~.slds-radio_faux:after {
+        background: black;
+    }
+}
+
+.slds-form_compound fieldset.slds-form-element {
+    margin-bottom: 40px;
+}
+
+// Family member add button wip?
+.slds-form-element .button-add {
+    font-size: $ig-font-size--base;
+    font-family: $ig-whitney-book;
+    background: $ig-light-grey;
+    border-radius: 20px;
+    color: $ig-black;
+    text-transform: none;
+    line-height: 1.3;
+    padding: 0 15px;
+}
+
+// Checkbox button group
+.slds-checkbox_button-group {
+    flex-wrap: wrap;
+    justify-content: center;
+    border: none;
+}
+
+// Checkbox Plain
+.slds-checkbox {
+    .slds-form-element__label {
+        font-size: 1rem;
+    }
+
+    .slds-checkbox--faux,
+    .slds-checkbox_faux {
+        background: none;
+        border-radius: 0;
+    }
+
+    &.slds-checkbox_dark {
+        .slds-form-element__label {
+            color: $ig-white;
+        }
+    }
+}
+
+// Reset 
+.slds-radio_button+.slds-radio_button {
+    border: 0;
+}
+
+//Boolean Checkbox
+.cQuestionBoolean {
+    span.slds-checkbox_button {
+        line-height: 1; // By default, Salesforce makes the label change colours when selected
+
+        &:first-child>.slds-checkbox_button__label {
+            border-radius: 0;
+        }
+    }
+
+    // Deal with padding around cols
+    // .slds-gutters .slds-col{
+    //     &.slds-button {
+    //         padding: 0;
+    //     }
+    // }
+    .slds-checkbox_button-group {
+        display: flex;
+
+        >span {
+            margin: 10px 0;
+        }
+    }
+
+    legend {
+        font-family: $ig-whitney-book;
+        font-size: $ig-font-size--medium-plus;
+        line-height: $ig-line-height--medium-plus;
+        color: $ig-white;
+    }
+
+    label {
+        width: 100%;
+        color: $ig-black;
+        font-family: $ig-whitney-book;
+        line-height: 1.2;
+        font-size: $ig-font-size--mini;
+        border: 1px solid #DBDBDB;
+        height: 50px;
+    }
+
+    .slds-checkbox_button+.slds-checkbox_button {
+        border: 0;
+    }
+}
+
+.cQuestionnaire_NumberInput {
+    text-align: center;
+    font-size: $ig-font-size--medium-plus;
+    line-height: $ig-line-height--medium-plus;
+    > div {
+        padding: 10px 0;
+    }
+
+    legend {
+        font-family: $ig-whitney-book;
+        font-size: $ig-font-size--medium-plus;
+        line-height: $ig-line-height--medium-plus;
+    }
+
+    input {
+        border: none;
+        border: 1px solid $ig-tile-grey;
+        border-bottom: 2px solid $ig-black;
+        padding: 10px 20px;
+        margin: 0 12px;
+        // text-align: center;
+    }
+}
+
+.question-multiple,
+.cQuestionBoolean {
+
+    .slds-checkbox--button-group,
+    .slds-checkbox_button-group {
+        border: 0;
+    }
+
+    .slds-checkbox--button [type=checkbox]:checked+.slds-checkbox--button__label,
+    .slds-checkbox--button [type=checkbox]:checked+.slds-checkbox--faux,
+    .slds-checkbox--button [type=checkbox]:checked+.slds-checkbox_button__label,
+    .slds-checkbox--button [type=checkbox]:checked+.slds-checkbox_faux,
+    .slds-checkbox--button [type=checkbox]:checked~.slds-checkbox--faux,
+    .slds-checkbox--button [type=checkbox]:checked~.slds-checkbox_faux,
+    .slds-checkbox_button [type=checkbox]:checked+.slds-checkbox--button__label,
+    .slds-checkbox_button [type=checkbox]:checked+.slds-checkbox--faux,
+    .slds-checkbox_button [type=checkbox]:checked+.slds-checkbox_button__label,
+    .slds-checkbox_button [type=checkbox]:checked+.slds-checkbox_faux,
+    .slds-checkbox_button [type=checkbox]:checked~.slds-checkbox--faux,
+    .slds-checkbox_button [type=checkbox]:checked~.slds-checkbox_faux {
+        background: none;
+        border: 2px solid $ig-secondary;
+        color: $ig-black;
+        // webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.25);
+        -moz-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .slds-checkbox_button:first-child>.slds-checkbox_button__label,
+    .slds-checkbox_button:last-child>.slds-checkbox_button__label {
+        border-radius: 0;
+    }
+
+    label {
+        min-height: 40px;
+    }
+}
+
+.question-multiple {
+    &.stacked {
+        label {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 200px;
+        }
+
+        .slds-checkbox_button-group {
+            display: block;
+        }
+
+        /////?
+        .slds-checkbox_button-group {
+            text-align: center;
+            display: block;
+        }
+
+        .slds-checkbox_button+.slds-checkbox_button {
+            width: 100%;
+        }
+
+        .slds-checkbox_button-group .slds-checkbox_button {
+            margin: 0 auto 1rem;
+        }
+    }
+
+    legend {
+        font-family: $ig-whitney-book;
+        font-size: $ig-font-size--medium-plus;
+        line-height: $ig-line-height--medium-plus;
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+
+    .slds-checkbox_button-group .slds-checkbox_button {
+        margin-bottom: 1rem;
+    }
+
+    .slds-button {
+        color: $ig-black;
+        margin-right: 8px;
+        margin-left: 8px;
+    }
+
+    .slds-checkbox_button+.slds-checkbox_button {
+        border: 0;
+    }
+
+    .slds-checkbox_button-group span {
+        display: inline-block;
+        font-family: $ig-whitney-book;
+        font-size: $ig-font-size--mini;
+        line-height: $ig-line-height--mini;
+    }
+
+    label {
+        // border-radius: 0;
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        border: 1px solid $ig-tile-grey;
+    }
+}
+
+// Table + Search Screen
+// Radio Button Group
+.search_tabs {
+    background: $ig-primary;
+    color: $ig-white;
+
+    >div:first-child {
+        border-bottom: 1px solid $ig-white-15;
+    }
+
+    >div:nth-child(2) {
+        padding-bottom: 1.5rem;
+    }
+
+    fieldset {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .slds-radio--button:first-child>.slds-radio--button__label,
+    .slds-radio--button:first-child>.slds-radio--faux,
+    .slds-radio--button:first-child>.slds-radio_button__label,
+    .slds-radio--button:first-child>.slds-radio_faux,
+    .slds-radio_button:first-child>.slds-radio--button__label,
+    .slds-radio_button:first-child>.slds-radio--faux,
+    .slds-radio_button:first-child>.slds-radio_button__label,
+    .slds-radio_button:first-child>.slds-radio_faux,
+    .slds-radio--button .slds-button--last>.slds-radio--faux,
+    .slds-radio--button .slds-button_last>.slds-radio_faux,
+    .slds-radio--button:last-child>.slds-radio--button__label,
+    .slds-radio--button:last-child>.slds-radio--faux,
+    .slds-radio--button:last-child>.slds-radio_button__label,
+    .slds-radio--button:last-child>.slds-radio_faux,
+    .slds-radio_button .slds-button--last>.slds-radio--faux,
+    .slds-radio_button .slds-button_last>.slds-radio_faux,
+    .slds-radio_button:last-child>.slds-radio--button__label,
+    .slds-radio_button:last-child>.slds-radio--faux,
+    .slds-radio_button:last-child>.slds-radio_button__label,
+    .slds-radio_button:last-child>.slds-radio_faux {
+        border-radius: 0;
+        padding-bottom: 5px;
+    }
+
+    .slds-radio--button-group,
+    .slds-radio_button-group {
+        border: none;
+    }
+
+    .slds-radio_button {
+        color: $ig-white-50;
+        font-family: $ig-whitney-book;
+    }
+
+    .slds-radio--button__label,
+    .slds-radio_button__label {
+        background: none;
+    }
+
+    .slds-radio--button [type=radio]:checked+.slds-radio--button__label,
+    .slds-radio--button [type=radio]:checked+.slds-radio--faux,
+    .slds-radio--button [type=radio]:checked+.slds-radio_button__label,
+    .slds-radio--button [type=radio]:checked+.slds-radio_faux,
+    .slds-radio--button [type=radio]:checked~.slds-radio--faux,
+    .slds-radio--button [type=radio]:checked~.slds-radio_faux,
+    .slds-radio_button [type=radio]:checked+.slds-radio--button__label,
+    .slds-radio_button [type=radio]:checked+.slds-radio--faux,
+    .slds-radio_button [type=radio]:checked+.slds-radio_button__label,
+    .slds-radio_button [type=radio]:checked+.slds-radio_faux,
+    .slds-radio_button [type=radio]:checked~.slds-radio--faux,
+    .slds-radio_button [type=radio]:checked~.slds-radio_faux {
+        color: $ig-white;
+        background: none;
+        border-bottom: 2px solid $ig-white;
+    }
+
+    .slds-radio--button+.slds-radio--button,
+    .slds-radio--button+.slds-radio_button,
+    .slds-radio_button+.slds-radio--button,
+    .slds-radio_button+.slds-radio_button {
+        border: none;
+    }
+
+    .slds-radio_button-group {
+        z-index: 1000;
+    }
+
+    p {
+        font-family: $ig-whitney-book;
+        font-size: $ig-font-size--medium-plus;
+        line-height: 1.75rem;
+    }
+
+    .slds-input {
+        color: $ig-black;
+        font-size: 1rem;
+        background: none;
+    }
+
+    .searchbar {
+        .slds-form-element__control {
+            display: flex;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .slds-button {
+            background: $ig-link-text;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            position: absolute;
+            right: 10px;
+            top: -10px;
+        }
+
+        .slds-input {
+            border: none;
+            border-bottom: 1px solid $ig-white-15;
+            ;
+            color: $ig-white;
+            text-align: center;
+            padding-bottom: 40px;
+            font-family: $ig-whitney-light;
+            font-size: $ig-font-size--medium-plus;
+
+            &:focus {
+                box-shadow: none;
+            }
+        }
+
+        .igforms-search-button .slds-button_icon-inverse {
+            position: relative;
+            top: -2px;
+        }
+
+        ::placeholder {
+            /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: $ig-white;
+            opacity: 1;
+            font-size: $ig-font-size--medium-plus;
+            /* Firefox */
+        }
+
+        :-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            color: $ig-white;
+        }
+
+        ::-ms-input-placeholder {
+            /* Microsoft Edge */
+            color: $ig-white;
+        }
+
+        // Make the placeholder disappear on focus
+        input:focus::-webkit-input-placeholder {
+            color: transparent;
+        }
+
+        input:focus:-moz-placeholder {
+            color: transparent;
+        }
+
+        /* FF 4-18 */
+        input:focus::-moz-placeholder {
+            color: transparent;
+        }
+
+        /* FF 19+ */
+        input:focus:-ms-input-placeholder {
+            color: transparent;
+        }
+
+        /* IE 10+ */
+    }
+}
+
+
+.client-table-result-label {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.slds-table {
+    font-size: $ig-font-size--base;
+
+    td,
+    th {
+        white-space: normal;
+        padding: 1rem;
+    }
+
+    thead th {
+        background: $ig-secondary-50;
+        color: $ig-primary;
+        padding: 1rem;
+        position: relative;
+        font-family: $ig-whitney-semibold;
+        letter-spacing: 0.7px;
+
+        button {
+            position: absolute;
+            top: 15px;
+            padding-left: 6px;
+        }
+
+        .slds-button--icon-bare,
+        .slds-button_icon-bare {
+            color: $ig-primary;
+        }
+
+        &:nth-child(3) {
+            width: 18%;
+        }
+
+        .client-table_sort {
+            color: $ig-primary-45;
+        }
+    }
+
+    thead a {
+        color: $ig-white;
+        background: none;
+        padding-left: 0.5rem;
+    }
+
+    tbody {
+        tr {
+            cursor: pointer;
+
+            &:first-child {
+                border-top: 0;
+            }
+        }
+
+        a {
+            color: $ig-black;
+        }
+    }
+
+    td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        span {
+            word-break: break-all;
+        }
+    }
+}
+
+.slds-table--bordered,
+.slds-table_bordered {
+    border: 0;
+}
+
+.add-profile_button {
+    .slds-button_neutral {
+        background: $ig-primary;
+        color: #FFF;
+        font-family: $ig-whitney-book;
+        text-transform: none;
+        display: inline-block;
+        padding: 5px 48px;
+        border-radius: 5px;
+        letter-spacing: 0.5px;
+    }
+}
+
+// .slds-is-resizable .slds-th__action:focus,
+.slds-is-resizable .slds-th__action:hover,
+// .slds-th__action:focus,
+.slds-th__action:hover {
+    background: none;
+    color: #FFF;
+}
+
+.slds-is-resizable .slds-th__action:focus,
+.slds-is-resizable .slds-th__action:hover {
+    box-shadow: none;
+}
+
+.slds-table--bordered,
+.slds-table_bordered {
+    border-bottom: 1px solid #dddbda;
+}
+
+.slds-table_bordered tbody td,
+.slds-table_bordered tbody th,
+.slds-table--bordered tbody td,
+.slds-table--bordered tbody th {
+    border-top: 1px solid #dddbda;
+}
+
+.slds-th__action {
+    padding-left: 0;
+}
+
+// Goals and Concerns
+.igforms-priority>div:nth-child(4) {
+    margin-top: 20px;
+    border-top: 1px solid rgba(0, 38, 99, 0.15);
+}
+
+// NEED TO REFACTOR THIS...
+.cGoals_And_Concerns {
+    .igforms-utils__position--relative {
+        .slds-col {
+            position: relative;
+        }
+
+        >p:first-child {
+            background: $ig-secondary-30;
+            color: $ig-primary;
+            padding: 1rem 0 2rem 24px;
+            top: 0;
+            border-top: 1px solid $ig-tertiary-45;
+            border-bottom: 1px solid $ig-tertiary-45;
+        }
+
+        a {
+            display: inline-block;
+            position: relative;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        li:not(.igforms-priority__drop-area--placeholder) {
+            margin: 0.5rem;
+            padding: 0;
+        }
+
+        //temp:
+        .#{$namespace}-priority__drop-area--placeholder {
+            padding: 0;
+        }
+    }
+
+    .igforms-nonpriority__container {
+        padding-bottom: 140px;
+        background: $ig-primary-05;
+
+        >p:first-child {
+            background: none;
+            color: #002E6E;
+            font-family: $ig-whitney-book;
+            font-size: 1rem;
+            padding-bottom: 0;
+            border-top: 0;
+            border-bottom: 0;
+        }
+
+        ul {
+            padding: 0;
+            min-height: 30px;
+        }
+
+        .slds-col {
+            border-bottom: none;
+        }
+
+        .igforms-priority__card--title {
+            padding-left: 10px;
+            padding-right: 10px;
+            min-height: 38px;
+        }
+    }
+}
+
+// HERO HEADER
+.igforms__hero {
+    position: relative;
+
+    img {
+        width: 100%;
+    }
+
+    .igforms__hero-gradient {
+        background: teal;
+        width: 100%;
+    }
+
+    .igforms__hero-text {
+        color: $ig-white;
+        position: relative;
+        font-family: $ig-whitney-book;
+        font-size: $ig-font-size--medium-plus;
+    }
+}

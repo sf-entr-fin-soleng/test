@@ -1,0 +1,31 @@
+@import "sass/global";
+@import "sass/mixins";
+@import "sass/functions";
+@import "sass/fonts";
+@import "sass/elements";
+// @import "sass/print";
+@import "sass/breakpoints";
+@import "sass/community-overrides";
+
+@import "sass/slds/overrides";
+@import "sass/slds/spacing";
+@import "sass/slds/icons";
+@import "sass/slds/breakpoints";
+
+@import "sass/igforms/header";
+@import "sass/igforms/header-sidenav";
+@import "sass/igforms/mobile-nav";
+@import "sass/igforms/footer";
+@import "sass/igforms/utils";
+@import "sass/igforms/global-styles";
+@import "sass/igforms/carousel";
+@import "sass/igforms/breakpoints";
+@import "sass/igforms/pages";
+@import "sass/igforms/components";
+@import "sass/igforms/forms";
+@import "sass/igforms/timeline";
+@import "sass/igforms/family-tree";
+
+@import "sass/igforms/kyc";
+
+@import "sass/print";

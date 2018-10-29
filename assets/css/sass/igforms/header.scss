@@ -1,0 +1,55 @@
+//BEM convention
+//[namespace]-[block]__[element]--[modifier]
+//See https://seesparkbox.com/foundry/bem_by_example for details
+//Header - Any style pertaining to the global header and nav go in here
+.#{$namespace}-header {
+  border-bottom: 1px solid rgba(0, 38, 99, 0.15);
+  border-top: 1px solid rgba(0, 38, 99, 0.15);
+  .#{$namespace}-header__iglogo {
+    padding:8px 14px 8px 14px;
+    font-family: $ig-whitney-light;
+    font-size: $ig-font-size--medium-plus;
+  }
+  .#{$namespace}-header__igpagename {
+    padding-top: 20px;
+  }
+  .#{$namespace}-header__menu {
+    padding-right: 24px;
+  }
+  h1 {
+    font-family: $ig-whitney-light;
+    font-size: $ig-font-size--medium-plus;
+    color: $ig-black;
+    border-left: 1px solid rgba(0, 38, 99, 0.15);
+    padding: 0 10px;
+  }
+  ul {
+    margin-top: 10px;
+  }
+  li,
+  a {
+    display: inline-block;
+    color: $ig-black;
+    font-size: $ig-font-size--mini;
+    width: initial;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  span {
+    display: block;
+    text-align: center;
+    width: 28px;
+    margin: 0 auto;
+  }
+  .igforms-header__iglogo img {
+    height: 48px;
+  }
+  ul img {
+    display: inline-block;
+    width: 100%;
+  }
+  .home {
+    width: 16px;
+  }
+}
