@@ -22,22 +22,17 @@
 						@click="sort($event, col.value)"
 					>
 						{{ col.label }}
-						<button 
-							v-if="col.value === sortBy && orderBy === 'asc'"
-							class="slds-button slds-button_icon"
-						>
-							<i class="slds-button__icon material-icons">
-								arrow_upward
-							</i>
-						</button>
 
-						<button 
-							v-if="col.value === sortBy && orderBy === 'desc'"
-							class="slds-button slds-button_icon"
-						>
-							<i class="slds-button__icon material-icons">
-								arrow_downward
-							</i>
+						<button class="slds-button slds-button_icon">
+							<i 
+								v-if="col.value === sortBy && orderBy === 'asc'" 
+								class="slds-button__icon material-icons">arrow_upward</i>
+							<i 
+								v-else-if="col.value === sortBy && orderBy === 'desc'" 
+								class="slds-button__icon material-icons">arrow_downward</i>
+							<i 
+								v-else
+								class="slds-button__icon material-icons">sort</i>
 						</button>
 					</th>
 					<th 

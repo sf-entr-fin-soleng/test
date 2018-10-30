@@ -8,12 +8,6 @@ async function fetchProspects(req, res) {
 		const constraints = { ...req.query }
 		let query = utils.getBaseQuery(types.prospect)
 
-		if (constraints.perPage && constraints.offset) {
-			query += ` LIMIT ${constraints.perPage} OFFSET ${
-				constraints.offset
-			}`
-		}
-
 		const result = await db.query(query)
 		let prospects = result.rows.map(row => utils.parseObject(row))
 
@@ -41,6 +35,21 @@ async function fetchProspects(req, res) {
 				}
 				return false
 			})
+
+			prospects.forEach(
+				prospect => (prospect.totalCount = prospects.length)
+			)
+		}
+
+		if (constraints.perPage && constraints.offset) {
+			prospects = prospects.slice(
+				constraints.offset,
+				(constraints.offset / constraints.perPage + 1) *
+					constraints.perPage
+			)
+			// query += ` LIMIT ${constraints.perPage} OFFSET ${
+			// 	constraints.offset
+			// }`
 		}
 
 		res.setHeader('Content-Type', 'application/json')

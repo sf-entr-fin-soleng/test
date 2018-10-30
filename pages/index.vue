@@ -20,7 +20,7 @@ import Header from '~/components/Header.vue'
 import Datatable from '~/components/Datatable.vue'
 import SearchBar from '~/components/SearchBar.vue'
 import Paginator from '~/components/Paginator.vue'
-import * as test from '~/services/test.js'
+import services from '~/services'
 
 export default {
 	components: {
@@ -67,14 +67,13 @@ export default {
 	computed: {
 		paginationLabel: function() {
 			const { offset, perPage, term } = { ...this.searchParams }
-			if (this.prospects[0])
+			const prospect = this.prospects[0]
+			if (prospect)
 				return `Showing ${offset + 1}-${
-					offset + perPage > this.prospects[0].totalCount
-						? this.prospects[0].totalCount
+					offset + perPage > prospect.totalCount
+						? prospect.totalCount
 						: offset + perPage
-				} of ${this.prospects[0].totalCount} ${
-					term ? `for ${term}` : ``
-				}`
+				} of ${prospect.totalCount} ${term ? `for ${term}` : ``}`
 			else return ''
 		}
 	},
@@ -83,27 +82,9 @@ export default {
 		const params = { ...this.searchParams }
 		params.filterBy = this.columns.map(c => c.value).join(',')
 		this.searchParams = params
-
-		test.testFunction()
 	},
 
 	methods: {
-		buildEndpointURL: function() {
-			const params = { ...this.searchParams }
-			let endpoint = `api/prospect/getAll.json?perPage=
-			${params.perPage}&offset=${params.offset}`
-
-			if (params.term) {
-				endpoint += `&filter=${params.term}&filterBy=${params.filterBy}`
-			}
-
-			if (params.order && params.orderBy) {
-				endpoint += `&orderBy=${params.orderBy}&order=${params.order}`
-			}
-
-			return endpoint
-		},
-
 		handlePageChange: function(currentPage, totalPages, perPage) {
 			this.searchParams.offset = (currentPage - 1) * perPage
 			this.updateProspects()
@@ -111,6 +92,7 @@ export default {
 
 		handleSearch: function(searchTerm) {
 			this.searchParams.term = searchTerm
+			this.searchParams.offset = 0
 			this.updateProspects()
 		},
 
@@ -122,8 +104,9 @@ export default {
 
 		updateProspects: async function() {
 			try {
-				const url = this.buildEndpointURL()
-				this.prospects = await this.$axios.$get(url)
+				this.prospects = await services.prospect.fetchProspects(
+					this.searchParams
+				)
 			} catch (error) {
 				console.error(error)
 			}
