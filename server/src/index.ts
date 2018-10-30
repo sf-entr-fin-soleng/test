@@ -17,6 +17,8 @@ async function start() {
 	// Init Nuxt.js
 	const nuxt = new Nuxt(config)
 
+	console.log('starting server with config:', host, port)
+
 	// Build only in dev mode
 	if (config.dev) {
 		const builder = new Builder(nuxt)

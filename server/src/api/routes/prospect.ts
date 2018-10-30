@@ -55,7 +55,8 @@ async function fetchProspect(req, res) {
 	try {
 		// prettier-ignore
 		const result = await db.query(`SELECT Sfid as id, Mock_Container__c as parentId, Type__c as type, Data__c as data
-		FROM sfgc.mock_container__c WHERE Type__c = 'Prospect/Client' AND Sfid = '${req.query.id}' LIMIT 1`)
+				FROM sfgc.mock_container__c WHERE Type__c = 'Prospect/Client
+				AND Sfid = '${req.query.id}' LIMIT 1`)
 
 		let prospect
 

@@ -20,7 +20,7 @@ import Header from '~/components/Header.vue'
 import Datatable from '~/components/Datatable.vue'
 import SearchBar from '~/components/SearchBar.vue'
 import Paginator from '~/components/Paginator.vue'
-import * as test from '~/assets/test.js'
+import * as test from '~/services/test.js'
 
 export default {
 	components: {
