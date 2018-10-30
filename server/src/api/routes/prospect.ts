@@ -27,7 +27,6 @@ async function fetchProspects(req, res) {
 
 		if (constraints.filterBy && constraints.filter) {
 			const fields = constraints.filterBy.split(',')
-			console.log('fields', fields)
 			prospects = prospects.filter(el => {
 				for (let index in fields) {
 					const field = fields[index]

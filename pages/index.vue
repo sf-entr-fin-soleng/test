@@ -90,7 +90,7 @@ export default {
 	methods: {
 		buildEndpointURL: function() {
 			const params = { ...this.searchParams }
-			let endpoint = `/api/prospect/getAll.json?perPage=
+			let endpoint = `api/prospect/getAll.json?perPage=
 			${params.perPage}&offset=${params.offset}`
 
 			if (params.term) {
