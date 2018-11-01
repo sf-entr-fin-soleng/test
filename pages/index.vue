@@ -1,5 +1,6 @@
 <template>
 	<section>
+		<nuxt-link to="/prospect/add/a080i000000E7ZxAAK">Test</nuxt-link>
 		<Header :title="title"/>
 		<SearchBar @search-updated="handleSearch"/>
 		<div class="slds-grid slds-wrap slds-col slds-size_12-of-12 slds-grid_align-center">
@@ -12,6 +13,7 @@
 		<Paginator 
 			:record-count="prospects[0] ? parseInt(prospects[0].totalCount) : 0" 
 			@page-change="handlePageChange"/>
+		
 	</section>
 </template>
 

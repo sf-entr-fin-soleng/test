@@ -80,12 +80,14 @@ export default {
 			default: 'Showing 0 of 0 results'
 		}
 	},
+
 	data: function() {
 		return {
 			sortBy: '',
 			orderBy: 'asc'
 		}
 	},
+
 	methods: {
 		sort: function(event, key) {
 			this.sortBy = key

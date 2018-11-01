@@ -47,9 +47,6 @@ async function fetchProspects(req, res) {
 				(constraints.offset / constraints.perPage + 1) *
 					constraints.perPage
 			)
-			// query += ` LIMIT ${constraints.perPage} OFFSET ${
-			// 	constraints.offset
-			// }`
 		}
 
 		res.setHeader('Content-Type', 'application/json')
@@ -61,12 +58,11 @@ async function fetchProspects(req, res) {
 
 async function fetchProspect(req, res) {
 	try {
-		// prettier-ignore
 		const result = await db.query(`SELECT Sfid as id, Mock_Container__c as parentId, Type__c as type, Data__c as data
-				FROM sfgc.mock_container__c WHERE Type__c = 'Prospect/Client
+				FROM sfgc.mock_container__c WHERE Type__c = 'Prospect/Client'
 				AND Sfid = '${req.query.id}' LIMIT 1`)
 
-		let prospect
+		let prospect = {}
 
 		if (result.rowCount > 0) {
 			const row = result.rows[0]

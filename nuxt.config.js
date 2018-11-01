@@ -40,7 +40,7 @@ module.exports = {
 	/*
   ** Plugins to load before mounting the App
   */
-	plugins: [],
+	plugins: ['~plugins/filters.js'],
 
 	/*
   ** Nuxt.js modules
@@ -54,6 +54,11 @@ module.exports = {
   */
 	axios: {
 		// See https://github.com/nuxt-community/axios-module#options
+		// baseURL: process.env.BASE_URL
+	},
+
+	env: {
+		baseUrl: process.env.BASE_URL || 'http://localhost:8080'
 	},
 
 	/*
