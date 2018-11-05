@@ -1,15 +1,19 @@
 <template>
 	<section>
+		<nuxt-link to="/prospect/add/a080i000000E7ZxAAK">Test</nuxt-link>
 		<Header :title="title"/>
-		<SearchBar/>
+		<SearchBar @search-updated="handleSearch"/>
 		<div class="slds-grid slds-wrap slds-col slds-size_12-of-12 slds-grid_align-center">
 			<Datatable 
 				:rows="prospects"
-				:columns="columns"/>
+				:columns="columns"
+				:result-label="paginationLabel"
+				@sort-table="handleTableSort"/>
 		</div>
 		<Paginator 
 			:record-count="prospects[0] ? parseInt(prospects[0].totalCount) : 0" 
 			@page-change="handlePageChange"/>
+		
 	</section>
 </template>
 
@@ -18,6 +22,7 @@ import Header from '~/components/Header.vue'
 import Datatable from '~/components/Datatable.vue'
 import SearchBar from '~/components/SearchBar.vue'
 import Paginator from '~/components/Paginator.vue'
+import services from '~/services'
 
 export default {
 	components: {
@@ -29,7 +34,9 @@ export default {
 
 	async asyncData({ app }) {
 		try {
-			const prospects = await app.$axios.$get('/api/prospect/getAll.json')
+			const prospects = await app.$axios.$get(
+				'api/prospect/getAll.json?offset=0&perPage=5'
+			)
 			return { prospects }
 		} catch (err) {
 			console.error(err)
@@ -40,61 +47,72 @@ export default {
 		return {
 			title: 'Address Book',
 			loading: false,
+
 			columns: [
 				{ label: 'First Name', value: 'firstName' },
 				{ label: 'Last Name', value: 'lastName' },
 				{ label: 'Phone', value: 'phone' },
 				{ label: 'Email', value: 'email' }
-			]
+			],
+
+			searchParams: {
+				term: '',
+				filterBy: '',
+				offset: 0,
+				perPage: 5,
+				orderBy: '',
+				order: 'asc'
+			}
 		}
 	},
 
-	methods: {
-		handlePageChange: async function(currentPage, totalPages, perPage) {
-			try {
-				const offset = (currentPage - 1) * perPage
-				const prospects = await this.$axios.$get(
-					`/api/prospect/getAll.json?offset=${offset}&perPage=${perPage}`
-				)
+	computed: {
+		paginationLabel: function() {
+			const { offset, perPage, term } = { ...this.searchParams }
+			const prospect = this.prospects[0]
+			if (prospect)
+				return `Showing ${offset + 1}-${
+					offset + perPage > prospect.totalCount
+						? prospect.totalCount
+						: offset + perPage
+				} of ${prospect.totalCount} ${term ? `for ${term}` : ``}`
+			else return ''
+		}
+	},
 
-				this.prospects = prospects
-			} catch (err) {
-				console.error(err)
+	mounted: function() {
+		const params = { ...this.searchParams }
+		params.filterBy = this.columns.map(c => c.value).join(',')
+		this.searchParams = params
+	},
+
+	methods: {
+		handlePageChange: function(currentPage, totalPages, perPage) {
+			this.searchParams.offset = (currentPage - 1) * perPage
+			this.updateProspects()
+		},
+
+		handleSearch: function(searchTerm) {
+			this.searchParams.term = searchTerm
+			this.searchParams.offset = 0
+			this.updateProspects()
+		},
+
+		handleTableSort: function(orderBy, order) {
+			this.searchParams.orderBy = orderBy
+			this.searchParams.order = order
+			this.updateProspects()
+		},
+
+		updateProspects: async function() {
+			try {
+				this.prospects = await services.prospect.fetchProspects(
+					this.searchParams
+				)
+			} catch (error) {
+				console.error(error)
 			}
 		}
 	}
 }
 </script>
-
-<style>
-.container {
-	min-height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-}
-
-.title {
-	font-family: 'Quicksand', 'Source Sans Pro', -apple-system,
-		BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-		sans-serif;
-	display: block;
-	font-weight: 300;
-	font-size: 100px;
-	color: #35495e;
-	letter-spacing: 1px;
-}
-
-.subtitle {
-	font-weight: 300;
-	font-size: 42px;
-	color: #526488;
-	word-spacing: 5px;
-	padding-bottom: 15px;
-}
-
-.links {
-	padding-top: 15px;
-}
-</style>

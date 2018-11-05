@@ -8,12 +8,6 @@ async function fetchProspects(req, res) {
 		const constraints = { ...req.query }
 		let query = utils.getBaseQuery(types.prospect)
 
-		if (constraints.perPage && constraints.offset) {
-			query += ` LIMIT ${constraints.perPage} OFFSET ${
-				constraints.offset
-			}`
-		}
-
 		const result = await db.query(query)
 		let prospects = result.rows.map(row => utils.parseObject(row))
 
@@ -26,11 +20,32 @@ async function fetchProspects(req, res) {
 		}
 
 		if (constraints.filterBy && constraints.filter) {
-			prospects = prospects.filter(el =>
-				el[constraints.filterBy]
-					.toString()
-					.toLowerCase()
-					.includes(constraints.filter.toLowerCase())
+			const fields = constraints.filterBy.split(',')
+			prospects = prospects.filter(el => {
+				for (let index in fields) {
+					const field = fields[index]
+					if (
+						el[field] &&
+						el[field]
+							.toString()
+							.toLowerCase()
+							.includes(constraints.filter.toLowerCase())
+					)
+						return true
+				}
+				return false
+			})
+
+			prospects.forEach(
+				prospect => (prospect.totalCount = prospects.length)
+			)
+		}
+
+		if (constraints.perPage && constraints.offset) {
+			prospects = prospects.slice(
+				constraints.offset,
+				(constraints.offset / constraints.perPage + 1) *
+					constraints.perPage
 			)
 		}
 
@@ -43,11 +58,11 @@ async function fetchProspects(req, res) {
 
 async function fetchProspect(req, res) {
 	try {
-		// prettier-ignore
 		const result = await db.query(`SELECT Sfid as id, Mock_Container__c as parentId, Type__c as type, Data__c as data
-		FROM sfgc.mock_container__c WHERE Type__c = 'Prospect/Client' AND Sfid = '${req.query.id}' LIMIT 1`)
+				FROM sfgc.mock_container__c WHERE Type__c = 'Prospect/Client'
+				AND Sfid = '${req.query.id}' LIMIT 1`)
 
-		let prospect
+		let prospect = {}
 
 		if (result.rowCount > 0) {
 			const row = result.rows[0]

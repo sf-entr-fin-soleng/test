@@ -1,12 +1,12 @@
 function parseObject(row) {
 	return Object.assign(
+		{ ...JSON.parse(row.data) },
 		{
 			id: row.id,
 			parentId: row.parentId,
 			type: row.type,
 			totalCount: row['full_count']
-		},
-		{ ...JSON.parse(row.data) }
+		}
 	)
 }
 

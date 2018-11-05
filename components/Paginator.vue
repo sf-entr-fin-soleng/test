@@ -29,12 +29,7 @@
 </template>
 
 <script>
-function clamp(value, min, max) {
-	if (value < min) value = min
-	if (value > max) value = max
-
-	return value
-}
+import { clamp } from 'lodash'
 
 export default {
 	props: {
@@ -49,13 +44,19 @@ export default {
 	},
 
 	data: function() {
-		return { currentPage: 1, totalPages: 5 }
+		return { currentPage: 1 }
 	},
 
-	mounted: function() {
-		this.$nextTick(function() {
-			this.totalPages = Math.ceil(this.recordCount / this.perPage)
-		})
+	computed: {
+		totalPages: function() {
+			return Math.ceil(this.recordCount / this.perPage)
+		}
+	},
+
+	watch: {
+		totalPages: function() {
+			this.currentPage = 1
+		}
 	},
 
 	methods: {
