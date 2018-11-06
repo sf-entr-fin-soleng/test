@@ -1,10 +1,11 @@
 <template>
 	<div>
 		<Header :title="title"/>
-		{{ localProspect }}
+		<pre 
+			v-if="debug" 
+			style="background-color: #000000; color: limegreen; font-family: Consolas">{{ localProspect }}</pre>
 		<Form 
 			id="prospect-form"
-			class="slds-grid slds-wrap slds-size_12-of-12"
 			@form-submit="saveProspect">
 			<div class="igforms-client-details slds-grid slds-col slds-size_1-of-1 slds-grid_align-center slds-form slds-form_compound cFormValidator">
 				<fieldset class="slds-grid slds-size_1-of-1 slds-form-element slds-wrap">
@@ -105,6 +106,7 @@ export default {
 		return {
 			title: 'Add Prospect',
 			testValue: 'My test Value',
+			debug: true,
 			localProspect: Object.assign(
 				{},
 				this.$store.state.prospect.prospect

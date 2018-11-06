@@ -8,7 +8,7 @@
 					<button 
 						class="slds-button"
 						@click="$emit('click-prev', $event)">
-						<i class="slds-button__icon material-icons">
+						<i class="slds-button__icon slds-button__icon_left material-icons">
 							navigate_before
 						</i>
 						{{ backLabel }}
@@ -37,7 +37,7 @@
 							class="slds-button"
 							@click="$emit('click-next', $event)">
 							{{ nextLabel }}
-							<i class="slds-button__icon material-icons">
+							<i class="slds-button__icon slds-button__icon_right material-icons">
 								navigate_next
 							</i>
 						</button>

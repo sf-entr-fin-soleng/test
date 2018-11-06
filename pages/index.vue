@@ -38,6 +38,19 @@
 				@click-row="handleRowClick"/>
 		</div>
 
+		<!-- Add new profile button -->
+		<div 
+			style="margin-bottom: 24px" 
+			class="slds-col slds-size_12-of-12 slds_grid-align-center slds-button slds-m-top_large slds-align_absolute-center add-profile_button">
+			<button 
+				class="slds-button slds-button_neutral" 
+				@click="$router.push('/prospect/info')">
+				<i class="slds-button__icon slds-button__icon_left material-icons">
+					add
+				</i>
+			<span>New Profile</span></button>
+		</div>
+
 		<!-- Pagination -->
 		<Paginator 
 			:record-count="prospects[0] ? parseInt(prospects[0].totalCount) : 0" 
@@ -63,9 +76,10 @@ export default {
 
 	async asyncData({ app }) {
 		try {
-			const prospects = await app.$axios.$get(
-				'api/prospect/getAll.json?offset=0&perPage=5'
-			)
+			const prospects = await services.prospect.fetchProspects({
+				perPage: 5,
+				offset: 0
+			})
 			return { prospects }
 		} catch (err) {
 			console.error(err)
