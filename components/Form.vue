@@ -1,5 +1,9 @@
 <template>
 	<section>
+		<!-- @antonio.cordeiro
+		`novalidate` needs to be here in order for the HTML5 popups to be gone. 
+		Unfortunately it also implies that the form will not trigger HTML5's
+		.checkValidity on each input target, so we need to do it manually. -->
 		<form
 			:id="id"
 			novalidate
@@ -18,11 +22,6 @@
 </template>
 
 <script>
-// Import component
-import Loading from 'vue-loading-overlay'
-// Import stylesheet
-import 'vue-loading-overlay/dist/vue-loading.css'
-
 export default {
 	components: {},
 	props: {
@@ -41,6 +40,7 @@ export default {
 	},
 
 	methods: {
+		// Register child component into array
 		registerField(field) {
 			this.fields.push(field)
 		},
@@ -55,6 +55,12 @@ export default {
 			// Force validity check before submit
 			const checkFields = async () => {
 				this.fields.forEach(async (field, index) => {
+					// @antonio.cordeiro
+					// fieldValidity is called without a target
+					// parameter because we actually don't have one
+					// we just have the component reference and
+					// its values, but it doesn't contain the
+					// html5 standard .checkValidity method
 					await field.checkValidity()
 				})
 			}
@@ -69,16 +75,25 @@ export default {
 				return field.valid
 			})
 
-			if (valid) console.log('Submitting form...')
-			else console.log('[Error] Invalid form!')
+			if (valid) {
+				this.$emit('form-submit')
+			} else console.log('[Error] Invalid form!')
 		},
 
-		// Trigger event listeners
+		// Submit form trigger
 		triggerSubmit(event) {
+			// @antonio.cordeiro
+			// Not to sure we need to abstract this
+			// method even further since we are already
+			// using .preventDefault()
+
+			// If form id matches the id passed by
+			// the container of the form (parent)
 			if (event.formId === this.id)
 				document.getElementById('hidden-submit').click()
 		},
 
+		// Reset form trigger
 		triggerReset(event) {
 			if (event.formId === this.id)
 				document.getElementById('hidden-reset').click()
