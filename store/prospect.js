@@ -8,6 +8,10 @@ export const state = () => ({
 export const mutations = {
 	[types.prospect.mutation.FETCH_SUCCESS](state, prospect) {
 		state.prospect = prospect
+	},
+
+	[types.prospect.mutation.WRITE_SUCCESS](state, { result }) {
+		console.log('Prospect saved to the server...')
 	}
 }
 
@@ -19,7 +23,18 @@ export const actions = {
 
 			return prospect
 		} catch (err) {
-			console.error(err)
+			throw err
+		}
+	},
+
+	async [types.prospect.action.SAVE_PROSPECT]({ commit, state }, prospect) {
+		try {
+			const result = await services.prospect.saveProspect(prospect)
+			commit(types.prospect.mutation.WRITE_SUCCESS, { result })
+
+			return result.data
+		} catch (err) {
+			throw err
 		}
 	}
 }

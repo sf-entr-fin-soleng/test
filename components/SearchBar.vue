@@ -57,7 +57,9 @@
 						<button 
 							class="slds-button slds-button_icon igforms-search-button"
 						>
-							<i class="material-icons">
+							<i 
+								class="material-icons" 
+								style="color: white">
 								search
 							</i>
 						</button>
@@ -79,6 +81,10 @@ export default {
 	},
 
 	methods: {
+		// @antonio.cordeiro
+		// This could be a generic component that handles
+		// a list of entities but for now it's just a dumb
+		// component that simply handles input events
 		searchTermUpdated(event, term) {
 			this.$emit('search-updated', term)
 		}

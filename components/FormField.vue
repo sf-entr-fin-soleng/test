@@ -35,6 +35,10 @@
 <script>
 export default {
 	props: {
+		// FIXME: use $attrs and $listeners here
+		// in order to avoid this lengthy list of
+		// standard properties such as (min, max, maxlength, etc..)
+
 		id: { type: String, default: undefined },
 		classNames: { type: String, default: undefined },
 		type: { type: String, default: 'string' },
@@ -62,18 +66,24 @@ export default {
 	},
 
 	mounted: function() {
+		// Tightly couples this component with parent component
 		this.$parent.registerField(this)
 	},
 
 	methods: {
 		checkValidity: async function(event) {
+			// If no event is passed, fetch
+			// the current <input> reference
 			if (!event) {
 				event = { target: this.$refs.input }
 			}
 
+			// Make sure comparison is not case-sensitive
 			const type = this.type.toLowerCase()
 			this.pristine = false
 
+			// Boolean to check whether or not
+			// current input has something in it
 			const hasValue = this.value && this.value.toString().length > 0
 
 			// Standard HTML5 validity comes first
@@ -86,9 +96,17 @@ export default {
 			// Check for custom validations
 			if (this.customValidation) {
 				try {
+					// @antonio.cordeiro
+					// Supporting async validation actually
+					// means that if we are calling a sync
+					// method it needs to use `throw err`
+					// in order for this block to run correctly
+
+					// Resolve custom validation
 					await this.customValidation(event.target)
 					this.valid = true
 				} catch (err) {
+					// There was a validation error
 					this.valid = false
 					this.errorMessage = err
 				}
@@ -104,6 +122,9 @@ export default {
 			let value = event.target.value
 			if (this.filter) value = this.filter(value)
 
+			// 'input' is a little bit of vue+nuxt magic
+			// to update whatever property was binded
+			// through the v-model directive
 			this.$emit('input', value)
 			this.checkValidity(event)
 		}

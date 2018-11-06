@@ -1,10 +1,12 @@
 <template>
 	<div>
 		<Header :title="title"/>
-		{{ localProspect }}
+		<pre 
+			v-if="debug" 
+			style="background-color: #000000; color: limegreen; font-family: Consolas">{{ localProspect }}</pre>
 		<Form 
 			id="prospect-form"
-			class="slds-grid slds-wrap slds-size_12-of-12">
+			@form-submit="saveProspect">
 			<div class="igforms-client-details slds-grid slds-col slds-size_1-of-1 slds-grid_align-center slds-form slds-form_compound cFormValidator">
 				<fieldset class="slds-grid slds-size_1-of-1 slds-form-element slds-wrap">
 					<div class="igforms-client-details-header_container slds-grid slds-grid_align-center slds-size_1-of-1">
@@ -45,7 +47,7 @@
 							<div class="slds-col slds-size_1-of-2">
 								<FormField 
 									v-model="localProspect.email"
-									:maxlength="20"
+									:maxlength="50"
 									:required="true"
 									label="Email"
 									type="email"
@@ -58,7 +60,6 @@
 									v-model="localProspect.occupation"
 									:maxlength="20"
 									:required="true"
-									:custom-validation="syncTurtle"
 									label="Occupation"
 									type="text"/>
 							</div>
@@ -68,7 +69,9 @@
 			</div>
 		</Form>
 
-		<NavBar @click-next="$root.$emit('trigger-submit', { formId: 'prospect-form' })"/>
+		<NavBar 
+			@click-prev="$router.push('/')" 
+			@click-next="$root.$emit('trigger-submit', { formId: 'prospect-form' })"/>
 
 	</div>
 </template>
@@ -80,6 +83,7 @@ import FormField from '~/components/FormField.vue'
 import NavBar from '~/components/NavBar.vue'
 import { mapActions } from 'vuex'
 import types from '~/store/types'
+import services from '~/services/'
 
 export default {
 	components: {
@@ -91,8 +95,7 @@ export default {
 
 	async asyncData({ store, params }) {
 		const prospect = await store.dispatch(
-			// FIXME: this line here could use some optimization
-			`prospect/${types.prospect.action.FETCH_PROSPECT}`,
+			`${types.prospect.prefix}/${types.prospect.action.FETCH_PROSPECT}`,
 			params.id
 		)
 
@@ -103,6 +106,7 @@ export default {
 		return {
 			title: 'Add Prospect',
 			testValue: 'My test Value',
+			debug: true,
 			localProspect: Object.assign(
 				{},
 				this.$store.state.prospect.prospect
@@ -111,21 +115,22 @@ export default {
 	},
 
 	methods: {
-		asyncTurtle: function(target) {
-			return new Promise((resolve, reject) => {
-				setTimeout(() => {
-					if (target.value.toString().includes('turtle')) {
-						resolve(target)
-					} else {
-						reject('We need turtles!')
-					}
-				}, 1000)
-			})
-		},
+		saveProspect: async function() {
+			try {
+				const result = await this.$store.dispatch(
+					`${types.prospect.prefix}/${
+						types.prospect.action.SAVE_PROSPECT
+					}`,
+					this.localProspect
+				)
 
-		syncTurtle: function(target) {
-			if (target.value.toString().includes('turtle')) return
-			else throw 'we need turtles dammiitt!'
+				this.$router.push({
+					name: 'index',
+					params: { command: result.command }
+				})
+			} catch (err) {
+				console.error(err)
+			}
 		}
 	}
 }

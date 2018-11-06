@@ -76,4 +76,36 @@ async function fetchProspect(req, res) {
 	}
 }
 
-export { fetchProspect, fetchProspects }
+async function saveProspect(req, res) {
+	try {
+		const prospect = req.body
+		const data = JSON.stringify(prospect)
+
+		let query = ''
+
+		if (prospect.id) {
+			// UPDATE
+			query = `UPDATE sfgc.mock_container__c SET 
+			${prospect.parentId ? `Mock_Container__c = '${prospect.parentId}',` : ''} 
+			Data__c = '${data}' WHERE Sfid = '${prospect.id}'`
+		} else {
+			// INSERT
+			query = `INSERT INTO sfgc.mock_container__c (${
+				prospect.parentId ? 'Mock_Container__c,' : ''
+			} Type__c, Data__c) VALUES (${
+				prospect.parentId ? `'${prospect.parentId}',` : ''
+			} 'Prospect/Client', '${data}' )`
+		}
+
+		const result = await db.query(query)
+
+		res.setHeader('Content-Type', 'application/json')
+		res.end(JSON.stringify(result, null, 2))
+	} catch (err) {
+		console.error(err)
+		res.setHeader('Content-Type', 'application/json')
+		res.status(502).end(JSON.stringify(err, null, 2))
+	}
+}
+
+export { fetchProspect, fetchProspects, saveProspect }

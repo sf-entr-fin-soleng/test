@@ -55,11 +55,21 @@ export default {
 
 	watch: {
 		totalPages: function() {
+			// Reseting user back to first page
+			// whenever the total amount of page changes
 			this.currentPage = 1
 		}
 	},
 
 	methods: {
+		clickNext: function() {
+			this.clickPage(clamp(++this.currentPage, 1, this.totalPages))
+		},
+
+		clickPrevious: function() {
+			this.clickPage(clamp(--this.currentPage, 1, this.totalPages))
+		},
+
 		clickPage: function(pageNumber) {
 			this.currentPage = pageNumber
 			this.$emit(
@@ -68,14 +78,6 @@ export default {
 				this.totalPages,
 				this.perPage
 			)
-		},
-
-		clickNext: function() {
-			this.clickPage(clamp(++this.currentPage, 1, this.totalPages))
-		},
-
-		clickPrevious: function() {
-			this.clickPage(clamp(--this.currentPage, 1, this.totalPages))
 		}
 	}
 }

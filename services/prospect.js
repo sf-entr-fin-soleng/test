@@ -37,4 +37,15 @@ async function fetchProspectById(id) {
 	}
 }
 
-export { fetchProspects, fetchProspectById }
+async function saveProspect(prospect) {
+	try {
+		const url = `/api/prospect/saveOne.json`
+		const result = await Api().post(url, prospect)
+
+		return result
+	} catch (err) {
+		throw err
+	}
+}
+
+export { fetchProspects, fetchProspectById, saveProspect }

@@ -6,8 +6,9 @@
 					v-if="displayBackButton" 
 					class="igforms-footer__back-button slds-float_left">
 					<button 
-						class="slds-button">
-						<i class="slds-button__icon material-icons">
+						class="slds-button"
+						@click="$emit('click-prev', $event)">
+						<i class="slds-button__icon slds-button__icon_left material-icons">
 							navigate_before
 						</i>
 						{{ backLabel }}
@@ -16,7 +17,9 @@
 
 				<div class="igforms-footer__next-button slds-float_right">
 
-					<!-- Remove/Cancel buttons -->
+					<!-- @antonio.cordeiro
+					Actions are just really extra buttons
+					coming from the original InVision design  -->
 					<div 
 						v-if="displayActions" 
 						class="igforms-footer__family-tree__actions">
@@ -34,7 +37,7 @@
 							class="slds-button"
 							@click="$emit('click-next', $event)">
 							{{ nextLabel }}
-							<i class="slds-button__icon material-icons">
+							<i class="slds-button__icon slds-button__icon_right material-icons">
 								navigate_next
 							</i>
 						</button>
@@ -42,13 +45,16 @@
 				</div>
 			</div>
 		</div>
-
-
 	</div>
 </template>
 
 <script>
 export default {
+	// @antonio.cordeiro
+	// Huge level of boolean controls are
+	// needed because the navbar functionality
+	// is the same in every page but the way
+	// it's displayed isn't.
 	props: {
 		displayNextButton: {
 			type: Boolean,
