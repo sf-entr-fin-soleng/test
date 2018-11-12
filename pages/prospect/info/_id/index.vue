@@ -2,8 +2,7 @@
 	<div>
 		<Header :title="title"/>
 		<pre 
-			v-if="debug" 
-			style="background-color: #000000; color: limegreen; font-family: Consolas">{{ localProspect }}</pre>
+			v-if="debug" >{{ localProspect }}</pre>
 		<Form 
 			id="prospect-form"
 			@form-submit="saveProspect">
@@ -125,7 +124,7 @@ export default {
 				)
 
 				this.$router.push({
-					name: 'index',
+					path: '/goals/' + this.localProspect.id,
 					params: { command: result.command }
 				})
 			} catch (err) {

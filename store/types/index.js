@@ -1,2 +1,4 @@
 import prospect from './prospect-types'
-export default { prospect }
+import goal from './goal-types'
+
+export default { prospect, goal }
