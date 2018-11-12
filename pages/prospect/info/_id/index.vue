@@ -92,14 +92,14 @@ export default {
 		NavBar
 	},
 
-	async asyncData({ store, params }) {
-		const prospect = await store.dispatch(
-			`${types.prospect.prefix}/${types.prospect.action.FETCH_PROSPECT}`,
-			params.id
-		)
+	// async asyncData({ store, params }) {
+	// 	const prospect = await store.dispatch(
+	// 		`${types.prospect.prefix}/${types.prospect.action.FETCH_PROSPECT}`,
+	// 		params.id
+	// 	)
 
-		return { prospect }
-	},
+	// 	return { prospect }
+	// },
 
 	data: function() {
 		return {
@@ -124,8 +124,9 @@ export default {
 				)
 
 				this.$router.push({
-					path: '/goals/' + this.localProspect.id,
+					path: '/',
 					params: { command: result.command }
+					// TODO: fix prospectID retrieval + command send
 				})
 			} catch (err) {
 				console.error(err)

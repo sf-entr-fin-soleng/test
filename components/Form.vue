@@ -36,6 +36,10 @@ export default {
 
 	mounted: function() {
 		// Root event bus
+		// TODO: handle event bus in separate file
+		this.$root.$off('trigger-submit')
+		this.$root.$off('trigger-reset')
+
 		this.$root.$on('trigger-submit', this.triggerSubmit)
 		this.$root.$on('trigger-reset', this.triggerReset)
 	},
@@ -78,7 +82,7 @@ export default {
 
 			if (valid) {
 				this.$emit('form-submit')
-			} else console.log('[Error] Invalid form!')
+			}
 		},
 
 		// Submit form trigger

@@ -164,9 +164,8 @@ export default {
 
 		// Datatable 'click-row' event
 		handleRowClick: function(rowData) {
-			console.log('clicked', rowData)
 			this.$router.push({
-				path: `/prospect/info/${rowData.id ? rowData.id : ''}`
+				path: `/dashboard/${rowData.id ? rowData.id : ''}`
 			})
 		},
 

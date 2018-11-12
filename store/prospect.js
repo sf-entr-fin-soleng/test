@@ -10,9 +10,7 @@ export const mutations = {
 		state.prospect = prospect
 	},
 
-	[types.prospect.mutation.WRITE_SUCCESS](state, { result }) {
-		console.log('Prospect saved to the server...')
-	}
+	[types.prospect.mutation.WRITE_SUCCESS](state, { result }) {}
 }
 
 export const actions = {
@@ -32,7 +30,7 @@ export const actions = {
 			const result = await services.prospect.saveProspect(prospect)
 			commit(types.prospect.mutation.WRITE_SUCCESS, { result })
 
-			return result.data
+			return result
 		} catch (err) {
 			throw err
 		}

@@ -52,18 +52,24 @@ async function fetchProspects(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(prospects, null, 2))
 	} catch (err) {
-		console.log(err.stack)
+		console.error(err.stack)
+		res.setHeader('Content-Type', 'application/json')
+		res.status(500).end(JSON.stringify(err, null, 2))
 	}
 }
 
 async function fetchProspect(req, res) {
 	try {
-		const result = await db.query(`SELECT Sfid as id, Mock_Container__c as parentId, Type__c as type, Data__c as data
-				FROM sfgc.mock_container__c WHERE Type__c = 'Prospect/Client'
-				AND Sfid = '${req.query.id}' LIMIT 1`)
+		// Get base SQL query and await for
+		// postgres promise to resolve
+		const query = utils.getBaseQuery(types.prospect, req.query.id)
+		const result = await db.query(query)
 
+		// Prospect container
 		let prospect = {}
 
+		// Assign row properties to container
+		// only if there are actually any results
 		if (result.rowCount > 0) {
 			const row = result.rows[0]
 			prospect = utils.parseObject(row)
@@ -72,31 +78,31 @@ async function fetchProspect(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(prospect, null, 2))
 	} catch (err) {
-		console.log(err.stack)
+		console.error(err.stack)
+		res.status(500).setHeader('Content-Type', 'application/json')
+		res.end(JSON.stringify(err, null, 2))
 	}
 }
 
 async function saveProspect(req, res) {
 	try {
+		// Fetch prospect data from POST body
 		const prospect = req.body
-		const data = JSON.stringify(prospect)
-
 		let query = ''
 
-		if (prospect.id) {
-			// UPDATE
-			query = `UPDATE sfgc.mock_container__c SET 
-			${prospect.parentId ? `Mock_Container__c = '${prospect.parentId}',` : ''} 
-			Data__c = '${data}' WHERE Sfid = '${prospect.id}'`
+		// If prospect has no ID assigned,
+		// generate unique ID and save it
+		// back to the database
+		if (!prospect.id) {
+			prospect.id = utils.uuid()
+			query = utils.getWriteQuery(types.prospect, prospect, true)
 		} else {
-			// INSERT
-			query = `INSERT INTO sfgc.mock_container__c (${
-				prospect.parentId ? 'Mock_Container__c,' : ''
-			} Type__c, Data__c) VALUES (${
-				prospect.parentId ? `'${prospect.parentId}',` : ''
-			} 'Prospect/Client', '${data}' )`
+			query = utils.getWriteQuery(types.prospect, prospect, false)
 		}
 
+		// Stringify prospect and initialize
+		// query string (will be built dynamically)
+		const data = JSON.stringify(prospect)
 		const result = await db.query(query)
 
 		res.setHeader('Content-Type', 'application/json')
