@@ -92,20 +92,20 @@ export default {
 		NavBar
 	},
 
-	// async asyncData({ store, params }) {
-	// 	const prospect = await store.dispatch(
-	// 		`${types.prospect.prefix}/${types.prospect.action.FETCH_PROSPECT}`,
-	// 		params.id
-	// 	)
+	async asyncData({ store, params }) {
+		const prospect = await store.dispatch(
+			`${types.prospect.prefix}/${types.prospect.action.FETCH_PROSPECT}`,
+			params.id
+		)
 
-	// 	return { prospect }
-	// },
+		return { prospect }
+	},
 
 	data: function() {
 		return {
 			title: 'Add Prospect',
-			testValue: 'My test Value',
 			debug: true,
+
 			localProspect: Object.assign(
 				{},
 				this.$store.state.prospect.prospect

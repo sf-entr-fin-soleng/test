@@ -1,25 +1,23 @@
 <template>
-	<section>
-		<!-- @antonio.cordeiro
+	<!-- @antonio.cordeiro
 		`novalidate` needs to be here in order for the HTML5 popups to be gone. 
 		Unfortunately it also implies that the form will not trigger HTML5's
 		.checkValidity on each input target, so we need to do it manually. -->
-		<form
-			:id="id"
-			novalidate
-			class="slds-grid slds-wrap slds-size_12-of-12"
-			@submit.prevent="submit">
-			<slot/>
-			<input 
-				id="hidden-submit" 
-				type="submit" 
-				hidden>
-			<input 
-				id="hidden-reset" 
-				type="reset" 
-				hidden>
-		</form>
-	</section>
+	<form
+		:id="id"
+		novalidate
+		class="slds-grid slds-wrap slds-size_12-of-12"
+		@submit.prevent="submit">
+		<slot/>
+		<input 
+			id="hidden-submit" 
+			type="submit" 
+			hidden>
+		<input 
+			id="hidden-reset" 
+			type="reset" 
+			hidden>
+	</form>
 </template>
 
 <script>

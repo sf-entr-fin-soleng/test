@@ -43,7 +43,6 @@
 					<label 
 						class="slds-form-element__label" 
 						for="form-element-01"/>
-					{{ searchTerm }}
 					<div class="slds-form-element__control">
 						<input 
 							id="form-element-01" 

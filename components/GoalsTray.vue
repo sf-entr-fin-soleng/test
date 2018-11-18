@@ -17,24 +17,25 @@
 					@start="drag=true"
 					@end="drag=false">
 					<div 
-						v-for="detail in details" 
+						v-for="(detail,index) in details" 
 						:key="detail.goalId" 
-						class="igforms-priority__card igforms-priority__card--high slds-p-around-xxx-small slds-col slds-medium-size_2-of-12 slds-small-size_4-of-12">
-						<div v-if="true">
+						class="igforms-priority__card igforms-priority__card--high slds-p-around-xxx-small slds-col slds-medium-size_2-of-12 slds-small-size_4-of-12"
+						@click="click($event, index)">
+						<div v-if="detail.valid">
 							Checkmark
 						</div>
-						<a href="/">
+						<div 
+						>
 							<img 
-								src="~assets/images/IG_Wealth_Management_RGB.svg" 
+								:src="'/images/goals-concerns/cards/' + goals[detail.goalId].image + '.png'" 
 								alternativeText="IG Wealth Management logo"
 							>
 							<span>
 								<p class="igforms-priority__card--title">
-									{{ goals[detail.goalId].name }}<br>
-									<b>{{ detail.goalId }}</b>
+									{{ goals[detail.goalId].name }}
 								</p>
 							</span>
-						</a>
+						</div>
 					</div>
 				</draggable>
 			</div>
@@ -71,6 +72,19 @@ export default {
 					details: value
 				})
 			}
+		}
+	},
+	methods: {
+		click: function(event, index) {
+			const params = {
+				priority: this.priority,
+				detailIndex: index
+			}
+
+			this.$router.push({
+				name: 'goals-detail-id',
+				params: { ...params }
+			})
 		}
 	}
 }

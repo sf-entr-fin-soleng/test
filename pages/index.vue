@@ -74,7 +74,7 @@ export default {
 		Paginator
 	},
 
-	async asyncData({ app }) {
+	async asyncData({ app, store }) {
 		try {
 			const prospects = await services.prospect.fetchProspects({
 				perPage: 5,

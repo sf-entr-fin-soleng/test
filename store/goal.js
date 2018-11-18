@@ -29,7 +29,8 @@ export const state = () => {
 	return {
 		trays,
 		goals: {},
-		detailInfo: {}
+		detailInfo: {},
+		priorities
 	}
 }
 
@@ -69,6 +70,10 @@ export const mutations = {
 	// Mutations called by the component directly
 	updateDetails(state, { priority, details }) {
 		state.trays[priority].details = details
+	},
+
+	updateSingleDetail(state, { priority, detailIndex, detail }) {
+		state.trays[priority].details[detailIndex] = detail
 	}
 }
 
@@ -91,21 +96,30 @@ export const actions = {
 	},
 
 	async [types.goal.action.WRITE_DETAILS]({ commit, state }) {
-		const detailInfo = {
-			id: state.detailInfo.id,
-			parentId: state.detailInfo.parentId,
-			trays: {}
-		}
+		try {
+			const detailInfo = {
+				id: state.detailInfo.id,
+				parentId: state.detailInfo.parentId,
+				trays: {}
+			}
 
-		// Trust what has been put in state
-		// by Sortable and Vue's computed props
-		for (let key in state.trays) {
-			const tray = state.trays[key]
-			detailInfo.trays[key] = {}
-			detailInfo.trays[key].details = state.trays[key].details
-		}
+			// Trust what has been put in state
+			// by Sortable and Vue's computed props
+			for (let key in state.trays) {
+				const tray = state.trays[key]
+				detailInfo.trays[key] = {}
+				detailInfo.trays[key].details = state.trays[key].details
+			}
 
-		const result = await services.goal.saveDetails(detailInfo)
-		commit(types.goal.mutation.WRITE_DETAIL_SUCCESS, { result })
+			const result = await services.goal.saveDetails(detailInfo)
+			commit(types.goal.mutation.WRITE_DETAIL_SUCCESS, { result })
+		} catch (err) {
+			throw err
+		}
+	},
+
+	saveDetail({ commit, state }, payload) {
+		const { priority, index, detail } = { ...payload }
+		state.trays[priority].details[index] = detail
 	}
 }

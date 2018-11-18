@@ -60,6 +60,7 @@ export default {
 	methods: {
 		handleNext: function() {
 			this.$store.dispatch('goal/writeDetails')
+			this.$router.push('timeline')
 		}
 	}
 }

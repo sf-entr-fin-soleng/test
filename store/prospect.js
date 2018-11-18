@@ -14,7 +14,7 @@ export const mutations = {
 }
 
 export const actions = {
-	async [types.prospect.action.FETCH_PROSPECT]({ commit, state }, id) {
+	async [types.prospect.action.FETCH_PROSPECT]({ commit }, id) {
 		try {
 			const prospect = await services.prospect.fetchProspectById(id)
 			commit(types.prospect.mutation.FETCH_SUCCESS, prospect)
