@@ -77,9 +77,9 @@
 		</div>
 
 		<!-- NavBar -->
-		<!-- <NavBar 
+		<NavBar 
 			@click-next="$root.$emit('trigger-submit', { formId: 'detail-form' })" 
-			@click-prev="$router.go(-1)"/> -->
+			@click-prev="$router.go(-1)"/>
 	</section>
 </template>
 
