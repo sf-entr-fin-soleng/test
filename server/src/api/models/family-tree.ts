@@ -48,10 +48,28 @@ const familyTree = {
 		email: undefined,
 		notes: undefined,
 
-		parents: [],
+		parents: [
+			{
+				firstName: 'Mother',
+				relationship: {
+					type: 'parent',
+					label: 'Mother',
+					gender: 'Female'
+				}
+			}
+		],
 		children: [],
 		family: [],
 		externals: []
+	},
+
+	partner: {
+		firstName: '+',
+		relationship: {
+			type: 'partner',
+			label: 'Partner - Not Specified',
+			gender: 'Other'
+		}
 	}
 
 	// partner: {

@@ -102,7 +102,6 @@ async function saveProspect(req, res) {
 
 		// Stringify prospect and initialize
 		// query string (will be built dynamically)
-		const data = JSON.stringify(prospect)
 		const result = await db.query(query)
 
 		res.setHeader('Content-Type', 'application/json')

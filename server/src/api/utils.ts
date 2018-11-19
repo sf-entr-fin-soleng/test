@@ -39,6 +39,7 @@ function getWriteQuery(type, data, isInsert): string {
 	let query = ''
 
 	if (isInsert) {
+		data.id = uuid()
 		query = `INSERT INTO sfgc.mock_container__c (Heroku_Id__c, Type__c, Data__c, Heroku_Parent_Id__c)`
 		query += ` VALUES ('${data.id}', '${type}', '${parseData(data)}'`
 		query += `,'${data.parentId ? data.parentId : 'null'}')`

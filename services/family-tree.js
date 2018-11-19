@@ -10,4 +10,15 @@ async function fetchFamilyTree(prospectId) {
 	}
 }
 
-export { fetchFamilyTree }
+async function saveFamilyTree(prospectId, tree) {
+	try {
+		const url = `/api/family-tree/saveOne.json`
+		const result = Api().post(url, { prospectId, tree })
+
+		return result
+	} catch (err) {
+		throw err
+	}
+}
+
+export { fetchFamilyTree, saveFamilyTree }

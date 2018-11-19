@@ -7,7 +7,7 @@ import * as _ from 'lodash'
 async function fetchFamilyTree(req, res) {
 	try {
 		const prospectId = req.query.prospectId
-		const query = utils.getBaseQuery(types.goals, null, prospectId)
+		const query = utils.getBaseQuery(types.familyTree, null, prospectId)
 		const result = await db.query(query)
 
 		let familyTree = Object.assign({}, models.familyTree)
@@ -26,4 +26,30 @@ async function fetchFamilyTree(req, res) {
 	}
 }
 
-export { fetchFamilyTree }
+async function saveFamilyTree(req, res) {
+	try {
+		console.log('Req.body', req.body)
+
+		const prospectId = req.body.prospectId
+		const tree = req.body.tree
+
+		tree.parentId = prospectId
+		const query = utils.getWriteQuery(
+			types.familyTree,
+			tree,
+			tree.id === undefined
+		)
+
+		const result = await db.query(query)
+
+		res.setHeader('Content-Type', 'application/json')
+		res.end(JSON.stringify(result, null, 2))
+	} catch (err) {
+		console.error(err)
+
+		res.setHeader('Content-Type', 'application/json')
+		res.end(JSON.stringify(err, null, 2))
+	}
+}
+
+export { fetchFamilyTree, saveFamilyTree }

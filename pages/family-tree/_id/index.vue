@@ -55,28 +55,38 @@
 
 						<!-- Display parent node -->
 						<div 
-							v-for="parent in familyTree[key].parents" 
+							v-for="(parent, index) in familyTree[key].parents" 
 							:key="parent.lastName"
 							class="slds-col slds-medium-size_1-of-2 slds-small-size_1-of-1">
-							<a 
-								href="#">
-								<div class="family-tree_member-container">
-									<div class="family-tree-member_letter-container">
+							
+							<nuxt-link 
+								:to="{
+									name:'family-tree-id-action', 
+									params: { 
+										id: $route.params.id, 
+										action: 'edit',
+										path: 'self.parents.' + index,
+										filter: 'parent'
+									}
+								}"
+							><div class="family-tree_member-container">
+								<div class="family-tree-member_letter-container">
 
-										<div class="family-tree-member_letter_icon slds-align_absolute-center">
-											<p>{{ parent.firstName[0] }}</p>
-										</div>
+									<div class="family-tree-member_letter_icon slds-align_absolute-center">
+										<p>{{ parent.firstName[0] }}</p>
+									</div>
 
-									</div>
-									<div class="family-tree-member_name-age-container">
-										<p class="family-tree-member_name-age">
-											{!item.firstName}&nbsp;
-											<span>({!item.age})</span>
-										</p>
-										<p class="family-tree-member_label">({!item.relationship})</p>
-									</div>
 								</div>
-							</a>
+								<div class="family-tree-member_name-age-container">
+									<p class="family-tree-member_name-age">
+										{!item.firstName}&nbsp;
+										<span>({!item.age})</span>
+									</p>
+									<p class="family-tree-member_label">({!item.relationship})</p>
+								</div>
+							</div></nuxt-link>
+								
+							
 						</div>
 	
 						<!-- Add parents button section -->
@@ -84,7 +94,17 @@
 							<div>
 								<a 
 									href="#">
-									<button class="slds-button slds-button_neutral">
+									<button 
+										class="slds-button slds-button_neutral" 
+										@click="$router.push({
+											name:'family-tree-id-action', 
+											params: { 
+												id: $route.params.id, 
+												action: 'new',
+												path: key + '.parents',
+												filter: 'parent'
+											}
+									})">
 										<img 
 											src="{!$Resource.formspatternlib + '/formspatternlib/images/icons/plus-icon.svg'}"
 											alternativeText="plus" 
@@ -103,7 +123,16 @@
 				<div class="family-tree_add-member slds-col slds-size_1-of-1">
 					<div>
 						<nuxt-link 
-							:to="{name:'family-tree-id-node', params: { key: 'parents', relatedTo: 'self' }}">
+							:to="{
+								name:'family-tree-id-action', 
+								params: { 
+									id: $route.params.id, 
+									action: 'new', 
+									path: 'self.parents', 
+									filter: 'parent' 
+								}
+							}"
+						>
 							<button class="slds-button slds-button_neutral">
 								<img 
 									src="{!$Resource.formspatternlib + '/formspatternlib/images/icons/plus-icon.svg'}"
@@ -121,21 +150,30 @@
 				<div class="slds-grid slds-col slds-size_9-of-12 slds-grid_align-center slds-wrap igforms-utils__max-width--large">
 					<div class="family-tree_clients-picture-container">
 						<!-- Node's first letter, firstName, and age -->
-						<a 
+						<nuxt-link 
 							v-for="(value, key) in familyTree"
 							v-if="familyTree[key] !== undefined && familyTree[key].firstName !== undefined"
 							:key="key" 
-							href="#">
-							<div class="family-tree_clients-picture-border">
-								<div class="family-tree_clients-picture slds-align_absolute-center">
-									<p>{{ familyTree[key].firstName[0] }}</p>
-								</div>
+							:to="{
+								name:'family-tree-id-action', 
+								params: { 
+									id: $route.params.id, 
+									action: 'edit', 
+									path: 'partner', 
+									filter: 'partner' 
+								}
+							}"
+						><div class="family-tree_clients-picture-border">
+							<div class="family-tree_clients-picture slds-align_absolute-center">
+								<p>{{ familyTree[key].firstName[0] }}</p>
 							</div>
+						</div>
 							<p class="family-tree-member_name-age">
-								{{ familyTree[key].firstName }}&nbsp;
-								<span>({{ familyTree[key].age }})</span>
-							</p>
-						</a>
+								{{ familyTree[key].firstName.length > 1 ? familyTree[key].firstName : '' }}&nbsp;
+								<span v-if="familyTree[key].age">({{ familyTree[key].age }})</span>
+						</p></nuxt-link>
+						
+							
 					</div>
 				</div>
 			</div>
@@ -474,14 +512,18 @@ export default {
 	},
 
 	async asyncData({ app, store, params }) {
-		if (!store.state.prospect.prospect.id) {
-			await store.dispatch('prospect/fetchProspect', params.id)
-		}
-
-		await store.dispatch('familyTree/fetchTree')
+		await store.dispatch('prospect/fetchProspect', params.id)
+		await store.dispatch(
+			'familyTree/fetchTree',
+			store.state.prospect.prospect.id
+		)
 	},
 
 	data: function() {
+		if (!this.$store.state.prospect.prospect.firstName) {
+			this.$router.push('/')
+		}
+
 		return {
 			title: 'Family Tree',
 			debug: true
@@ -511,7 +553,8 @@ export default {
 			let valid = false
 
 			for (let key in tree) {
-				valid = tree[key] && tree[key][path].length > 0
+				valid =
+					tree[key] && tree[key][path] && tree[key][path].length > 0
 				if (valid) break
 			}
 
