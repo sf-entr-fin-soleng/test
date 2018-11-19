@@ -37,7 +37,7 @@
 		"@types/nanoid": "^1.2.0",
 		"@types/pg": "^7.4.11",
 		"babel-eslint": "^8.2.1",
-		"eslint": "^5.0.1",
+		"eslint": "^5.9.0",
 		"eslint-config-prettier": "^3.1.0",
 		"eslint-loader": "^2.0.0",
 		"eslint-plugin-prettier": "2.6.2",

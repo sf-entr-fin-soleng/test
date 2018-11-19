@@ -23,6 +23,7 @@ async function fetchProspects(searchParams) {
 		return data
 	} catch (err) {
 		console.error(err)
+		return []
 	}
 }
 

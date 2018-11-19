@@ -21,6 +21,7 @@ export const actions = {
 
 			return prospect
 		} catch (err) {
+			console.log('Couldn not fetch prospect. Error details:', err)
 			throw err
 		}
 	},

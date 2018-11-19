@@ -1,7 +1,9 @@
 <template>
 	<div class="client-table slds-col slds-medium-size_10-of-12 igforms-utils__max-width--large">
 		<div class="slds-clearfix slds-m-top_medium">
-			<div class="slds-float_right slds-text-body_small slds-m-top_large slds-m-bottom_medium client-table-result-label">
+			<div 
+				v-if="rows.length > 0" 
+				class="slds-float_right slds-text-body_small slds-m-top_large slds-m-bottom_medium client-table-result-label">
 				{{ resultLabel }}
 			</div>
 		</div>
