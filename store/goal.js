@@ -1,5 +1,6 @@
 import types from './types'
 import services from '../services'
+import { cloneDeep } from 'lodash'
 
 const priorities = {
 	nil: 'none',
@@ -11,89 +12,82 @@ const priorities = {
 const base = {
 	priority: 'none',
 	accept: Object.keys(priorities).map(key => priorities[key]),
-	elements: []
+	details: []
 }
 
 export const state = () => {
-	const goals = {}
+	const trays = {}
 
 	for (let key in priorities) {
 		const priority = priorities[key]
 
-		goals[priority] = Object.assign(Object.assign({}, base), {
+		trays[priority] = Object.assign(Object.assign({}, base), {
 			priority
 		})
 	}
 
 	return {
-		goals,
-		details: {}
+		trays,
+		goals: {},
+		detailInfo: {},
+		priorities
 	}
 }
 
 export const mutations = {
-	// Goals are fetched as an array from the server
-	// but transformed into a plain object-map since
-	// they only contain read-only information
-	[types.goal.mutation.FETCH_GOAL_SUCCESS](state, payload) {
-		const goalMap = {}
+	fetchFinished(state, payload) {
+		payload.goals.forEach(goal => (state.goals[goal.id] = goal))
 
-		// Parse each goal into key-value pair
-		payload.goals.forEach(goal => {
-			// Make sure every goal has a detail associated to id
-			goal.detail = { goalId: goal.id }
-			goalMap[goal.id] = goal
-		})
-
-		// Assign detail to goals
-		payload.details.forEach(detail => {
-			const goal = goalMap[detail.goalId]
-			if (goal) goal.detail = detail
-		})
-
-		// Initialize arrays
-		for (let key in state.goals) {
-			state.goals[key].elements = []
+		const detailInfo = {
+			id: undefined,
+			parentId: payload.prospectId,
+			trays: {},
+			...payload.detailInfo
 		}
 
-		// Sort into categories
-		for (let key in goalMap) {
-			const goal = goalMap[key]
-			const priority = goal.detail.priority
+		// Initialize goal trays
+		for (let key in state.trays) state.trays[key].details = []
 
-			state.goals[
-				priority ? priority.toString.toLowerCase() : 'none'
-			].elements.push({
-				...goal
-			})
+		if (detailInfo.id) {
+			for (let key in priorities) {
+				const priority = priorities[key]
+				detailInfo.trays[priority].details.forEach(detail => {
+					state.trays[priority].details.push(detail)
+				})
+			}
+		} else {
+			for (let id in state.goals)
+				state.trays[priorities.nil].details.push({ goalId: id })
 		}
 
-		state.details = payload.details
+		state.detailInfo = detailInfo
 	},
 
 	[types.goal.mutation.WRITE_DETAIL_SUCCESS](state, { result }) {
-		console.log('Goal detail saved to the server...')
+		state.detailInfo = result
 	},
 
 	// Mutations called by the component directly
-	updateElement(state, { priority, elements }) {
-		state.goals[priority].elements = elements
+	updateDetails(state, { priority, details }) {
+		state.trays[priority].details = details
+	},
+
+	updateSingleDetail(state, { priority, detailIndex, detail }) {
+		state.trays[priority].details[detailIndex] = detail
 	}
 }
 
 export const actions = {
-	async [types.goal.action.FETCH_GOALS]({ commit, state }, prospectId) {
+	// Initial action, fetch all goals and all
+	// details from the server for the specified
+	// prospect id. Then, call the mutation that
+	// will handle linking goals and details
+	async [types.goal.action.FETCH_GOALS]({ commit }, prospectId) {
 		try {
-			console.log('fetching goals...', prospectId)
 			const goals = await services.goal.fetchGoals()
-			const details = await services.goal.fetchDetails(prospectId)
+			const detailInfo = await services.goal.fetchDetails(prospectId)
 
-			commit(types.goal.mutation.FETCH_GOAL_SUCCESS, {
-				goals,
-				details
-			})
-
-			//console.log(('details', JSON.stringify(details, null, 2)))
+			commit('fetchFinished', { goals, detailInfo, prospectId })
 
 			return goals
 		} catch (err) {
@@ -101,44 +95,31 @@ export const actions = {
 		}
 	},
 
-	async [types.goal.action.WRITE_DETAILS](
-		{ commit, state },
-		{ prospectId, to }
-	) {
+	async [types.goal.action.WRITE_DETAILS]({ commit, state }) {
 		try {
-			// Fetch goal information from state
-			const goals = state.goals
-
-			// Initialize details container
-			const details = { parentId: prospectId, elements: [] }
-
-			// For every priority, fetch all
-			// goals assigned to it
-			for (let key in state.goals) {
-				const goals = state.goals[key].elements
-
-				// If the current 'priority tray' id
-				// matches the 'to' target, assign
-				// new priority to the goal detail
-				goals.forEach(goal => {
-					goal.detail.priority =
-						key === to ? key : goal.detail.priority
-					details.elements.push(goal.detail)
-				})
+			const detailInfo = {
+				id: state.detailInfo.id,
+				parentId: state.detailInfo.parentId,
+				trays: {}
 			}
 
-			if (!details.parentId) {
-				throw 'Cannot save details for a nil prospect!'
+			// Trust what has been put in state
+			// by Sortable and Vue's computed props
+			for (let key in state.trays) {
+				const tray = state.trays[key]
+				detailInfo.trays[key] = {}
+				detailInfo.trays[key].details = state.trays[key].details
 			}
 
-			console.log('saving:', details)
-
-			const result = await services.goal.saveDetails(details)
+			const result = await services.goal.saveDetails(detailInfo)
 			commit(types.goal.mutation.WRITE_DETAIL_SUCCESS, { result })
-
-			return result.data
 		} catch (err) {
 			throw err
 		}
+	},
+
+	saveDetail({ commit, state }, payload) {
+		const { priority, index, detail } = { ...payload }
+		state.trays[priority].details[index] = detail
 	}
 }

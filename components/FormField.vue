@@ -1,65 +1,119 @@
 <template>
-	<section>
-		<div :class="['slds-form-element', valid ? '' : 'slds-has-error']">
-			<label 
-				class="slds-form-element__label" 
-				for="text-input-id-1">{{ label }}</label>
-			<div class="slds-form-element__control">
-				<input
-					ref="input" 
-					:id="id"
-					:value="value" 
-					:type="type" 
-					:min="min"
-					:max="max"
-					:step="step"
-					:maxlength="maxlength"
-					:required="required"
-					:pattern="pattern"
-					:checked="checked"
-					:name="name"
-					:class="['slds-input', classNames]"
-					@blur="checkValidity($event)"
-					@input="updateValue($event)"
-				>
-			</div>
+	
+	<div :class="['slds-form-element', valid ? '' : 'slds-has-error']">
+		<label 
+			class="slds-form-element__label" 
+			for="text-input-id-1">{{ label }}</label>
+
+		<div class="slds-form-element__control">
+
+			<!-- Traditional input -->
+			<input
+				v-if="rootType === 'input'"
+				ref="input" 
+				v-bind="$attrs"
+				:value="value"
+				:class="['slds-input', classNames]"
+				@blur="updateOnBlur ? updateValue($event) : null"
+				@keyup.prevent="updateOnKeyUp ? updateValue($event) : null"
+			>
+
+			<!-- Picklist -->
+			<select 
+				v-if="rootType === 'select'" 
+				ref="input"
+				v-bind="$attrs"
+				:value="value" 
+				class="slds-select"
+				@input="updateValue($event)">
+				<!-- Default slot is allocated for picklists
+				due to <select> looking for options right away -->
+				<slot/>
+			</select>
+
+			<!-- Slider -->
 			<div 
-				v-if="!valid"
-				role="alert" 
-				class="slds-form-element__help" 
-				lightning-input_input="">{{ errorMessage }}</div>
+				v-if="rootType === 'slider'" 
+				class="slds-slider">
+				<input 
+					ref="input" 
+					v-bind="$attrs" 
+					:value="value"
+					:class="['slds-slider__range', classNames]"
+					type="range"
+					@input="updateValue($event)">
+				<!-- Slot for any elements that should be displayed
+				to the side of the slider -->
+				<slot name="sliderValue"/>
+			</div>
+
+			<!-- Textarea -->
+			<textarea 
+				v-if="rootType === 'textarea'" 
+				ref="input" 
+				v-bind="$attrs" 
+				:value="value" 
+				:class="['slds-textarea', classNames]"
+				@blur="updateOnBlur ? updateValue($event) : null"
+				@keyup.prevent="updateOnKeyUp ? updateValue($event) : null"/>
 		</div>
-	</section>
+		<div 
+			v-if="!valid"
+			role="alert" 
+			class="slds-form-element__help" 
+			lightning-input_input="">{{ errorMessage }}</div>
+	</div>
 </template>
 
 <script>
 export default {
-	props: {
-		// FIXME: use $attrs and $listeners here
-		// in order to avoid this lengthy list of
-		// standard properties such as (min, max, maxlength, etc..)
+	inheritAttrs: false,
 
-		id: { type: String, default: undefined },
-		classNames: { type: String, default: undefined },
-		type: { type: String, default: 'string' },
-		value: { type: null, default: undefined },
-		name: { type: String, default: undefined },
-		min: { type: Number, default: undefined },
-		max: { type: Number, default: undefined },
-		step: { type: Number, default: 1 },
-		maxlength: { type: Number, default: undefined },
-		checked: { type: Boolean, default: undefined },
-		required: { type: Boolean, default: undefined },
-		pattern: { type: String, default: undefined },
-		label: { type: String, default: 'Input Field' },
-		invalidMessage: { type: String, default: 'Invalid input detected.' },
-		requiredMessage: { type: String, default: 'Complete this field.' },
-		customValidation: { type: Function, default: undefined },
-		filter: { type: Function, default: undefined }
+	props: {
+		rootType: {
+			type: String,
+			default: 'input'
+		},
+		classNames: {
+			type: String,
+			default: undefined
+		},
+		value: {
+			type: null,
+			default: undefined
+		},
+		label: {
+			type: String,
+			default: 'Input Field'
+		},
+		invalidMessage: {
+			type: String,
+			default: 'Invalid input detected.'
+		},
+		requiredMessage: {
+			type: String,
+			default: 'Complete this field.'
+		},
+		customValidation: {
+			type: Function,
+			default: undefined
+		},
+		filter: {
+			type: Function,
+			default: undefined
+		},
+		updateOnBlur: {
+			type: Boolean,
+			default: true
+		},
+		updateOnKeyUp: {
+			type: Boolean,
+			default: true
+		}
 	},
+
 	data: function() {
 		return {
-			pristine: true,
 			valid: true,
 			errorMessage: ''
 		}
@@ -77,10 +131,6 @@ export default {
 			if (!event) {
 				event = { target: this.$refs.input }
 			}
-
-			// Make sure comparison is not case-sensitive
-			const type = this.type.toLowerCase()
-			this.pristine = false
 
 			// Boolean to check whether or not
 			// current input has something in it
@@ -122,9 +172,9 @@ export default {
 			let value = event.target.value
 			if (this.filter) value = this.filter(value)
 
-			// 'input' is a little bit of vue+nuxt magic
-			// to update whatever property was binded
-			// through the v-model directive
+			// Update whatever property was binded
+			// through the v-model directive and
+			// check the field's validity
 			this.$emit('input', value)
 			this.checkValidity(event)
 		}

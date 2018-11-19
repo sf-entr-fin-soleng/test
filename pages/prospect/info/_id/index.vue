@@ -104,8 +104,8 @@ export default {
 	data: function() {
 		return {
 			title: 'Add Prospect',
-			testValue: 'My test Value',
 			debug: true,
+
 			localProspect: Object.assign(
 				{},
 				this.$store.state.prospect.prospect
@@ -124,8 +124,9 @@ export default {
 				)
 
 				this.$router.push({
-					path: '/goals/' + this.localProspect.id,
+					path: '/',
 					params: { command: result.command }
+					// TODO: fix prospectID retrieval + command send
 				})
 			} catch (err) {
 				console.error(err)

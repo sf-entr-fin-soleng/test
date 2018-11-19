@@ -23,9 +23,8 @@ async function fetchDetails(prospectId) {
 async function saveDetails(goalDetails) {
 	try {
 		const url = `/api/goal/detail/saveAll.json`
-		const result = Api().post(url, goalDetails)
-
-		return result
+		const { data } = await Api().post(url, goalDetails)
+		return data
 	} catch (err) {
 		throw err
 	}

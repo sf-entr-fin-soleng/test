@@ -7,8 +7,8 @@ const prospect = {
 	},
 
 	action: {
-		FETCH_PROSPECT: 'fetch',
-		SAVE_PROSPECT: 'write'
+		FETCH_PROSPECT: 'fetchProspect',
+		SAVE_PROSPECT: 'writeProspect'
 	}
 }
 

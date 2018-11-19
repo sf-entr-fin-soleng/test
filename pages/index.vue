@@ -6,11 +6,12 @@
 		<Header :title="title"/>
 
 		<!-- Search Bar -->
-		<SearchBar @search-updated="handleSearch"/>
+		<SearchBar 
+			@search-updated="handleSearch"/>
 
 		<!-- Show 'created/updated' toast whenever
 		$route has the specified parameter -->
-		<div 
+		<div
 			v-if="this.$route.params.command" 
 			class="kyc-toast kyc-toast_success slds-grid slds-col slds-size_12-of-12 slds-grid_align-center">
 			<div class="slds-medium-size_11-of-12 igforms-utils__max-width--large">
@@ -74,12 +75,13 @@ export default {
 		Paginator
 	},
 
-	async asyncData({ app }) {
+	async asyncData({ app, store }) {
 		try {
-			const prospects = await services.prospect.fetchProspects({
+			let prospects = await services.prospect.fetchProspects({
 				perPage: 5,
 				offset: 0
 			})
+
 			return { prospects }
 		} catch (err) {
 			console.error(err)
@@ -120,7 +122,7 @@ export default {
 		// and using an event bus for this is overkill
 		paginationLabel: function() {
 			const { offset, perPage, term } = { ...this.searchParams }
-			const prospect = this.prospects[0]
+			const prospect = this.prospects[0] ? this.prospects[0] : {}
 			if (prospect)
 				return `Showing ${offset + 1}-${
 					offset + perPage > prospect.totalCount
@@ -164,9 +166,8 @@ export default {
 
 		// Datatable 'click-row' event
 		handleRowClick: function(rowData) {
-			console.log('clicked', rowData)
 			this.$router.push({
-				path: `/prospect/info/${rowData.id ? rowData.id : ''}`
+				path: `/dashboard/${rowData.id ? rowData.id : ''}`
 			})
 		},
 

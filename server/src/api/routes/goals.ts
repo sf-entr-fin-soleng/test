@@ -9,7 +9,13 @@ async function fetchGoals(req, res) {
 		const result = await db.query(query)
 
 		res.setHeader('Content-Type', 'application/json')
-		res.end(JSON.stringify(result.rows.map(row => utils.parseObject(row))))
+		res.end(
+			JSON.stringify(
+				result.rows.map(row => utils.parseObject(row)),
+				null,
+				2
+			)
+		)
 	} catch (err) {
 		console.error(err)
 
@@ -21,19 +27,22 @@ async function fetchGoals(req, res) {
 async function fetchGoalDetails(req, res) {
 	try {
 		const prospectId = req.query.prospectId
-		if (!prospectId) {
+		let details = {}
+
+		if (!prospectId || prospectId === 'undefined') {
 			throw { code: 500, message: 'Invalid prospect id provided' }
-		} else {
-			console.log('looking for prospect...', prospectId)
 		}
 
-		const query = utils.getBaseQuery(types.goalDetails, prospectId)
+		const query = utils.getBaseQuery(types.goalDetails, null, prospectId)
 		const result = await db.query(query)
 
-		console.log(result.rows)
+		if (result.rows.length > 0) {
+			const row = result.rows[0]
+			details = utils.parseObject(row)
+		}
 
 		res.setHeader('Content-Type', 'application/json')
-		res.end(JSON.stringify(result.rows.map(row => utils.parseObject(row))))
+		res.end(JSON.stringify(details, null, 2))
 	} catch (err) {
 		console.error(err)
 		res.setHeader('Content-Type', 'application/json')
@@ -43,33 +52,36 @@ async function fetchGoalDetails(req, res) {
 
 async function saveDetails(req, res) {
 	try {
+		// Fetch details data from POST body
 		const details = req.body
-		const data = JSON.stringify(details)
-
 		let query = ''
 
 		if (!details.parentId) {
 			throw { statusCode: 500, message: 'No valid parentId' }
-		}
-
-		if (details.id) {
-			// UPDATE
-			query = `UPDATE sfgc.mock_container__c SET 
-			${details.parentId ? `Mock_Container__c = '${details.parentId}',` : ''} 
-			Data__c = '${data}', Type__c = 'Goal/Detail' WHERE Sfid = '${details.id}'`
 		} else {
-			// INSERT
-			query = `INSERT INTO sfgc.mock_container__c (${
-				details.parentId ? 'Mock_Container__c,' : ''
-			} Type__c, Data__c) VALUES (${
-				details.parentId ? `'${details.parentId}',` : ''
-			} 'Goal/Detail', '${data}' )`
+			query = utils.getBaseQuery(types.prospect, details.parentId)
+			const { rows } = await db.query(query)
+			if (rows.length <= 0) {
+				throw { statusCode: 500, message: 'ParentID does not exist' }
+			}
 		}
 
+		// If details has no ID assigned,
+		// generate unique ID and save it
+		// back to the database
+		if (!details.id) {
+			details.id = utils.uuid()
+			query = utils.getWriteQuery(types.goalDetails, details, true)
+		} else {
+			query = utils.getWriteQuery(types.goalDetails, details, false)
+		}
+
+		// Execute query
 		const result = await db.query(query)
+		console.log(Date.now().toString(), result.data)
 
 		res.setHeader('Content-Type', 'application/json')
-		res.end(JSON.stringify(result, null, 2))
+		res.end(JSON.stringify(details, null, 2))
 	} catch (err) {
 		console.error(err)
 		res.setHeader('Content-Type', 'application/json')

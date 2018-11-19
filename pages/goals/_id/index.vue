@@ -1,27 +1,30 @@
 <template>
 	<div>
 		<Header :title="title"/>
-		<div class="cGoals_And_Concerns">
+		<div 
+			class="cGoals_And_Concerns" 
+			@keyup.enter="handleNext">
 			<pre v-if="debug">{{ goals }}</pre>
 			<GoalsTray 
-				:debug="true"
 				name="High Priority" 
 				priority="high"
-				@autosave="handleSave"/>
+			/>
 			<GoalsTray 
-				:debug="true" 
 				name="Medium Priority" 
 				priority="medium"
-				@autosave="handleSave"/>
+			/>
 			<GoalsTray 
-				:debug="true" 
 				name="Low Priority" 
 				priority="low"
-				@autosave="handleSave"/>
+			/>
 			<GoalsTray 
-				:debug="false" 
 				priority="none"
-				@autosave="handleSave"/>
+			/>
+
+			<NavBar 
+				next-label="Save"
+				@click-prev="$router.push('/')" 
+				@click-next="handleNext"/>
 		</div>
 	</div>
 	
@@ -30,6 +33,7 @@
 <script>
 import { mapActions } from 'vuex'
 import GoalsTray from '~/components/GoalsTray'
+import NavBar from '~/components/NavBar'
 import Header from '~/components/Header'
 import services from '~/services'
 import types from '~/store/types'
@@ -37,14 +41,16 @@ import types from '~/store/types'
 export default {
 	components: {
 		GoalsTray,
-		Header
+		Header,
+		NavBar
 	},
 
 	async asyncData({ store, params }) {
-		await store.dispatch(
-			`${types.goal.prefix}/${types.goal.action.FETCH_GOALS}`,
-			params.id
-		)
+		try {
+			await store.dispatch(`goal/fetchGoals`, params.id)
+		} catch (err) {
+			throw err
+		}
 	},
 
 	data: function() {
@@ -52,10 +58,9 @@ export default {
 	},
 
 	methods: {
-		handleSave: async function() {
-			// await this.$store.dispatch(
-			// 	'goal/' + types.goal.action.WRITE_DETAILS
-			// )
+		handleNext: function() {
+			this.$store.dispatch('goal/writeDetails')
+			this.$router.push('timeline')
 		}
 	}
 }

@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import VueCurrencyFilter from 'vue-currency-filter'
+
 /**
  * Formats a phone number.
  * Example: 123-456-7890 => (123) 456-7890
@@ -12,4 +14,13 @@ Vue.filter('phone', function(phone) {
 			.replace(/[^0-9]/g, '')
 			.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')
 	}
+})
+
+Vue.use(VueCurrencyFilter, {
+	symbol: '$',
+	thousandsSeparator: ',',
+	fractionCount: 2,
+	fractionSeparator: '.',
+	symbolPosition: 'front',
+	symbolSpacing: true
 })

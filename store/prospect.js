@@ -10,19 +10,18 @@ export const mutations = {
 		state.prospect = prospect
 	},
 
-	[types.prospect.mutation.WRITE_SUCCESS](state, { result }) {
-		console.log('Prospect saved to the server...')
-	}
+	[types.prospect.mutation.WRITE_SUCCESS](state, { result }) {}
 }
 
 export const actions = {
-	async [types.prospect.action.FETCH_PROSPECT]({ commit, state }, id) {
+	async [types.prospect.action.FETCH_PROSPECT]({ commit }, id) {
 		try {
 			const prospect = await services.prospect.fetchProspectById(id)
 			commit(types.prospect.mutation.FETCH_SUCCESS, prospect)
 
 			return prospect
 		} catch (err) {
+			console.log('Couldn not fetch prospect. Error details:', err)
 			throw err
 		}
 	},
@@ -32,7 +31,7 @@ export const actions = {
 			const result = await services.prospect.saveProspect(prospect)
 			commit(types.prospect.mutation.WRITE_SUCCESS, { result })
 
-			return result.data
+			return result
 		} catch (err) {
 			throw err
 		}
