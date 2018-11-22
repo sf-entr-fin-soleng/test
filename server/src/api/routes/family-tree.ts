@@ -16,6 +16,15 @@ async function fetchFamilyTree(req, res) {
 			familyTree = utils.parseObject(result.rows[0])
 		}
 
+		if (familyTree.self && familyTree.partner) {
+			if (familyTree.self.firstName && familyTree.partner.firstName) {
+				familyTree.both.firstName = 'Both'
+				familyTree.both.lastName = `${familyTree.self.firstName} & ${
+					familyTree.partner.firstName
+				}`
+			}
+		}
+
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(familyTree, null, 2))
 	} catch (err) {
@@ -28,7 +37,7 @@ async function fetchFamilyTree(req, res) {
 
 async function saveFamilyTree(req, res) {
 	try {
-		console.log('Req.body', req.body)
+		console.log('Family tree:', req.body)
 
 		const prospectId = req.body.prospectId
 		const tree = req.body.tree

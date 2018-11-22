@@ -44,7 +44,7 @@
 					<!-- For each main key with defined parents -->
 					<div 
 						v-for="(value, key) in familyTree"
-						v-if="familyTree[key] && familyTree[key].parents && familyTree[key].parents.length >= 0"
+						v-if="familyTree[key] && familyTree[key].parents && familyTree[key].parents.length > 0"
 						:key="key" 
 						class="slds-grid slds-col slds-wrap slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-small-size_1-of-1">
 						<div class="slds-col slds-medium-size_1-of-1">
@@ -65,8 +65,10 @@
 									params: { 
 										id: $route.params.id, 
 										action: 'edit',
-										path: 'self.parents.' + index,
-										filter: 'parent'
+										root: key,
+										sub: 'parents',
+										index: index,
+										filter: 'parents'
 									}
 								}"
 							><div class="family-tree_member-container">
@@ -79,10 +81,10 @@
 								</div>
 								<div class="family-tree-member_name-age-container">
 									<p class="family-tree-member_name-age">
-										{!item.firstName}&nbsp;
-										<span>({!item.age})</span>
+										{{ parent.firstName }}&nbsp;
+										<span>({{ parent.age }})</span>
 									</p>
-									<p class="family-tree-member_label">({!item.relationship})</p>
+									<p class="family-tree-member_label">({{ parent.relationship.label }})</p>
 								</div>
 							</div></nuxt-link>
 								
@@ -101,8 +103,9 @@
 											params: { 
 												id: $route.params.id, 
 												action: 'new',
-												path: key + '.parents',
-												filter: 'parent'
+												root: key,
+												sub: 'parents',
+												filter: 'parents'
 											}
 									})">
 										<img 
@@ -127,9 +130,10 @@
 								name:'family-tree-id-action', 
 								params: { 
 									id: $route.params.id, 
-									action: 'new', 
-									path: 'self.parents', 
-									filter: 'parent' 
+									action: 'new',
+									root: 'self',
+									sub: 'parents',
+									filter: 'parents'
 								}
 							}"
 						>
@@ -152,7 +156,7 @@
 						<!-- Node's first letter, firstName, and age -->
 						<nuxt-link 
 							v-for="(value, key) in familyTree"
-							v-if="familyTree[key] !== undefined && familyTree[key].firstName !== undefined"
+							v-if="key !== 'both' && familyTree[key] !== undefined && familyTree[key].firstName !== undefined"
 							:key="key" 
 							:to="{
 								name:'family-tree-id-action', 
@@ -500,7 +504,9 @@
 				</div>
 
 			</div>
-</div></div></template>
+		</div>
+	</div>
+</template>
 
 <script>
 import Header from '~/components/Header.vue'
@@ -512,11 +518,20 @@ export default {
 	},
 
 	async asyncData({ app, store, params }) {
+		// Fetch prospect from id parameter and also
+		// fetch the corresponding family tree
 		await store.dispatch('prospect/fetchProspect', params.id)
 		await store.dispatch(
 			'familyTree/fetchTree',
 			store.state.prospect.prospect.id
 		)
+
+		// Any node that is/should be a prospect
+		// needs to be specified here so both the
+		// tree and prospect information match
+		await store.dispatch('familyTree/assignProspects', [
+			{ prospect: store.state.prospect.prospect, path: 'self' }
+		])
 	},
 
 	data: function() {
@@ -532,18 +547,7 @@ export default {
 
 	computed: {
 		familyTree: function() {
-			// @antonio.cordeiro
-			// FIXME: Implement this on the backend, resolving any
-			// nodes that can potentially be prospects/clients before
-			// returning the tree data to the client
-
-			const tree = cloneDeep(this.$store.state.familyTree.tree)
-			tree.self = Object.assign(
-				tree.self,
-				this.$store.state.prospect.prospect
-			)
-
-			return tree
+			return this.$store.state.familyTree.tree
 		}
 	},
 

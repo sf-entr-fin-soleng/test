@@ -1,7 +1,7 @@
 import types from './types'
 import services from '../services'
 
-import { get, set } from 'lodash'
+import { get, set, cloneDeep } from 'lodash'
 
 export const state = () => {
 	return {
@@ -20,12 +20,25 @@ export const mutations = {
 
 	[types.familyTree.mutation.WRITE_NODE_START](state, { path, node }) {
 		const value = get(state.tree, path)
-		if (value && value.length) {
+		if (value && value.length !== undefined) {
 			value.push(node)
 			set(state.tree, path, value)
 		} else if (value) {
 			set(state.tree, path, node)
 		}
+	},
+
+	[types.familyTree.mutation.ASSIGN_PROSPECTS](state, prospectList) {
+		prospectList.forEach(prospect => {
+			const path = prospect.path
+			const data = prospect.prospect
+
+			const node = get(state.tree, path, undefined)
+			if (node) {
+				const result = Object.assign(node, data)
+				set(state.tree, path, result)
+			}
+		})
 	}
 }
 
@@ -46,5 +59,10 @@ export const actions = {
 
 	[types.familyTree.action.WRITE_NODE]({ commit }, { path, node }) {
 		commit(types.familyTree.mutation.WRITE_NODE_START, { path, node })
+	},
+
+	[types.familyTree.action.ASSIGN_PROSPECTS]({ commit }, prospectList) {
+		const clonedList = cloneDeep(prospectList)
+		commit(types.familyTree.mutation.ASSIGN_PROSPECTS, clonedList)
 	}
 }

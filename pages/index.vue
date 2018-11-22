@@ -54,7 +54,7 @@
 
 		<!-- Pagination -->
 		<Paginator 
-			:record-count="prospects ? parseInt(prospects[0].totalCount) : 0" 
+			:record-count="prospects ? parseInt(prospects[0] ? prospects[0].totalCount : 0) : 0" 
 			@page-change="handlePageChange"/>
 		
 	</section>

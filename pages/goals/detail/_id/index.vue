@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section class="cPage_GoalDetails">
 		<Header title="Goal Details"/>
 
 		<div v-if="debug">
