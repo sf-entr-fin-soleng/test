@@ -1,10 +1,10 @@
 <template>
 	<section class="cFamilyTreeInputForm">
 		<Header title="Family Tree"/>
-		<pre v-if="debug">{{ node }}</pre>
-		<pre v-if="debug">{{ relatedTo }}</pre>
-		<pre v-if="debug">{{ params }}</pre>
-		<pre v-if="debug">{{ $store.state.familyTree.tree }}</pre>
+		<pre v-if="debug">NODE: {{ node }}</pre>
+		<pre v-if="debug">RELATED_TO: {{ relatedTo }}</pre>
+		<pre v-if="debug">PARAMS: {{ params }}</pre>
+		<pre v-if="debug">STORE: {{ $store.state.familyTree.tree }}</pre>
 
 		<div class="family-tree_header slds-size_12-of-12 slds_grid-align-center">
 			<div class="questionnaire-header slds-col slds-size_12-of-12 slds_grid-align-center">
@@ -76,7 +76,8 @@
 								<!-- Related to picklist-->
 								<div class="slds-col slds-size_1-of-2">
 									<form-field
-										v-model="params.path"
+										v-if="params.filter !== 'partner'"
+										v-model="path"
 										root-type="select" 
 										label="Related To"
 										required>
@@ -269,7 +270,10 @@ export default {
 		}
 
 		// Construct path from parameters
-		const path = `${root}.${sub}${index !== undefined ? `.${index}` : ''}`
+		// eslint-disable-next-line prettier/prettier
+		const path = `${root}${sub ? `.${sub}` : ''}${
+			index !== undefined ? `.${index}` : ''
+		}`
 
 		// Client node model
 		let node = {
@@ -279,12 +283,13 @@ export default {
 
 		// If this is a new node, but no path has been
 		// specified by the previous page, return
-		if (action !== 'new' && (!root || !sub)) {
+		if (action !== 'new' && !root) {
 			this.$router.push('/')
 		}
+
 		// Else just fetch the node from the family
 		// tree and combine with our base model
-		else if (root && sub) {
+		else if (root && action === 'edit') {
 			const treeNode = get(this.$store.state.familyTree.tree, path)
 			if (treeNode) node = Object.assign(node, treeNode)
 		}
@@ -367,28 +372,32 @@ export default {
 				if (main) {
 					arr.push({
 						label: `${main.firstName} ${main.lastName}`,
-						path: `${key}.${this.params.filter}.${
-							this.params.index
+						path: `${key}${
+							this.params.sub ? `.${this.params.sub}` : ''
+						}${
+							this.params.index !== undefined
+								? `.${this.params.index}`
+								: ''
 						}`,
 						type: mapping[key]
 					})
 				}
 			}
 
-			if (filter === 'children') {
-				for (let key in tree) {
-					const node = tree[key]
-					if (node.children) {
-						node.children.forEach((child, index) => {
-							arr.push({
-								label: `${both.firstName} ${both.lastName}`,
-								path: `${key}.children.${index}`,
-								type: 'children'
-							})
-						})
-					}
-				}
-			}
+			// if (filter === 'children') {
+			// 	for (let key in tree) {
+			// 		const node = tree[key]
+			// 		if (node.children) {
+			// 			node.children.forEach((child, index) => {
+			// 				arr.push({
+			// 					label: `${both.firstName} ${both.lastName}`,
+			// 					path: `${key}.children.${index}`,
+			// 					type: 'children'
+			// 				})
+			// 			})
+			// 		}
+			// 	}
+			// }
 
 			return arr
 		}
@@ -396,11 +405,24 @@ export default {
 
 	methods: {
 		saveNode: async function(something) {
-			console.log(this.path)
+			// Rebuild old path
+			const fromPath = `${this.params.root}${
+				this.params.sub ? `.${this.params.sub}` : ''
+			}${this.params.index !== undefined ? `.${this.params.index}` : ''}`
+
+			if (this.params.action === 'edit' && fromPath != this.path) {
+				// Delete old node reference
+				this.$store.dispatch('familyTree/writeNode', {
+					path: fromPath,
+					node: this.node,
+					isInsert: false
+				})
+			}
 
 			this.$store.dispatch('familyTree/writeNode', {
 				path: this.path,
-				node: this.node
+				node: this.node,
+				isInsert: true
 			})
 
 			const result = await this.$store.dispatch(

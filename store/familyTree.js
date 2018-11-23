@@ -1,7 +1,7 @@
 import types from './types'
 import services from '../services'
 
-import { get, set, cloneDeep } from 'lodash'
+import { get, set, cloneDeep, isArray, remove, unset, omitBy } from 'lodash'
 
 export const state = () => {
 	return {
@@ -18,14 +18,72 @@ export const mutations = {
 		console.log('Tree written back to the database')
 	},
 
-	[types.familyTree.mutation.WRITE_NODE_START](state, { path, node }) {
+	[types.familyTree.mutation.WRITE_NODE_START](
+		state,
+		{ path, node, isInsert }
+	) {
 		const value = get(state.tree, path)
-		if (value && value.length !== undefined) {
-			value.push(node)
-			set(state.tree, path, value)
-		} else if (value) {
-			set(state.tree, path, node)
+		const debugVal = JSON.stringify(value)
+
+		// Split path into its parameters
+		const params = path.split('.')
+
+		// Path points to an element inside an array
+		if (
+			params[params.length - 1] !== undefined &&
+			!isNaN(parseInt(params[params.length - 1]))
+		) {
+			console.log('It is an element inside an array', params)
+			if (isInsert) {
+				console.log(
+					'... and it is setting the same node inside the tree, path:',
+					path
+				)
+				set(state.tree, path, node)
+			} else {
+				const arrayIndex = parseInt(params[params.length - 1])
+				console.log(
+					'... and it is removing from the array inside the tree, path:',
+					path
+				)
+
+				const arrayPath = params.slice(0, params.length - 1).join('.')
+				let array = get(state.tree, arrayPath, [])
+				array.splice(arrayIndex, 1)
+
+				set(state.tree, arrayPath, array)
+			}
 		}
+		// or path in itself points to an array
+		// as is the case with a new insertion
+		else if (value && isArray(value)) {
+			console.log('It is an array already')
+			if (isInsert) {
+				console.log('..and we are pushing a new element to the array')
+				value.push(node)
+			} else {
+				console.log('..and we are removing element')
+				remove(value, el => el == node)
+			}
+		}
+		// of if it points to a single set element
+		else {
+			if (isInsert) {
+				set(state.tree, path, node)
+			} else {
+				unset(state.tree, path)
+
+				// Make sure all nodes on the tree are
+				// not undefined or null
+				state.tree = JSON.parse(
+					JSON.stringify(state.tree, (key, value) => {
+						if (value !== undefined && value !== null) return value
+					})
+				)
+			}
+		}
+
+		// throw { message: 'stop-here' }
 	},
 
 	[types.familyTree.mutation.ASSIGN_PROSPECTS](state, prospectList) {
@@ -57,8 +115,12 @@ export const actions = {
 		return result
 	},
 
-	[types.familyTree.action.WRITE_NODE]({ commit }, { path, node }) {
-		commit(types.familyTree.mutation.WRITE_NODE_START, { path, node })
+	[types.familyTree.action.WRITE_NODE]({ commit }, { path, node, isInsert }) {
+		commit(types.familyTree.mutation.WRITE_NODE_START, {
+			path,
+			node,
+			isInsert
+		})
 	},
 
 	[types.familyTree.action.ASSIGN_PROSPECTS]({ commit }, prospectList) {

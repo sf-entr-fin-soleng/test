@@ -56,6 +56,7 @@
 						<!-- Display parent node -->
 						<div 
 							v-for="(parent, index) in familyTree[key].parents" 
+							v-if="parent"
 							:key="parent.lastName"
 							class="slds-col slds-medium-size_1-of-2 slds-small-size_1-of-1">
 							
@@ -162,9 +163,9 @@
 								name:'family-tree-id-action', 
 								params: { 
 									id: $route.params.id, 
-									action: 'edit', 
-									path: 'partner', 
-									filter: 'partner' 
+									action: 'edit',
+									root: 'partner',
+									filter: 'partner'
 								}
 							}"
 						><div class="family-tree_clients-picture-border">
