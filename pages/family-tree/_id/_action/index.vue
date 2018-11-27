@@ -1,6 +1,7 @@
 <template>
 	<section class="cFamilyTreeInputForm">
 		<Header title="Family Tree"/>
+		<pre v-if="debug">PATH: {{ path }}</pre>
 		<pre v-if="debug">NODE: {{ node }}</pre>
 		<pre v-if="debug">RELATED_TO: {{ relatedTo }}</pre>
 		<pre v-if="debug">PARAMS: {{ params }}</pre>
@@ -14,41 +15,48 @@
 		</div>
 
 		<div class="slds-grid slds-wrap slds-size_12-of-12">
-			<div class="family-tree-form__add-picture-container slds-align_absolute-center slds-m-vertical_medium">
+			<div
+				class="family-tree-form__add-picture-container slds-align_absolute-center slds-m-vertical_medium"
+			>
 				<div class="family-tree-form__add-picture"/>
 				<div class="family-tree-form__add-plus slds-align_absolute-center">
 					<!-- <lightning:icon 
 						icon-name="utility:add" 
 						alternative-text="plus icon" 
 						size="xx-small" 
-						variant="inverse" /> -->
+          variant="inverse" />-->
 				</div>
 			</div>
 		</div>
 
-
-		<div class="slds-grid slds-wrap slds-size_12-of-12 slds-grid_align-center igforms-utils__max-width--large">
+		<div
+			class="slds-grid slds-wrap slds-size_12-of-12 slds-grid_align-center igforms-utils__max-width--large"
+		>
 			<Form 
-				id="node-form"
+				id="node-form" 
 				@form-submit="saveNode">
-				<div class="igforms-client-details slds-col slds-size_1-of-1 slds-form slds-form_compound cFormValidator">
+				<div
+					class="igforms-client-details slds-col slds-size_1-of-1 slds-form slds-form_compound cFormValidator"
+				>
 					<fieldset class="slds-form-element">
-						<div class="slds-form-element__group slds-grid slds-col slds-gutters slds-wrap slds-size_10-of-12 slds-grid_align-center">
+						<div
+							class="slds-form-element__group slds-grid slds-col slds-gutters slds-wrap slds-size_10-of-12 slds-grid_align-center"
+						>
 							<div class="slds-form-element__row slds-col slds-size_1-of-1">
 								<div class="slds-col slds-size_1-of-2">
-									<FormField 
-										v-model="node.firstName" 
-										label="First Name" 
-										required="true" 
-										type="text" 
-										maxlength="30" />
+									<FormField
+										v-model="node.firstName"
+										label="First Name"
+										required="true"
+										type="text"
+										maxlength="30"
+									/>
 								</div>
 								<div class="slds-col slds-size_1-of-2">
-									<FormField 
+									<form-field 
 										v-model="node.lastName" 
 										label="Last Name" 
-										required="true" 
-									/>
+										required="true"/>
 								</div>
 							</div>
 							<div class="slds-form-element__row slds-col slds-size_1-of-1">
@@ -56,20 +64,21 @@
 								<div class="slds-col slds-size_1-of-2">
 									<form-field
 										v-model="node.relationship"
-										root-type="select" 
+										root-type="select"
 										label="Relationship"
-										required>
-		
+										required
+									>
 										<option
-											:selected="node.relationship.label === undefined" 
-											value=""> Select relationship type </option>
-										<option 
+											:selected="node.relationship.label === undefined"
+											value
+										>Select relationship type</option>
+										<option
 											v-for="relationship in relationships"
 											v-if="relationship.type === params.filter"
 											:key="relationship.label"
-											:value="JSON.stringify(relationship)" 
-											:selected="node.relationship.label === relationship.label">{{ relationship.label }}</option>
-
+											:value="JSON.stringify(relationship)"
+											:selected="node.relationship.label === relationship.label"
+										>{{ relationship.label }}</option>
 									</form-field>
 								</div>
 
@@ -78,101 +87,96 @@
 									<form-field
 										v-if="params.filter !== 'partner'"
 										v-model="path"
-										root-type="select" 
+										root-type="select"
 										label="Related To"
-										required>
-										<option 
+										required
+									>
+										<option
 											v-for="option in relatedTo"
+											v-if="((`${option.label}` !== `${node.firstName} ${node.lastName}`) && 
+											(option.type === 'all' || option.type.includes(params.filter)))"
 											:key="option.path"
-											:value="option.path" 
+											:value="option.path"
 										>{{ option.label }}</option>
-
 									</form-field>
 								</div>
 							</div>
 
 							<div class="slds-form-element__row slds-col slds-size_1-of-1">
 								<div class="slds-col slds-size_1-of-4">
-									<form-field
-										v-model="showBirthday"
+									<form-field 
+										v-model="showBirthday" 
 										root-type="select">
 										<option value="true">Birthday</option>
 										<option value="false">Age</option>
 									</form-field>
-									<!-- <lightning:select 
-										aura:id="form1-field" 
-										label="Birthday or Age" 
-										value="{!v.showBirthday}">
-										<option 
-											text="Birthday" 
-											value="true" />
-										<option 
-											text="Age" 
-											value="false" />
-									</lightning:select> -->
 								</div>
-	
+
 								<div 
-									v-if="showBirthday"
+									v-if="showBirthday" 
 									class="slds-col slds-size_1-of-4">
-									<FormField 
+									<form-field 
 										v-model="node.birthdate" 
 										label="Birthday" 
 										required="true" 
-										type="date" 
-									/>
+										type="date"/>
 								</div>
 								<div 
 									v-else 
 									class="slds-col slds-size_1-of-4">
-									<form-field 
-										v-model="node.age" 
-										label="Age" 
-										required="true" 
-										type="number" 
-										min="0" 
-										max="200" 
+									<form-field
+										v-model="node.age"
+										label="Age"
+										required="true"
+										type="number"
+										min="0"
+										max="200"
 									/>
 								</div>
 							</div>
-					</div></fieldset>
+						</div>
+					</fieldset>
 				</div>
 
-
-				<div 
-					id="accordion" 
-					class="igforms-client-details slds-col slds-size_1-of-1 slds-form slds-form_compound cFormValidator">
+				<div
+					id="accordion"
+					class="igforms-client-details slds-col slds-size_1-of-1 slds-form slds-form_compound cFormValidator"
+				>
 					<fieldset class="slds-form-element">
-						<div class="slds-form-element__group slds-grid slds-col slds-gutters slds-wrap slds-size_10-of-12 slds-grid_align-center">
+						<div
+							class="slds-form-element__group slds-grid slds-col slds-gutters slds-wrap slds-size_10-of-12 slds-grid_align-center"
+						>
 							<div class="slds-form-element__row slds-col slds-size_1-of-1">
 								<div class="slds-col slds-size_1-of-1">
-									<legend 
-										class="family-tree-form_legend slds-form-element__label slds-form-element__legend slds-p-top_medium" 
+									<legend
+										class="family-tree-form_legend slds-form-element__label slds-form-element__legend slds-p-top_medium"
 										onclick="{!c.OnToggleAccordion}"
-										data-toggle="accordion">
-										Additional Details 
+										data-toggle="accordion"
+									>
+										Additional Details
 										<span>(Optional)</span>
 
 										<!-- <lightning:icon 
 											icon-name="utility:chevrondown" 
-											alternative-text="Connected" /> -->
+                    alternative-text="Connected" />-->
 									</legend>
 								</div>
 							</div>
 							<div class="slds-form-element__row slds-col slds-size_1-of-1">
 								<div class="slds-col slds-size_1-of-2">
-									<FormField 
-										v-model="node.phone" 
-										label="Phone Number" 
-										type="tel" 
+									<FormField
+										v-model="node.phone"
+										label="Phone Number"
+										type="tel"
 										formatter="phone"
-										pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
+										pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+									/>
 								</div>
 								<div class="slds-col slds-size_1-of-2">
-									<FormField 
-										v-model="node.email" 
-										label="Email" 
-										type="email" 
+									<FormField
+										v-model="node.email"
+										label="Email"
+										type="email"
 										pattern="[a-z0-9!'*+/=?^_`{|}~-]+(?:\.[a-z0-9!'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
 									/>
 								</div>
@@ -190,30 +194,29 @@
 							<div class="slds-form-element__row slds-col slds-size_1-of-1">
 								<div class="slds-col slds-size_1-of-2">
 									<fieldset class="slds-form-element">
-										<legend class="slds-form-element__legend">
-											Beneficiary
-										</legend>
-										<form-field 
+										<legend class="slds-form-element__legend">Beneficiary</legend>
+										<form-field
 											v-model="node.beneficiary"
 											:checked="node.beneficiary"
-											type="checkbox" 
-											label="Yes, include as beneficiary" />
+											type="checkbox"
+											label="Yes, include as beneficiary"
+										/>
 									</fieldset>
 								</div>
 								<div class="slds-col slds-size_1-of-2">
-									<form-field
-										v-model="node.status"
-										root-type="select"
-										label="Status"
-									>
+									<form-field 
+										v-model="node.status" 
+										root-type="select" 
+										label="Status">
 										<option 
-											value="" 
+											value 
 											label="Select an option...">Select an option...</option>
-										<option 
-											v-for="(option, index) in status" 
-											:key="index" 
+										<option
+											v-for="(option, index) in status"
+											:key="index"
 											:value="option.value"
-											:selected="option.value == node.status">{{ option.label }}</option>
+											:selected="option.value == node.status"
+										>{{ option.label }}</option>
 									</form-field>
 								</div>
 							</div>
@@ -222,10 +225,10 @@
 				</div>
 			</Form>
 
-
-			<NavBar 
-				@click-prev="$router.push(-1)" 
-				@click-next="$root.$emit('trigger-submit', { formId: 'node-form' })"/>
+			<NavBar
+				@click-prev="$router.push('/family-tree/' + $store.state.prospect.prospect.id)"
+				@click-next="$root.$emit('trigger-submit', { formId: 'node-form' })"
+			/>
 		</div>
 	</section>
 </template>
@@ -235,6 +238,8 @@ import Header from '~/components/Header.vue'
 import Form from '~/components/Form.vue'
 import FormField from '~/components/FormField.vue'
 import NavBar from '~/components/NavBar.vue'
+
+import moment from 'moment'
 
 import { get } from 'lodash'
 
@@ -295,7 +300,7 @@ export default {
 		}
 
 		return {
-			debug: true,
+			debug: false,
 			params: { ...this.$route.params },
 			node,
 			path,
@@ -321,6 +326,7 @@ export default {
 
 		relationships: function() {
 			return [
+				// Parents
 				{ label: 'Mother', gender: 'Female', type: 'parents' },
 				{ label: 'Father', gender: 'Male', type: 'parents' },
 				{
@@ -328,24 +334,51 @@ export default {
 					gender: 'Other',
 					type: 'parents'
 				},
-				{ label: 'Daughter', gender: 'Female', type: 'child' },
-				{ label: 'Son', gender: 'Male', type: 'child' },
+
+				// Children / Grandchildren
+				{ label: 'Daughter', gender: 'Female', type: 'children' },
+				{ label: 'Son', gender: 'Male', type: 'children' },
 				{
 					label: 'Child - Not Specified',
 					gender: 'Other',
-					type: 'child'
+					type: 'children'
 				},
-				{ label: 'Grandaughter', gender: 'Female', type: 'grandchild' },
-				{ label: 'Grandson', gender: 'Male', type: 'grandchild' },
+				{ label: 'Grandaughter', gender: 'Female', type: 'children' },
+				{ label: 'Grandson', gender: 'Male', type: 'children' },
 				{
 					label: 'Grandchild - Not Specified',
 					gender: 'Other',
-					type: 'grandchild'
+					type: 'children'
 				},
+
+				// Partner
 				{ label: 'Wife', gender: 'Female', type: 'partner' },
 				{ label: 'Husband', gender: 'Male', type: 'partner' },
 				{ label: 'Fiance', gender: 'Other', type: 'partner' },
-				{ label: 'Spouse', gender: 'Other', type: 'partner' }
+				{ label: 'Spouse', gender: 'Other', type: 'partner' },
+				{
+					label: 'Partner - Not Specified',
+					gender: 'Other',
+					type: 'partner'
+				},
+
+				// Family
+				{ label: 'Uncle', gender: 'Male', type: 'family' },
+				{ label: 'Aunt', gender: 'Female', type: 'family' },
+				{ label: 'Cousin', gender: 'Other', type: 'family' },
+				{ label: 'Brother-In-Law', gender: 'Male', type: 'family' },
+				{ label: 'Siste-In-Law', gender: 'Female', type: 'family' },
+				{ label: 'In-Law', gender: 'Other', type: 'family' },
+
+				// Externals
+				{ label: 'Lawyer', gender: 'Other', type: 'externals' },
+				{ label: 'Accountant', gender: 'Other', type: 'externals' },
+				{
+					label: 'Business Partner',
+					gender: 'Other',
+					type: 'externals'
+				},
+				{ label: 'Other', gender: 'Other', type: 'externals' }
 			]
 		},
 
@@ -364,16 +397,16 @@ export default {
 			const mapping = {
 				[keys.self]: 'all',
 				[keys.partner]: 'all',
-				[keys.both]: 'external/child'
+				[keys.both]: 'externals/children'
 			}
 
 			for (let key in keys) {
 				const main = tree[key]
-				if (main) {
+				if (main && main.lastName) {
 					arr.push({
 						label: `${main.firstName} ${main.lastName}`,
 						path: `${key}${
-							this.params.sub ? `.${this.params.sub}` : ''
+							this.params.filter ? `.${this.params.filter}` : ''
 						}${
 							this.params.index !== undefined
 								? `.${this.params.index}`
@@ -381,25 +414,35 @@ export default {
 						}`,
 						type: mapping[key]
 					})
+
+					if (main.children && this.params.filter === 'children') {
+						main.children.forEach((child, index) => {
+							arr.push({
+								label: `${child.firstName} ${child.lastName}`,
+								path: `${key}.children.${index}.children`,
+								type: mapping[key]
+							})
+						})
+					}
 				}
 			}
 
-			// if (filter === 'children') {
-			// 	for (let key in tree) {
-			// 		const node = tree[key]
-			// 		if (node.children) {
-			// 			node.children.forEach((child, index) => {
-			// 				arr.push({
-			// 					label: `${both.firstName} ${both.lastName}`,
-			// 					path: `${key}.children.${index}`,
-			// 					type: 'children'
-			// 				})
-			// 			})
-			// 		}
-			// 	}
-			// }
-
 			return arr
+		}
+	},
+
+	watch: {
+		showBirthday: function() {
+			let birthdate = moment(this.node.birthdate)
+			let age = this.node.age
+
+			if (this.showBirthday && age) {
+				birthdate = moment().subtract(age, 'years')
+				this.node.birthdate = birthdate.format('YYYY-MM-DD')
+			} else if (birthdate.isValid()) {
+				age = moment().diff(birthdate, 'years')
+				this.node.age = age
+			}
 		}
 	},
 
@@ -410,19 +453,22 @@ export default {
 				this.params.sub ? `.${this.params.sub}` : ''
 			}${this.params.index !== undefined ? `.${this.params.index}` : ''}`
 
-			if (this.params.action === 'edit' && fromPath != this.path) {
+			const changedPath = fromPath != this.path
+
+			if (this.params.action === 'edit' && changedPath) {
 				// Delete old node reference
 				this.$store.dispatch('familyTree/writeNode', {
 					path: fromPath,
 					node: this.node,
-					isInsert: false
+					isDelete: true,
+					changedPath
 				})
 			}
 
 			this.$store.dispatch('familyTree/writeNode', {
 				path: this.path,
 				node: this.node,
-				isInsert: true
+				changedPath
 			})
 
 			const result = await this.$store.dispatch(

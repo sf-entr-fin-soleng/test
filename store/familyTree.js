@@ -14,76 +14,70 @@ export const mutations = {
 		state.tree = tree
 	},
 
-	[types.familyTree.mutation.WRITE_TREE_SUCCESS](state) {
-		console.log('Tree written back to the database')
-	},
+	[types.familyTree.mutation.WRITE_TREE_SUCCESS](state) {},
 
-	[types.familyTree.mutation.WRITE_NODE_START](
-		state,
-		{ path, node, isInsert }
-	) {
-		const value = get(state.tree, path)
-		const debugVal = JSON.stringify(value)
+	[types.familyTree.mutation.WRITE_NODE_START](state, params) {
+		const { path, node, isDelete, changedPath } = params
+
+		let value = get(state.tree, path)
 
 		// Split path into its parameters
-		const params = path.split('.')
+		const pathComponents = path.split('.')
 
-		// Path points to an element inside an array
-		if (
-			params[params.length - 1] !== undefined &&
-			!isNaN(parseInt(params[params.length - 1]))
-		) {
-			console.log('It is an element inside an array', params)
-			if (isInsert) {
-				console.log(
-					'... and it is setting the same node inside the tree, path:',
-					path
-				)
-				set(state.tree, path, node)
-			} else {
-				const arrayIndex = parseInt(params[params.length - 1])
-				console.log(
-					'... and it is removing from the array inside the tree, path:',
-					path
+		// Control variables
+		const fromArray = !isNaN(
+			parseInt(pathComponents[pathComponents.length - 1])
+		)
+
+		// If this is a deletion operation
+		if (isDelete) {
+			// If value is contained within an array,
+			// delete item from array but keep others
+			if (fromArray) {
+				// Fetch original index, and make sure path is
+				// original path minus the array
+				const arrayIndex = parseInt(
+					pathComponents[pathComponents.length - 1]
 				)
 
-				const arrayPath = params.slice(0, params.length - 1).join('.')
-				let array = get(state.tree, arrayPath, [])
+				const arrayPath = pathComponents
+					.slice(0, pathComponents.length - 1)
+					.join('.')
+
+				// Fetch array from the tree and splice
+				// its reference at the given index
+				const array = get(state.tree, arrayPath, [])
 				array.splice(arrayIndex, 1)
 
+				// Set it back to the tree (unecessary?)
 				set(state.tree, arrayPath, array)
 			}
-		}
-		// or path in itself points to an array
-		// as is the case with a new insertion
-		else if (value && isArray(value)) {
-			console.log('It is an array already')
-			if (isInsert) {
-				console.log('..and we are pushing a new element to the array')
-				value.push(node)
-			} else {
-				console.log('..and we are removing element')
-				remove(value, el => el == node)
-			}
-		}
-		// of if it points to a single set element
-		else {
-			if (isInsert) {
-				set(state.tree, path, node)
-			} else {
+			// Otherwise just unset the value
+			else {
 				unset(state.tree, path)
-
-				// Make sure all nodes on the tree are
-				// not undefined or null
-				state.tree = JSON.parse(
-					JSON.stringify(state.tree, (key, value) => {
-						if (value !== undefined && value !== null) return value
-					})
-				)
 			}
 		}
+		// Inserting into
+		else {
+			if (fromArray && changedPath) {
+				const arrayPath = pathComponents
+					.splice(0, pathComponents.length - 1)
+					.join('.')
+				const array = get(state.tree, arrayPath, [])
 
-		// throw { message: 'stop-here' }
+				array.push(node)
+			} else {
+				// If value is undefined, initialize
+				// it and store it back in the tree
+				if (value === undefined) {
+					set(state.tree, path, [])
+					value = get(state.tree, path)
+				}
+
+				if (isArray(value)) value.push(node)
+				else set(state.tree, path, node)
+			}
+		}
 	},
 
 	[types.familyTree.mutation.ASSIGN_PROSPECTS](state, prospectList) {
@@ -105,7 +99,6 @@ export const actions = {
 		const tree = await services.familyTree.fetchFamilyTree(prospectId)
 		commit(types.familyTree.mutation.FETCH_TREE_SUCCESS, tree)
 	},
-
 	async [types.familyTree.action.WRITE_TREE]({ state, commit }, prospectId) {
 		const result = await services.familyTree.saveFamilyTree(
 			prospectId,
@@ -114,15 +107,11 @@ export const actions = {
 		commit(types.familyTree.mutation.WRITE_TREE_SUCCESS)
 		return result
 	},
-
-	[types.familyTree.action.WRITE_NODE]({ commit }, { path, node, isInsert }) {
+	[types.familyTree.action.WRITE_NODE]({ commit }, params) {
 		commit(types.familyTree.mutation.WRITE_NODE_START, {
-			path,
-			node,
-			isInsert
+			...params
 		})
 	},
-
 	[types.familyTree.action.ASSIGN_PROSPECTS]({ commit }, prospectList) {
 		const clonedList = cloneDeep(prospectList)
 		commit(types.familyTree.mutation.ASSIGN_PROSPECTS, clonedList)

@@ -37,8 +37,6 @@ async function fetchFamilyTree(req, res) {
 
 async function saveFamilyTree(req, res) {
 	try {
-		console.log('Family tree:', req.body)
-
 		const prospectId = req.body.prospectId
 		const tree = req.body.tree
 

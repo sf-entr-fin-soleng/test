@@ -78,7 +78,6 @@ async function saveDetails(req, res) {
 
 		// Execute query
 		const result = await db.query(query)
-		console.log(Date.now().toString(), result.data)
 
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(details, null, 2))
