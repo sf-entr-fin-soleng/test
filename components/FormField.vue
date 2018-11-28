@@ -16,6 +16,7 @@
 				:class="['slds-input', classNames]"
 				@blur="updateOnBlur ? updateValue($event) : null"
 				@keyup.prevent="updateOnKeyUp ? updateValue($event) : null"
+				@mouseup.prevent="updateOnMouseUp ? updateValue($event) : null"
 			>
 
 			<!-- Picklist -->
@@ -109,6 +110,10 @@ export default {
 		updateOnKeyUp: {
 			type: Boolean,
 			default: true
+		},
+		updateOnMouseUp: {
+			type: Boolean,
+			default: true
 		}
 	},
 
@@ -164,18 +169,27 @@ export default {
 		},
 
 		updateValue: function(event) {
+			let value = event.target.value
+			let parsed = {}
+
+			// Try parsing it from the string
+			try {
+				parsed = JSON.parse(value)
+			} catch (err) {
+				parsed = value
+			}
+
 			// @antonio.cordeiro
 			// Due to parent's two way data binding with
 			// v-model directive, input value is parsed
 			// by vue and edge cases are handled before
 			// the framework updates the binded property
-			let value = event.target.value
-			if (this.filter) value = this.filter(value)
+			if (this.filter) parsed = this.filter(parsed)
 
 			// Update whatever property was binded
 			// through the v-model directive and
 			// check the field's validity
-			this.$emit('input', value)
+			this.$emit('input', parsed)
 			this.checkValidity(event)
 		}
 	}

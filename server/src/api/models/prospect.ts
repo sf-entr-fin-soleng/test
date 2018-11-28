@@ -5,7 +5,8 @@ const prospect = {
 	email: undefined,
 	notes: undefined,
 	occupation: undefined,
-	phone: undefined
+	phone: undefined,
+	totalCount: 0
 }
 
 export default prospect

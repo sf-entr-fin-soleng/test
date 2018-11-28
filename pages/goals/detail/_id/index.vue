@@ -1,9 +1,9 @@
 <template>
-	<section>
+	<section class="cPage_GoalDetails">
 		<Header title="Goal Details"/>
 
 		<div v-if="debug">
-			<pre>GOAL: {{ goal }}</pre>
+			<pre>GOAL: {{ goal }}</pre><br>
 			<pre>DETAIL: {{ detail }}</pre>
 		</div>
 

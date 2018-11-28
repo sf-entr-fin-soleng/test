@@ -17,14 +17,14 @@
 					<div class="slds-form-element__group slds-grid slds-col slds-gutters slds-wrap slds-medium-size_10-of-12 slds-large-size_10-of-12 slds-grid_align-center slds-p-top_x-large igforms-utils__max-width--large">
 						<div class="slds-form-element__row slds-col slds-size_1-of-1">
 							<div class="slds-col slds-size_1-of-2">
-								<FormField 
+								<form-field 
 									v-model="localProspect.firstName"
 									:maxlength="20"
 									label="First Name"
 									type="text"/>
 							</div>
 							<div class="slds-col slds-size_1-of-2">
-								<FormField 
+								<form-field 
 									v-model="localProspect.lastName"
 									:maxlength="20"
 									:required="true"
@@ -34,7 +34,7 @@
 						</div>
 						<div class="slds-form-element__row slds-col slds-size_1-of-1">
 							<div class="slds-col slds-size_1-of-2">
-								<FormField 
+								<form-field 
 									v-model="localProspect.phone"
 									:maxlength="20"
 									:filter="$options.filters.phone"
@@ -44,7 +44,7 @@
 								/>
 							</div>
 							<div class="slds-col slds-size_1-of-2">
-								<FormField 
+								<form-field 
 									v-model="localProspect.email"
 									:maxlength="50"
 									:required="true"
@@ -55,7 +55,7 @@
 						</div>
 						<div class="slds-form-element__row slds-col slds-size_1-of-1">
 							<div class="slds-col slds-size_1-of-2">
-								<FormField 
+								<form-field 
 									v-model="localProspect.occupation"
 									:maxlength="20"
 									:required="true"

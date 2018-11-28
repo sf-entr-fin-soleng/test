@@ -54,7 +54,7 @@
 
 		<!-- Pagination -->
 		<Paginator 
-			:record-count="prospects[0] ? parseInt(prospects[0].totalCount) : 0" 
+			:record-count="prospects ? parseInt(prospects[0] ? prospects[0].totalCount : 0) : 0" 
 			@page-change="handlePageChange"/>
 		
 	</section>
@@ -122,7 +122,7 @@ export default {
 		// and using an event bus for this is overkill
 		paginationLabel: function() {
 			const { offset, perPage, term } = { ...this.searchParams }
-			const prospect = this.prospects[0] ? this.prospects[0] : {}
+			const prospect = this.prospects ? this.prospects[0] : undefined
 			if (prospect)
 				return `Showing ${offset + 1}-${
 					offset + perPage > prospect.totalCount

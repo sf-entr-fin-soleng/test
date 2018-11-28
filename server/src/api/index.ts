@@ -16,5 +16,6 @@ router.post('/goal/detail/saveAll.json', routes.goals.saveDetails)
 
 // Family-Tree routes
 router.get('/family-tree/getOne.json', routes.familyTree.fetchFamilyTree)
+router.post('/family-tree/saveOne.json', routes.familyTree.saveFamilyTree)
 
 export default router

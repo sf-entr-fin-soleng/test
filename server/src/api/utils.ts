@@ -1,3 +1,5 @@
+import * as moment from 'moment'
+
 const generate = require('nanoid/generate')
 const alphabet =
 	'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
@@ -22,7 +24,7 @@ function getBaseQuery(type, id?, parentId?): string {
 	if (parentId) query += ` AND Heroku_Parent_Id__c='${parentId}'`
 	if (id) query += ` AND Heroku_Id__c = '${id}'`
 
-	console.log(`[${Date.now().toString()}][DB_READ]: ${query}`)
+	console.log(`[${moment().toString()}][DB_READ]: ${query}`)
 	return query
 }
 
@@ -39,6 +41,7 @@ function getWriteQuery(type, data, isInsert): string {
 	let query = ''
 
 	if (isInsert) {
+		data.id = uuid()
 		query = `INSERT INTO sfgc.mock_container__c (Heroku_Id__c, Type__c, Data__c, Heroku_Parent_Id__c)`
 		query += ` VALUES ('${data.id}', '${type}', '${parseData(data)}'`
 		query += `,'${data.parentId ? data.parentId : 'null'}')`
@@ -53,7 +56,7 @@ function getWriteQuery(type, data, isInsert): string {
 		query += ` WHERE Heroku_Id__c = '${data.id}'`
 	}
 
-	console.log(`[${Date.now().toString()}][DB_WRITE]: ${query}`)
+	console.log(`[${moment().toString()}][DB_WRITE]: ${query}`)
 	return query
 }
 
