@@ -460,8 +460,7 @@
 				</div>
 			</div>
 
-			<!-- Loop through externals for self and partner, including
-      externals listed under the 'both' key-->
+			<!-- Loop through externals for self and partner, including externals listed under the 'both' key-->
 			<div
 				v-if="shouldDisplay('externals')"
 				class="family-tree-accordion_container slds-grid slds-size_1-of-1 igforms-utils__outer-margin-blue"
@@ -618,16 +617,20 @@
 				</div>
 			</div>
 		</div>
+
+		<NavBar/>
 	</div>
 </template>
 
 <script>
 import Header from '~/components/Header.vue'
+import NavBar from '~/components/NavBar.vue'
 import { cloneDeep } from 'lodash'
 
 export default {
 	components: {
-		Header
+		Header,
+		NavBar
 	},
 
 	async asyncData({ app, store, params }) {

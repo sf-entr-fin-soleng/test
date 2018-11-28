@@ -13,7 +13,10 @@ async function fetchFamilyTree(req, res) {
 		let familyTree = Object.assign({}, models.familyTree)
 
 		if (result.rows.length > 0) {
-			familyTree = utils.parseObject(result.rows[0])
+			familyTree = Object.assign(
+				familyTree,
+				utils.parseObject(result.rows[0])
+			)
 		}
 
 		if (familyTree.self && familyTree.partner) {

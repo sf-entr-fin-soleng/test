@@ -23,25 +23,23 @@
 					<div 
 						v-if="displayActions" 
 						class="igforms-footer__family-tree__actions">
-						<span 
+						<a 
 							v-for="(action, index) in actions" 
-							:key="index">
+							:key="index"
+							@click="action.go">
 							{{ action.label }}
-						</span>
+						</a>
 					</div>
 
-					<div 
+					<button 
 						v-if="displayNextButton" 
-						class="igforms-footer__back-button slds-float_left">
-						<button 
-							class="slds-button"
-							@click="$emit('click-next', $event)">
-							{{ nextLabel }}
-							<i class="slds-button__icon slds-button__icon_right material-icons">
-								navigate_next
-							</i>
-						</button>
-					</div>
+						class="slds-button"
+						@click="$emit('click-next', $event)">
+						{{ nextLabel }}
+						<i class="slds-button__icon slds-button__icon_right material-icons">
+							navigate_next
+						</i>
+					</button>
 				</div>
 			</div>
 		</div>

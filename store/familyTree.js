@@ -17,7 +17,7 @@ export const mutations = {
 	[types.familyTree.mutation.WRITE_TREE_SUCCESS](state) {},
 
 	[types.familyTree.mutation.WRITE_NODE_START](state, params) {
-		const { path, node, isDelete, changedPath } = params
+		const { path, node, isDelete, changedPath, initAsArray } = params
 
 		let value = get(state.tree, path)
 
@@ -70,7 +70,7 @@ export const mutations = {
 				// If value is undefined, initialize
 				// it and store it back in the tree
 				if (value === undefined) {
-					set(state.tree, path, [])
+					set(state.tree, path, fromArray ? [] : {})
 					value = get(state.tree, path)
 				}
 
