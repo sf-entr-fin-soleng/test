@@ -96,7 +96,7 @@
 						<!-- Add parents button section -->
 						<div class="slds-col slds-medium-size_1-of-1 family-tree_add-member">
 							<div>
-								<!-- <a href="#">
+								<a href="#">
 									<button
 										class="slds-button slds-button_neutral"
 										@click="$router.push({
@@ -117,7 +117,7 @@
 										>Parent
 									</button>
 									<p>Include new parent for {{ familyTree[key].firstName }}</p>
-								</a> -->
+								</a>
 							</div>
 						</div>
 					</div>

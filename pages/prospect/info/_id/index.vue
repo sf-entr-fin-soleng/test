@@ -38,6 +38,8 @@
 									v-model="localProspect.phone"
 									:maxlength="20"
 									:filter="$options.filters.phone"
+									:update-on-mouse-up="true"
+									:update-on-key-up="true"
 									label="Phone"
 									type="phone"
 									pattern="\(\d{3}\)\s\d{3}-\d{4}"
@@ -124,9 +126,8 @@ export default {
 				)
 
 				this.$router.push({
-					path: '/',
-					params: { command: result.command }
-					// TODO: fix prospectID retrieval + command send
+					name: 'index',
+					params: { command: result.data.command }
 				})
 			} catch (err) {
 				console.error(err)

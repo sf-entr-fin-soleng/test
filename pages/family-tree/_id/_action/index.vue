@@ -168,7 +168,6 @@
 								<div class="slds-col slds-size_1-of-1">
 									<legend
 										class="family-tree-form_legend slds-form-element__label slds-form-element__legend slds-p-top_medium"
-										onclick="{!c.OnToggleAccordion}"
 										data-toggle="accordion"
 									>
 										Additional Details

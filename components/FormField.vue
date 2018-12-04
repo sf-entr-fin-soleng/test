@@ -109,11 +109,11 @@ export default {
 		},
 		updateOnKeyUp: {
 			type: Boolean,
-			default: true
+			default: false
 		},
 		updateOnMouseUp: {
 			type: Boolean,
-			default: true
+			default: false
 		}
 	},
 
