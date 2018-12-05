@@ -618,7 +618,6 @@
 			</div>
 		</div>
 
-		<NavBar/>
 	</div>
 </template>
 
