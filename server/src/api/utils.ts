@@ -50,9 +50,7 @@ function getWriteQuery(type, data, isInsert): string {
 			data
 		)}'`
 		// eslint-disable-next-line prettier/prettier
-		query += `, Heroku_Parent_Id__c = '${
-			data.parentId ? data.parentId : 'null'
-		}'`
+		query += `, Heroku_Parent_Id__c = '${data.parentId ? data.parentId : 'null'}'`
 		query += ` WHERE Heroku_Id__c = '${data.id}'`
 	}
 

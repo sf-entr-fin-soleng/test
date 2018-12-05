@@ -69,12 +69,11 @@ async function saveDetails(req, res) {
 		// If details has no ID assigned,
 		// generate unique ID and save it
 		// back to the database
-		if (!details.id) {
-			details.id = utils.uuid()
-			query = utils.getWriteQuery(types.goalDetails, details, true)
-		} else {
-			query = utils.getWriteQuery(types.goalDetails, details, false)
-		}
+		query = utils.getWriteQuery(
+			types.goalDetails,
+			details,
+			details.id === undefined
+		)
 
 		// Execute query
 		const result = await db.query(query)

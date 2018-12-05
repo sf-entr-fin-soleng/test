@@ -2,5 +2,7 @@ export default {
 	prospect: 'Prospect/Client',
 	goals: 'Goal',
 	goalDetails: 'Goal/Detail',
-	familyTree: 'FamilyTree'
+	familyTree: 'FamilyTree',
+	questionnaire: 'Questionnaire',
+	answers: 'QuestionnaireResponses'
 }

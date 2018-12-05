@@ -46,16 +46,9 @@ module.exports = {
   ** Nuxt.js modules
   */
 	modules: [],
-	/*
-  ** Axios module configuration
-  */
-	axios: {
-		// See https://github.com/nuxt-community/axios-module#options
-		// baseURL: process.env.BASE_URL
-	},
 
 	env: {
-		baseUrl: process.env.BASE_URL || 'http://localhost:8080'
+		BASE_URL: process.env.BASE_URL || 'http://localhost:8080'
 	},
 
 	/*

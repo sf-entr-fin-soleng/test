@@ -1,8 +1,6 @@
 <template>
 	<div>
-		<nuxt-link to="/">Home</nuxt-link>
-		<nuxt-link :to="'/goals/' + id">Goals</nuxt-link>
-		<nuxt-link :to="'/prospect/info/' + id">Edit</nuxt-link>
+		<Header title="Digital Forms"/>
 
 		<div class="igforms-overview slds-grid slds-wrap slds-col slds-grid_align-center slds-size_12-of-12 igforms-utils__outer-margin-blue">
 			<div class="slds-grid slds-wrap slds-col slds-grid_align-center slds-size_12-of-12 igforms-utils__outer-margin-blue__inner utils__no-outer-border_top utils__no-outer-padding-top">
@@ -70,7 +68,13 @@
 </template>
 
 <script>
+import Header from '~/components/Header.vue'
+
 export default {
+	components: {
+		Header
+	},
+
 	async asyncData({ store, params }) {
 		const prospect = await store.dispatch(
 			`prospect/fetchProspect`,
@@ -79,13 +83,18 @@ export default {
 
 		const modules = [
 			{
-				name: 'Goals & Concerns',
-				href: '/goals/' + prospect.id,
-				lastUpdate: '2018-01-01'
-			},
-			{
 				name: 'Family Tree',
 				href: '/family-tree/' + prospect.id,
+				lastUpdate: '2018-01-01'
+			},
+			// {
+			// 	name: 'Questionnaire',
+			// 	href: `/questionnaire/QSN-01/${prospect.id}`,
+			// 	lastUpdate: '2018-01-01'
+			// },
+			{
+				name: 'Goals & Concerns',
+				href: '/goals/' + prospect.id,
 				lastUpdate: '2018-01-01'
 			}
 		]

@@ -88,17 +88,15 @@ async function saveProspect(req, res) {
 	try {
 		// Fetch prospect data from POST body
 		const prospect = req.body
-		let query = ''
 
 		// If prospect has no ID assigned,
 		// generate unique ID and save it
 		// back to the database
-		if (!prospect.id) {
-			prospect.id = utils.uuid()
-			query = utils.getWriteQuery(types.prospect, prospect, true)
-		} else {
-			query = utils.getWriteQuery(types.prospect, prospect, false)
-		}
+		const query = utils.getWriteQuery(
+			types.prospect,
+			prospect,
+			prospect.id === undefined
+		)
 
 		// Stringify prospect and initialize
 		// query string (will be built dynamically)

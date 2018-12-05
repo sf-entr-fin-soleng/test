@@ -12,12 +12,12 @@
 		<!-- Show 'created/updated' toast whenever
 		$route has the specified parameter -->
 		<div
-			v-if="this.$route.params.command" 
+			v-if="$route.params.command" 
 			class="kyc-toast kyc-toast_success slds-grid slds-col slds-size_12-of-12 slds-grid_align-center">
 			<div class="slds-medium-size_11-of-12 igforms-utils__max-width--large">
 				<div class="slds-col slds-text-align_center slds-p-vertical_medium">
-					<p v-if="this.$route.params.command === 'INSERT'"><strong>New prospect profile created!</strong></p>
-					<p v-if="this.$route.params.command === 'UPDATE'"><strong>Prospect profile updated successfully!</strong></p>
+					<p v-if="$route.params.command === 'INSERT'"><strong>New prospect profile created!</strong></p>
+					<p v-if="$route.params.command === 'UPDATE'"><strong>Prospect profile updated successfully!</strong></p>
 					<img 
 						src=""
 						alternativeText="checkmark" 
