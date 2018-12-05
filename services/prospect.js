@@ -34,7 +34,7 @@ async function fetchProspectById(id) {
 
 		return data
 	} catch (err) {
-		console.error(Api.defaults.baseURL, err)
+		console.error(err)
 	}
 }
 

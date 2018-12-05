@@ -106,7 +106,7 @@ export default {
 	data: function() {
 		return {
 			title: 'Add Prospect',
-			debug: true,
+			debug: false,
 
 			localProspect: Object.assign(
 				{},

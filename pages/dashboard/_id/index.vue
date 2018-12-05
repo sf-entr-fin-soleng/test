@@ -87,11 +87,11 @@ export default {
 				href: '/family-tree/' + prospect.id,
 				lastUpdate: '2018-01-01'
 			},
-			{
-				name: 'Questionnaire',
-				href: `/questionnaire/QSN-01/${prospect.id}`,
-				lastUpdate: '2018-01-01'
-			},
+			// {
+			// 	name: 'Questionnaire',
+			// 	href: `/questionnaire/QSN-01/${prospect.id}`,
+			// 	lastUpdate: '2018-01-01'
+			// },
 			{
 				name: 'Goals & Concerns',
 				href: '/goals/' + prospect.id,
