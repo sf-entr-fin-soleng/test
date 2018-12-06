@@ -5,12 +5,12 @@
 		<div class="slds-grid slds-size_1-of-1 igforms-utils__max-width--large">
 			<div class="slds-col slds-medium-size_8-of-12 slds-clearfix">
 				<div class="igforms-header__iglogo slds-float_left">
-					<a href="#">
+					<nuxt-link to="/">
 						<img 
 							src="~assets/images/IG_Wealth_Management_RGB.svg" 
 							alternativeText="IG Wealth Management logo"
 						>
-					</a>
+					</nuxt-link>
 				</div>
 				<div class="igforms-header__igpagename slds-float_left">
 					<h1 class="">{{ title }}</h1>

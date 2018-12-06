@@ -12,7 +12,8 @@
 									id="prospect" 
 									type="radio" 
 									name="radio" 
-									value="prospect" >
+									value="prospect"
+									checked >
 								<label 
 									class="slds-radio_button__label" 
 									for="prospect">
@@ -45,15 +46,19 @@
 					<div class="slds-form-element__control">
 						<input 
 							id="form-element-01" 
+							v-model="searchTerm" 
 							type="text" 
-							class="slds-input" 
-							placeholder="Enter Client Search Here" 
-							onkeyup="{!c.OnTermChange}">
-
+							class="slds-input"
+							placeholder="Enter Client Search Here"
+							@blur="$emit('search-updated', $event.target.value)"
+							@keyup.enter.prevent="$emit('search-updated', $event.target.value)"
+							@keyup.backspace.prevent="$event.target.value ? '' : $emit('search-updated', $event.target.value)">
 						<button 
 							class="slds-button slds-button_icon igforms-search-button"
 						>
-							<i class="material-icons">
+							<i 
+								class="material-icons" 
+								style="color: white">
 								search
 							</i>
 						</button>
@@ -65,3 +70,23 @@
 	</div>
     
 </template>
+
+<script>
+export default {
+	data: function() {
+		return {
+			searchTerm: ''
+		}
+	},
+
+	methods: {
+		// @antonio.cordeiro
+		// This could be a generic component that handles
+		// a list of entities but for now it's just a dumb
+		// component that simply handles input events
+		searchTermUpdated(event, term) {
+			this.$emit('search-updated', term)
+		}
+	}
+}
+</script>
