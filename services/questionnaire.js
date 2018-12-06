@@ -21,10 +21,14 @@ async function fetchAnswers(qid, pid) {
 	}
 }
 
-async function saveAnswers(prospectId, questionnaireId, answers) {
+async function saveAnswers(answers) {
 	try {
 		const url = `/api/questionnaire/answers/saveOne.json`
-		const result = Api().post(url, { prospectId, questionnaireId, answers })
+		const result = Api().post(url, {
+			prospectId: answers.prospectId,
+			questionnaireId: answers.questionnaireId,
+			answers
+		})
 
 		return result
 	} catch (err) {

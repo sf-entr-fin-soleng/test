@@ -1,14 +1,14 @@
 import axios from 'axios'
 
-export default () => {
-	console.log('baseURL', process.env.BASE_URL)
+const api = axios.create({
+	baseURL: process.env.BASE_URL || 'http://localhost:8080',
+	withCredentials: false,
+	headers: {
+		Accept: 'application/json',
+		'Content-Type': 'application/json'
+	}
+})
 
-	return axios.create({
-		baseURL: process.env.BASE_URL || 'http://localhost:8080',
-		withCredentials: false,
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json'
-		}
-	})
+export default () => {
+	return api
 }
