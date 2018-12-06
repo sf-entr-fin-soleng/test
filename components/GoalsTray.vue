@@ -21,8 +21,20 @@
 						:key="detail.goalId" 
 						class="igforms-priority__card igforms-priority__card--high slds-p-around-xxx-small slds-col slds-medium-size_2-of-12 slds-small-size_4-of-12"
 						@click="click($event, index)">
-						<div v-if="detail.valid">
-							Checkmark
+						<div
+							v-if="detail.valid"
+							class="igforms-tile-checkmark slds-icon_container_circle slds-icon-action-approval slds-icon_container cCenteredCheckIcon">
+							<span
+								class="slds-icon_container slds-icon-action-approval"
+								title="Approved">
+								<svg
+									class="slds-icon slds-icon-text-default"
+									aria-hidden="true">
+									<use xlink:href="/images/icons/action-sprite/svg/symbols.svg#approval" />
+								</svg>
+								<span
+									class="slds-assistive-text">Approved</span>
+							</span>
 						</div>
 						<div 
 						>

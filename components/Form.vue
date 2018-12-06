@@ -6,7 +6,7 @@
 	<form
 		:id="id"
 		novalidate
-		class="slds-grid slds-wrap slds-size_12-of-12"
+		class="slds-grid slds-wrap slds-size_10-of-12"
 		@submit.prevent="submit">
 		<slot/>
 		<input 
