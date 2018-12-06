@@ -61,10 +61,9 @@ async function fetchAnswers(req, res) {
 
 async function saveAnswers(req, res) {
 	try {
-		const prospectId = req.body.pid
 		const answers = req.body.answers
+		answers.parentId = answers.prospectId
 
-		answers.parentId = prospectId
 		const query = utils.getWriteQuery(
 			types.answers,
 			answers,

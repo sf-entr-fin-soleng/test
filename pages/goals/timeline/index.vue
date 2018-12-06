@@ -8,20 +8,30 @@
 				:key="key"
 				class="igforms-timeline__lane slds-grid slds-wrap slds-size_10-of-12 slds-p-vertical--small">
 
-				<div 
-					v-for="detail in $store.state.goal.trays[priority].details"
-					:key="detail.goalId"
-					:class="['igforms-timeline__milestone-year', 'igforms-timeline__milestone-year--' + detail.timeframe, 'slds-size_2-of-12']">
+				<div class="igforms-timeline__milestone-year igforms-timeline__milestone-year--0 slds-size_2-of-12"/>
+				<div class="igforms-timeline__milestone-year igforms-timeline__milestone-year--5 slds-size_2-of-12"/>
+				<div class="igforms-timeline__milestone-year igforms-timeline__milestone-year--10 slds-size_2-of-12"/>
+				<div class="igforms-timeline__milestone-year igforms-timeline__milestone-year--15 slds-size_2-of-12"/>
+				<div class="igforms-timeline__milestone-year igforms-timeline__milestone-year--20 slds-size_2-of-12"/>
+				<div class="igforms-timeline__milestone-year igforms-timeline__milestone-year--25 slds-size_2-of-12">
 					<div 
-						v-if="detail.valid" 
-						class="igforms-timeline__milestone">
-						<div class="igforms-timeline__milestone--image ">
-							<img :src="'/images/goals-concerns/cards/' + $store.state.goal.goals[detail.goalId].image +'.png'" >
+						v-for="detail in $store.state.goal.trays[priority].details"
+						v-if="detail.timeframe === 10"
+						:key="detail.goalId"
+					>
+					
+						<div 
+							v-if="detail.valid" 
+							class="igforms-timeline__milestone">
+							<div class="igforms-timeline__milestone--image ">
+								<img :src="'/images/goals-concerns/cards/' + $store.state.goal.goals[detail.goalId].image +'.png'" >
+							</div>
+							<p>{{ $store.state.goal.goals[detail.goalId].name }}</p>
 						</div>
-						<p>{{ $store.state.goal.goals[detail.goalId].name }}</p>
-					</div>
 
+					</div>
 				</div>
+
 				<h2 
 					class="igforms-timeline__title-big" 
 					style="text-transform:capitalize">{{ priority }}</h2>

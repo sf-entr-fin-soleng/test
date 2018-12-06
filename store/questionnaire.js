@@ -11,6 +11,17 @@ export const mutations = {
 		state,
 		questionnaire
 	) {
+		// Since this is the user's local copy,
+		// and the questionnaire object will never
+		// be mutated from the front-end, init
+		// an .answer prop so we can store user input
+		for (let key in questionnaire.questions) {
+			const question = questionnaire.questions[key]
+			if (question.type === 'textarea') question.answer = ''
+			if (question.type === 'number') question.answer = 0
+			if (question.type) question.answer = []
+		}
+
 		// Store questionnaire
 		state.questionnaire = questionnaire
 	},
@@ -28,8 +39,24 @@ export const mutations = {
 		}
 	},
 
-	[types.questionnaire.mutation.ANSWERS_WRITE_SUCCESS](state, answers) {
-		console.log('Finished writing answers back to the database...')
+	[types.questionnaire.mutation.ANSWERS_WRITE_SUCCESS](
+		state,
+		{ answers, isNext }
+	) {
+		console.log('Finished writing answers back to the database...', answers)
+
+		const currentSectionId = answers.currentSectionId
+		const currentSection = state.questionnaire.sections[currentSectionId]
+
+		const nextSectionId = currentSection ? currentSection.next : undefined
+		const prevSectionId = currentSection ? currentSection.prev : undefined
+
+		if (isNext) answers.currentSectionId = nextSectionId
+		else answers.currentSectionId = prevSectionId
+
+		state.answers = answers
+		console.log(state.answers)
+		console.log('isNext', isNext)
 	}
 }
 
@@ -62,16 +89,14 @@ export const actions = {
 
 	async [types.questionnaire.action.SAVE_ANSWERS](
 		{ commit, state },
-		{ pid, qid, answers }
+		{ answers, isNext }
 	) {
 		try {
-			const result = await services.questionnaire.saveAnswers(
-				pid,
-				qid,
-				answers
-			)
+			const result = await services.questionnaire.saveAnswers(answers)
+			console.log('isNext', isNext)
 			commit(types.questionnaire.mutation.ANSWERS_WRITE_SUCCESS, {
-				result
+				answers,
+				isNext
 			})
 
 			return result
