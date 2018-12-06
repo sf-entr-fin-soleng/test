@@ -29,6 +29,8 @@ export const mutations = {
 			parseInt(pathComponents[pathComponents.length - 1])
 		)
 
+		console.log(pathComponents, fromArray, changedPath)
+
 		// If this is a deletion operation
 		if (isDelete) {
 			// If value is contained within an array,
@@ -70,7 +72,14 @@ export const mutations = {
 				// If value is undefined, initialize
 				// it and store it back in the tree
 				if (value === undefined) {
-					set(state.tree, path, fromArray ? [] : {})
+					set(
+						state.tree,
+						path,
+						fromArray ||
+						pathComponents[pathComponents.length - 1] === 'children' // hotfix for grandchildren getting added wrongly, get this crap out of here asap
+							? []
+							: {}
+					)
 					value = get(state.tree, path)
 				}
 
