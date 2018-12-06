@@ -112,11 +112,19 @@
 		background: none;
 		color: $ig-primary;
 		border: 1px solid $ig-primary-30;
+		.slds-button__icon {
+			position: relative;
+			top: 3px;
+		}
 	}
 
 	.igforms-footer__next-button button {
 		background: $ig-primary;
 		color: $ig-white;
+		.slds-button__icon {
+			position: relative;
+			top: 3px;
+		}
 	}
 
 	.slds-button {

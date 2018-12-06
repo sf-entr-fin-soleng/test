@@ -136,6 +136,9 @@
 			bottom: -0.5px;
 			width: 100%;
 			background: $ig-white;
+			&.slds-icon_container {
+				background: transparent;
+			}
 		}
 	}
 
@@ -155,13 +158,24 @@
 	position: absolute;
 	left: 50%;
 	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
 	margin-left: -24px;
 	margin-top: -24px;
 	z-index: 300;
+	width: 32px;
+	height: 32px;
+	padding: .5rem;
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	-moz-transform: translateX(-50%) translateY(-50%);
+	-ms-transform: translateX(-50%) translateY(-50%);
+	-o-transform: translateX(-50%) translateY(-50%);
 
-	.slds-icon {
+	.slds-icon{
 		width: 1rem;
 		height: 1rem;
+		position: absolute;
+		top: 9.5px;
+		fill: white;
 	}
 }
 
