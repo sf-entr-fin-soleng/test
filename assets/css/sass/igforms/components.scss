@@ -262,6 +262,8 @@
 // Top blue header with client contact
 .#{$namespace}-client-header {
 	background: $ig-primary;
+	margin-left: 0;
+	margin-right: 0;
 
 	p {
 		padding: 0 10px;
@@ -286,6 +288,10 @@
 
 	.slds-button {
 		margin-right: 20px;
+		.slds-button__icon {
+			position: relative;
+			top: 3px;
+		}
 	}
 
 	.slds-button_inverse:hover {
@@ -305,6 +311,8 @@
 // Top light blue navigation
 .igforms-client-header_navigation {
 	background: $ig-secondary-15;
+	margin-left: 0;
+	margin-right: 0;
 
 	a {
 		color: $ig-primary;
