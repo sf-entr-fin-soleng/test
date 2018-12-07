@@ -330,7 +330,10 @@ export default {
 				{
 					label: 'Cancel',
 					go: () => {
-						this.$router.push('/')
+						this.$router.push(
+							'/family-tree/' +
+								this.$store.state.prospect.prospect.id
+						)
 					}
 				},
 				{

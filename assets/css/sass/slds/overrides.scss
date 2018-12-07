@@ -103,8 +103,13 @@
 .slds-checkbox [type=checkbox]:checked~.slds-checkbox_faux:after,
 .slds-checkbox [type=checkbox]:checked~.slds-checkbox--faux:after,
 .slds-checkbox [type=checkbox]:checked+.slds-checkbox__label .slds-checkbox_faux:after,
-.slds-checkbox [type=checkbox]:checked+.slds-checkbox__label .slds-checkbox--faux:after {
-
+.slds-checkbox [type=checkbox]:checked+.slds-checkbox__label .slds-checkbox--faux:after,
+.slds-checkbox [type=radio]:checked+.slds-checkbox_faux:after,
+.slds-checkbox [type=radio]:checked+.slds-checkbox--faux:after,
+.slds-checkbox [type=radio]:checked~.slds-checkbox_faux:after,
+.slds-checkbox [type=radio]:checked~.slds-checkbox--faux:after,
+.slds-checkbox [type=radio]:checked+.slds-checkbox__label .slds-checkbox_faux:after,
+.slds-checkbox [type=radio]:checked+.slds-checkbox__label .slds-checkbox--faux:after {
 	border-bottom: 2px solid $ig-dark-blue;
 	border-left: 2px solid $ig-dark-blue;
 }

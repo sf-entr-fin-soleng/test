@@ -97,7 +97,7 @@ export default {
 		NavBar
 	},
 	props: {
-		debug: { type: Boolean, default: true }
+		debug: { type: Boolean, default: false }
 	},
 	data: function() {
 		const { priority, detailIndex } = { ...this.$route.params }

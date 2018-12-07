@@ -4,6 +4,7 @@
 		class="cFamilyTreeOverview">
 		<pre v-if="debug">{{ familyTree }}</pre>
 		<Header :title="title"/>
+		<client-header/>
 
 		<!-- Main Family Tree Div -->
 		<div class="family-tree_page slds-grid slds-size_1-of-1 slds-wrap slds-grid_align-center">
@@ -623,13 +624,13 @@
 
 <script>
 import Header from '~/components/Header.vue'
-import NavBar from '~/components/NavBar.vue'
+import ClientHeader from '~/components/ClientHeader.vue'
 import { cloneDeep } from 'lodash'
 
 export default {
 	components: {
 		Header,
-		NavBar
+		ClientHeader
 	},
 
 	async asyncData({ app, store, params }) {

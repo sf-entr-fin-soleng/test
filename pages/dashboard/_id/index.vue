@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<Header title="Digital Forms"/>
+		<client-header :display-modules="false"/>
 
 		<div class="igforms-overview slds-grid slds-wrap slds-col slds-grid_align-center slds-size_12-of-12 igforms-utils__outer-margin-blue">
 			<div class="slds-grid slds-wrap slds-col slds-grid_align-center slds-size_12-of-12 igforms-utils__outer-margin-blue__inner utils__no-outer-border_top utils__no-outer-padding-top">
@@ -12,9 +13,10 @@
 				</div>
 				<div class="slds-grid slds-col slds-wrap slds-size_12-of-12 slds-grid_align-center slds-m-vertical_x-large igforms-utils__max-width--large">
 					<div 
-						v-for="item in modules" 
-						:key="item.name"
+						v-for="item in modules"
+						:key="item.name" 
 						:to="item.href"
+						role="button"
 						class="igforms-dashboard_accordion-item slds-grid slds-size_11-of-12 slds-grid_align-center"
 						@click="$router.push(item.href)">
 						<div class="igforms-dashboard_accordion-content slds-grid slds-size_11-of-12 slds-p-vertical_medium">
@@ -22,12 +24,12 @@
 								<p>
 									{{ item.name }}
 									<span>
-										Last Updated {{ item.lastUpdated }}
+										Last Updated {{ item.lastUpdate }}
 									</span>
 								</p>
 							</div>
 							<div class="igforms-dashboard_status slds-grid_vertical-align-center">
-								<ul>
+								<!-- <ul>
 									<li>
 										<a href="#">
 											<span>
@@ -50,7 +52,7 @@
 											</span>
 										</a>
 									</li>
-								</ul>
+								</ul> -->
 								<p>{{ item.status }}</p>
 								<img 
 									src="~assets/images/icons/arrow-icon.svg"
@@ -69,10 +71,12 @@
 
 <script>
 import Header from '~/components/Header.vue'
+import ClientHeader from '~/components/ClientHeader.vue'
 
 export default {
 	components: {
-		Header
+		Header,
+		ClientHeader
 	},
 
 	async asyncData({ store, params }) {

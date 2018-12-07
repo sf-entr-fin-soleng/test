@@ -43,8 +43,6 @@ export const mutations = {
 		state,
 		{ answers, isNext }
 	) {
-		console.log('Finished writing answers back to the database...', answers)
-
 		const currentSectionId = answers.currentSectionId
 		const currentSection = state.questionnaire.sections[currentSectionId]
 
@@ -55,8 +53,6 @@ export const mutations = {
 		else answers.currentSectionId = prevSectionId
 
 		state.answers = answers
-		console.log(state.answers)
-		console.log('isNext', isNext)
 	}
 }
 
@@ -93,7 +89,6 @@ export const actions = {
 	) {
 		try {
 			const result = await services.questionnaire.saveAnswers(answers)
-			console.log('isNext', isNext)
 			commit(types.questionnaire.mutation.ANSWERS_WRITE_SUCCESS, {
 				answers,
 				isNext

@@ -1,19 +1,18 @@
 <template>
-	<div class="igforms-priority slds-col slds-size_12-of-12">
+	<section>
 		<pre v-if="debug">{{ details }}</pre>
 		<div
 			class="igforms-utils__position--relative slds-grid slds-wrap slds-size_1-of-1 slds-grid_align-center">
 			<p 
 				v-if="name" 
-				class="igforms-priority__medium-title">{{ name }}</p>
+				class="igforms-priority__high-title">{{ name }}</p>
 			<div class="slds-grid slds-size_1-of-1 igforms-utils__max-width--large">
 				<p class="igforms-priority__high-title-big igforms-utils__max-width--large">{{ priority.toUpperCase() }}</p>
-				<div class="igforms-priority__drop-area--placeholder"/>
 				<draggable 
 					:id="priority"
 					v-model="details"
 					:options="{ group: { name: priority, put: accept }}" 
-					class="draggable igforms-priority__drop-area slds-m-vertical_x-large slds-align_absolute-center slds-col slds-gutters slds-size_1-of-1 igforms-utils__max-width--large slds-p-around_small" 
+					class="draggable igforms-priority__drop-area slds-m-vertical_x-large slds-align_absolute-center slds-col slds-gutters slds-size_1-of-1 igforms-utils__max-width--large" 
 					@start="drag=true"
 					@end="drag=false">
 					<div 
@@ -52,7 +51,7 @@
 				</draggable>
 			</div>
 		</div>
-	</div>
+	</section>
 </template>
 
 <script>

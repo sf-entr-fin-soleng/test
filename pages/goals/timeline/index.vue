@@ -1,6 +1,7 @@
 <template>
 	<section>
 		<Header :title="title"/>
+
 		<div class="igforms-timeline slds-grid slds-wrap slds-grid_align-center slds-size_12-of-12 igforms-utils__max-width--large">
 			<div 
 				v-for="(priority,key) in $store.state.goal.priorities" 
@@ -8,18 +9,15 @@
 				:key="key"
 				class="igforms-timeline__lane slds-grid slds-wrap slds-size_10-of-12 slds-p-vertical--small">
 
-				<div class="igforms-timeline__milestone-year igforms-timeline__milestone-year--0 slds-size_2-of-12"/>
-				<div class="igforms-timeline__milestone-year igforms-timeline__milestone-year--5 slds-size_2-of-12"/>
-				<div class="igforms-timeline__milestone-year igforms-timeline__milestone-year--10 slds-size_2-of-12"/>
-				<div class="igforms-timeline__milestone-year igforms-timeline__milestone-year--15 slds-size_2-of-12"/>
-				<div class="igforms-timeline__milestone-year igforms-timeline__milestone-year--20 slds-size_2-of-12"/>
-				<div class="igforms-timeline__milestone-year igforms-timeline__milestone-year--25 slds-size_2-of-12">
+				<div 
+					v-for="n in 6"
+					:key="n"
+					:class="'igforms-timeline__milestone-year igforms-timeline__milestone-year--' + (n-1)*5 + ' slds-size_2-of-12'">
 					<div 
 						v-for="detail in $store.state.goal.trays[priority].details"
-						v-if="detail.timeframe === 10"
+						v-if="detail.timeframe === (n-1)*5"
 						:key="detail.goalId"
 					>
-					
 						<div 
 							v-if="detail.valid" 
 							class="igforms-timeline__milestone">
@@ -31,12 +29,11 @@
 
 					</div>
 				</div>
-
 				<h2 
 					class="igforms-timeline__title-big" 
 					style="text-transform:capitalize">{{ priority }}</h2>
 			</div>
-            
+
 			<div class="igforms-timeline__scale slds-grid slds-wrap slds-size_10-of-12">
 				<div class="igforms-timeline__scale-milestone slds-size_2-of-10">
 					<div/>
@@ -64,6 +61,8 @@
 				</div>
 			</div>
 		</div>
+            
+		
 	</section>
 </template>
 

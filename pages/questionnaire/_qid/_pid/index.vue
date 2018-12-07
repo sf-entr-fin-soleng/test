@@ -1,54 +1,74 @@
 <template>
 	<section class="questionnaire">
 		<Header title="Questionnaire"/>
+		<client-header/>
 
-		<!-- <pre v-if="debug">{{ questions }} </pre> -->
-		<div class="slds-grid slds-wrap slds-grid_align-center slds-size_1-of-1">
-			<div 
-				v-for="key in currentSection.questions"
-				:key="key"
-				class="question-container">
-				<div class="question-title">{{ questions[key].title }}</div>
+		<Form :class="'slds-grid slds-wrap slds-grid_align-center slds-size_1-of-1'">
+			<div class="slds-grid slds-wrap slds-size_9-of-12 slds-grid_align-center slds-gutters igforms-utils__max-width--large">
+				<div 
+					v-for="key in currentSection.questions"
+					:key="key"
+					class="cQuestionnaire_Inquiry slds-col slds-size_1-of-1 cQuestionBoolean">
 
-				<div v-if="questions[key].options">
-					<div 
-						v-for="option in questions[key].options"
-						:key="option.key"
-						class="question-input">
-						<input  
-							:id="`${key}-${option.key}`"
-							:value="option"
-							v-model="questions[key].answer"
-							:type="questions[key].type === 'multiple' ? 'checkbox' : 'radio'"
-						>
-						<label 
-							:for="`${key}-${option.key}`"> {{ option }} </label>
-					</div>
-				</div>
+					<fieldset class="slds-form-element">
+						<legend class="slds-col slds-form-element__legend slds-form-element__label slds-p-vertical_small">{{ questions[key].title }}</legend>
 
-				<div v-if="questions[key].type === 'textarea'">
-					<input  
-						:id="`${key}-${questions[key].type}`"
-						v-model="questions[key].answer"
-						type="textarea"
-					>
-					<label 
-						:for="`${key}-${questions[key].type}`">Response: </label>
-				</div>
+						<div 
+							v-if="questions[key].options" 
+							class="slds-form-element__control">
 
-				<div v-if="questions[key].type === 'number'">
-					<input  
-						:id="`${key}-${questions[key].type}`"
-						v-model="questions[key].answer"
-						:min="questions[key].min"
-						:max="questions[key].max"
-						type="number"
-					>
-					<label 
-						:for="`${key}-${questions[key].type}`">Response: </label>
+							<div class="slds-form-element__row slds-size_1-of-1 slds-checkbox_button-group slds-m-top_small">
+								<span 
+									v-for="option in questions[key].options"
+									:key="option.key"
+									class="slds-col slds-button slds-checkbox_button slds-size_1-of-3">
+									<input  
+										:id="`${key}-${option.key}`"
+										:value="option"
+										v-model="questions[key].answer"
+										:type="questions[key].type === 'multiple' ? 'checkbox' : 'radio'"
+									>
+									<label 
+										:for="`${key}-${option.key}`"
+										class="slds-checkbox_button__label slds-align_absolute-center"> 
+										<span class="slds-checkbox_faux">{{ option.label }}</span>
+									</label>
+								</span>
+							</div>
+							
+						</div>
+
+						<div v-if="questions[key].type === 'textarea'">
+							<input  
+								:id="`${key}-${questions[key].type}`"
+								v-model="questions[key].answer"
+								type="textarea"
+							>
+							<label 
+								:for="`${key}-${questions[key].type}`">Response: </label>
+						</div>
+
+						<div 
+							v-if="questions[key].type === 'number'"
+							class="slds-form-element__control">
+
+							<div class="slds-m-top_small cQuestionnaire_NumberInput">
+								at
+								<input  
+									:id="`${key}-${questions[key].type}`"
+									v-model="questions[key].answer"
+									:min="questions[key].min"
+									:max="questions[key].max"
+									type="number"
+									class="igforms-utils__text-align--center"
+								>
+							</div>
+						</div>
+					</fieldset>
+					
 				</div>
 			</div>
-		</div>
+		</Form>
 
 		<NavBar 
 			@click-next="parseForm($event, true)" 
@@ -58,6 +78,7 @@
 
 <script>
 import Header from '~/components/Header.vue'
+import ClientHeader from '~/components/ClientHeader.vue'
 import NavBar from '~/components/NavBar.vue'
 import Form from '~/components/Form.vue'
 import FormField from '~/components/FormField.vue'
@@ -65,6 +86,7 @@ import FormField from '~/components/FormField.vue'
 export default {
 	components: {
 		Header,
+		ClientHeader,
 		NavBar,
 		Form,
 		FormField
@@ -149,7 +171,6 @@ export default {
 				answers.responses[key] = question.answer
 			}
 
-			console.log('isNext', isNext)
 			await this.$store.dispatch('questionnaire/writeAnswers', {
 				answers,
 				isNext

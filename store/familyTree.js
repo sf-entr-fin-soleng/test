@@ -29,8 +29,6 @@ export const mutations = {
 			parseInt(pathComponents[pathComponents.length - 1])
 		)
 
-		console.log(pathComponents, fromArray, changedPath)
-
 		// If this is a deletion operation
 		if (isDelete) {
 			// If value is contained within an array,

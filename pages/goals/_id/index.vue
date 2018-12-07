@@ -2,7 +2,7 @@
 	<div>
 		<Header :title="title"/>
 		<div 
-			class="cGoals_And_Concerns" 
+			class="igforms-priority slds-col slds-size_12-of-12 cGoals_And_Concerns" 
 			@keyup.enter="handleNext">
 			<pre v-if="debug">{{ goals }}</pre>
 			<GoalsTray 
@@ -17,6 +17,8 @@
 				name="Low Priority" 
 				priority="low"
 			/>
+			<hr>
+			<p class="slds-align_absolute-center">Choose your Goals and Concerns</p>
 			<GoalsTray 
 				priority="none"
 			/>
