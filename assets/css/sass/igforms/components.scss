@@ -692,3 +692,8 @@
 		font-family: $ig-whitney-semibold;
 	}
 }
+
+.#{$namespace}-questionnaire-container {
+	max-height: calc(100vh - 283px);
+	overflow-y: scroll;
+}

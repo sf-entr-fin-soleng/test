@@ -3,7 +3,7 @@
 		<Header title="Questionnaire"/>
 		<client-header/>
 
-		<div class="slds-grid slds-wrap slds-grid_align-center slds-size_1-of-1">
+		<div class="slds-grid slds-wrap slds-grid_align-center slds-size_1-of-1 igforms-questionnaire-container">
 			<div class="slds-grid slds-wrap slds-size_9-of-12 slds-grid_align-center slds-gutters igforms-utils__max-width--large">
 				<div 
 					v-for="key in currentSection.questions"
