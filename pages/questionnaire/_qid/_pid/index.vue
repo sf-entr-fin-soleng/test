@@ -3,16 +3,16 @@
 		<Header title="Questionnaire"/>
 		<client-header/>
 
-		<Form :class="'slds-grid slds-wrap slds-grid_align-center slds-size_1-of-1'">
+		<div class="slds-grid slds-wrap slds-grid_align-center slds-size_1-of-1">
 			<div class="slds-grid slds-wrap slds-size_9-of-12 slds-grid_align-center slds-gutters igforms-utils__max-width--large">
 				<div 
 					v-for="key in currentSection.questions"
 					:key="key"
-					class="cQuestionnaire_Inquiry slds-col slds-size_1-of-1 cQuestionBoolean">
+					:class="['cQuestionnaire_Inquiry slds-col', questions[key].renderLarge || (questions[key].options && questions[key].options.length > 2) || (questions[key].type === 'textarea') ? 'slds-size_1-of-1' : 'slds-size_1-of-2', 'cQuestionBoolean']">
 
+					<!-- <pre>{{ questions[key] }}</pre> -->
 					<fieldset class="slds-form-element">
 						<legend class="slds-col slds-form-element__legend slds-form-element__label slds-p-vertical_small">{{ questions[key].title }}</legend>
-
 						<div 
 							v-if="questions[key].options" 
 							class="slds-form-element__control">
@@ -21,7 +21,7 @@
 								<span 
 									v-for="option in questions[key].options"
 									:key="option.key"
-									class="slds-col slds-button slds-checkbox_button slds-size_1-of-3">
+									:class="['slds-col slds-button slds-checkbox_button', questions[key].options.length > 2 ? 'slds-size_1-of-3' : 'slds-size_1-of-2']">
 									<input  
 										:id="`${key}-${option.key}`"
 										:value="option"
@@ -38,14 +38,20 @@
 							
 						</div>
 
-						<div v-if="questions[key].type === 'textarea'">
-							<input  
-								:id="`${key}-${questions[key].type}`"
-								v-model="questions[key].answer"
-								type="textarea"
-							>
-							<label 
-								:for="`${key}-${questions[key].type}`">Response: </label>
+						<div 
+							v-if="questions[key].type === 'textarea'" 
+							class="textarea-input slds-col slds-size_1-of-1">
+							<fieldset>
+								<div class="slds-form-element">
+									<div class="slds-form-element__control">
+										<textarea 
+											:id="`${key}-${questions[key].type}`"
+											v-model="questions[key].answer"
+											class="slds-textarea textarea" 
+											placeholder="Add notes..."/>
+									</div>
+								</div>
+							</fieldset>
 						</div>
 
 						<div 
@@ -68,12 +74,11 @@
 					
 				</div>
 			</div>
-		</Form>
 
-		<NavBar 
-			@click-next="parseForm($event, true)" 
-			@click-prev="parseForm($event, false)"/>
-	</section>
+			<NavBar 
+				@click-next="parseForm($event, true)" 
+				@click-prev="parseForm($event, false)"/>
+	</div></section>
 </template>
 
 <script>
