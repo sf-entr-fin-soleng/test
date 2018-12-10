@@ -1,5 +1,5 @@
 <template>
-	<section class="cFamilyTreeInputForm">
+	<section class="cFamilyTreeInputForm slds-grid slds-wrap slds-grid_align-center slds-size_1-of-1">
 
 		<!-- Header -->
 		<Header title="Family Tree"/>

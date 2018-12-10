@@ -37,8 +37,23 @@
 						</div>
 						<div 
 						>
+							<!-- Hack. Get rid of this later -->
+							<div style="display: none">
+								<img src="~/assets/images/goal-concerns/cards/GC_Education_Planning.png">
+								<img src="~/assets/images/goal-concerns/cards/GC_Evolve_my_Business.png">
+								<img src="~/assets/images/goal-concerns/cards/GC_Financial_Reserve.png">
+								<img src="~/assets/images/goal-concerns/cards/GC_Major_Purchase.png">
+								<img src="~/assets/images/goal-concerns/cards/GC_Minimize_Taxation.png">
+								<img src="~/assets/images/goal-concerns/cards/GC_Parental_Care.png">
+								<img src="~/assets/images/goal-concerns/cards/GC_Planning_my_Estate.png">
+								<img src="~/assets/images/goal-concerns/cards/GC_Protecting_my_Family.png">
+								<img src="~/assets/images/goal-concerns/cards/GC_Reduce_my_Debt.png">
+								<img src="~/assets/images/goal-concerns/cards/GC_Retirement.png">
+								<img src="~/assets/images/goal-concerns/cards/GC_Strategic_Philanthropy.png">
+								<img src="~/assets/images/goal-concerns/cards/GC_Take_a_Vacation.png">
+							</div>
 							<img 
-								:src="'/images/goals-concerns/cards/' + goals[detail.goalId].image + '.png'" 
+								:src="'/_nuxt/assets/images/goal-concerns/cards/' + goals[detail.goalId].image + '.png'" 
 								alternativeText="IG Wealth Management logo"
 							>
 							<span>

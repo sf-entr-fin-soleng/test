@@ -26,7 +26,7 @@ async function query(query) {
 function instantiateClient(): Client {
 	const client = new Client({
 		connectionString: process.env.DATABASE_URL,
-		database: 'sfgc'
+		database: process.env.DATABASE_NAME
 		//ssl: process.env.LOCAL
 	})
 

@@ -20,7 +20,7 @@
 									<span class="slds-radio_faux">Prospects</span>
 								</label>
 							</span>
-							<span class="slds-button slds-radio_button">
+							<!-- <span class="slds-button slds-radio_button">
 								<input 
 									id="client" 
 									type="radio" 
@@ -31,7 +31,7 @@
 									for="client">
 									<span class="slds-radio_faux">Clients</span>
 								</label>
-							</span>
+							</span> -->
 						</div>
 					</div>
 				</fieldset>

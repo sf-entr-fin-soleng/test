@@ -2,7 +2,7 @@
 	<section>
 		<Header :title="title"/>
 
-		<div class="igforms-timeline slds-grid slds-wrap slds-grid_align-center slds-size_12-of-12 igforms-utils__max-width--large">
+		<div class="igforms-timeline slds-grid slds-wrap slds-grid_align-center slds-size_1-of-1">
 			<div 
 				v-for="(priority,key) in $store.state.goal.priorities" 
 				v-if="key !== 'nil'"

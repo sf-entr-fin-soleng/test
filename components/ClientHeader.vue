@@ -4,19 +4,19 @@
 			<div class="slds-grid slds-size_1-of-1 slds-col igforms-utils__max-width--large">
 				<div class=" slds-clearfix">
 					<div class="igforms-client-header__info igforms-client-header__back-button slds-float_left slds-align_absolute-center">
-						<button 
+						<!-- <button 
 							class="slds-button slds-button_inverse"
 							@click="$emit('click-prev', $event)">
 							<i class="slds-button__icon slds-button__icon_left material-icons">
 								navigate_before
 							</i>
 							Back
-						</button>
+						</button> -->
 						<p class="igforms-client-header__name-number">
 							<strong>Client: {{ `${this.$store.state.prospect.prospect.firstName} ${this.$store.state.prospect.prospect.lastName}` }}</strong>
-							<span>
+							<!-- <span>
 								{{ this.$store.state.prospect.prospect.id.slice(0,5).toString().toUpperCase() }}
-							</span>
+							</span> -->
 						</p>
 						<p>
 							<a href="#"> {{ this.$store.state.prospect.prospect.email }}</a>
