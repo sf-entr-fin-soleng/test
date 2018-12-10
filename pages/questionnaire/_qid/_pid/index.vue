@@ -3,85 +3,88 @@
 		<Header title="Questionnaire"/>
 		<client-header/>
 
-		<section-title 
-			:section-title="currentSection.title" 
-			:show-skip="true"
-			@skip="parseForm($event, true)"/>
-		<div class="slds-grid slds-wrap slds-grid_align-center slds-size_1-of-1 igforms-questionnaire-container">
-			<div class="slds-grid slds-wrap slds-size_9-of-12 slds-grid_align-center slds-gutters igforms-utils__max-width--large">
-				<div 
-					v-for="key in currentSection.questions"
-					:key="key"
-					:class="['cQuestionnaire_Inquiry slds-col', questions[key].renderLarge || (questions[key].options && questions[key].options.length > 2) || (questions[key].type === 'textarea') ? 'slds-size_1-of-1' : 'slds-size_1-of-2', 'cQuestionBoolean']">
+		<section class="igforms-questionnaire-container">
+			<section-title 
+				:section-title="currentSection.title" 
+				:show-skip="true"
+				@skip="parseForm($event, true)"/>
+			<div class="slds-grid slds-wrap slds-grid_align-center slds-size_1-of-1">
+				<div class="slds-grid slds-wrap slds-size_9-of-12 slds-grid_align-center slds-gutters igforms-utils__max-width--large">
+					<div 
+						v-for="key in currentSection.questions"
+						:key="key"
+						:class="['cQuestionnaire_Inquiry slds-col', questions[key].renderLarge || (questions[key].options && questions[key].options.length > 2) || (questions[key].type === 'textarea') ? 'slds-size_1-of-1' : 'slds-size_1-of-2', 'cQuestionBoolean']">
 
-					<!-- <pre>{{ questions[key] }}</pre> -->
-					<fieldset class="slds-form-element">
-						<legend class="slds-col slds-form-element__legend slds-form-element__label slds-p-vertical_small">{{ questions[key].title }}</legend>
-						<div 
-							v-if="questions[key].options" 
-							class="slds-form-element__control">
+						<!-- <pre>{{ questions[key] }}</pre> -->
+						<fieldset class="slds-form-element">
+							<legend class="slds-col slds-form-element__legend slds-form-element__label slds-p-vertical_small">{{ questions[key].title }}</legend>
+							<div 
+								v-if="questions[key].options" 
+								class="slds-form-element__control">
 
-							<div class="slds-form-element__row slds-size_1-of-1 slds-checkbox_button-group slds-m-top_small">
-								<span 
-									v-for="option in questions[key].options"
-									:key="option.key"
-									:class="['slds-col slds-button slds-checkbox_button', questions[key].options.length > 2 ? 'slds-size_1-of-3' : 'slds-size_1-of-2']">
-									<input  
-										:id="`${key}-${option.key}`"
-										:value="option"
-										v-model="questions[key].answer"
-										:type="questions[key].type === 'multiple' ? 'checkbox' : 'radio'"
-									>
-									<label 
-										:for="`${key}-${option.key}`"
-										class="slds-checkbox_button__label slds-align_absolute-center"> 
-										<span class="slds-checkbox_faux">{{ option.label }}</span>
-									</label>
-								</span>
-							</div>
-							
-						</div>
-
-						<div 
-							v-if="questions[key].type === 'textarea'" 
-							class="textarea-input slds-col slds-size_1-of-1">
-							<fieldset>
-								<div class="slds-form-element">
-									<div class="slds-form-element__control">
-										<textarea 
-											:id="`${key}-${questions[key].type}`"
+								<div class="slds-form-element__row slds-size_1-of-1 slds-checkbox_button-group slds-m-top_small">
+									<span 
+										v-for="option in questions[key].options"
+										:key="option.key"
+										:class="['slds-col slds-button slds-checkbox_button', questions[key].options.length > 2 ? 'slds-size_1-of-3' : 'slds-size_1-of-2']">
+										<input  
+											:id="`${key}-${option.key}`"
+											:value="option"
 											v-model="questions[key].answer"
-											class="slds-textarea textarea" 
-											placeholder="Add notes..."/>
-									</div>
+											:type="questions[key].type === 'multiple' ? 'checkbox' : 'radio'"
+										>
+										<label 
+											:for="`${key}-${option.key}`"
+											class="slds-checkbox_button__label slds-align_absolute-center"> 
+											<span class="slds-checkbox_faux">{{ option.label }}</span>
+										</label>
+									</span>
 								</div>
-							</fieldset>
-						</div>
-
-						<div 
-							v-if="questions[key].type === 'number'"
-							class="slds-form-element__control">
-
-							<div class="slds-m-top_small cQuestionnaire_NumberInput">
-								at
-								<input  
-									:id="`${key}-${questions[key].type}`"
-									v-model="questions[key].answer"
-									:min="questions[key].min"
-									:max="questions[key].max"
-									type="number"
-									class="igforms-utils__text-align--center"
-								>
+							
 							</div>
-						</div>
-					</fieldset>
+
+							<div 
+								v-if="questions[key].type === 'textarea'" 
+								class="textarea-input slds-col slds-size_1-of-1">
+								<fieldset>
+									<div class="slds-form-element">
+										<div class="slds-form-element__control">
+											<textarea 
+												:id="`${key}-${questions[key].type}`"
+												v-model="questions[key].answer"
+												class="slds-textarea textarea" 
+												placeholder="Add notes..."/>
+										</div>
+									</div>
+								</fieldset>
+							</div>
+
+							<div 
+								v-if="questions[key].type === 'number'"
+								class="slds-form-element__control">
+
+								<div class="slds-m-top_small cQuestionnaire_NumberInput">
+									at
+									<input  
+										:id="`${key}-${questions[key].type}`"
+										v-model="questions[key].answer"
+										:min="questions[key].min"
+										:max="questions[key].max"
+										type="number"
+										class="igforms-utils__text-align--center"
+									>
+								</div>
+							</div>
+						</fieldset>
+					</div>
 				</div>
 			</div>
+		</section>
 
-			<NavBar 
-				@click-next="parseForm($event, true)" 
-				@click-prev="parseForm($event, false)"/>
-	</div></section>
+		<NavBar 
+			@click-next="parseForm($event, true)" 
+			@click-prev="parseForm($event, false)"/>
+	</section>
 </template>
 
 <script>
