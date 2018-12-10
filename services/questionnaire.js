@@ -24,7 +24,7 @@ async function fetchAnswers(qid, pid) {
 async function saveAnswers(answers) {
 	try {
 		const url = `/api/questionnaire/answers/saveOne.json`
-		const result = Api().post(url, {
+		const result = await Api().post(url, {
 			prospectId: answers.prospectId,
 			questionnaireId: answers.questionnaireId,
 			answers

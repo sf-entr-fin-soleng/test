@@ -35,6 +35,13 @@ export const mutations = {
 				if (question) question.answer = answers.responses[key]
 			}
 
+			// Assign first section as current section
+			if (!answers.currentSectionId) {
+				answers.currentSectionId = Object.keys(
+					state.questionnaire.sections
+				)[0]
+			}
+
 			state.answers = answers
 		}
 	},
@@ -43,14 +50,44 @@ export const mutations = {
 		state,
 		{ answers, isNext }
 	) {
+		// Scope constants
 		const currentSectionId = answers.currentSectionId
-		const currentSection = state.questionnaire.sections[currentSectionId]
 
-		const nextSectionId = currentSection ? currentSection.next : undefined
-		const prevSectionId = currentSection ? currentSection.prev : undefined
+		// Loop control
+		const proceedFrom = function(sectionId) {
+			const section = state.questionnaire.sections[sectionId]
+			if (!section) return undefined
 
-		if (isNext) answers.currentSectionId = nextSectionId
-		else answers.currentSectionId = prevSectionId
+			const newSectionId = section[isNext ? 'next' : 'prev']
+			const dependency = state.questionnaire.dependencies[newSectionId]
+
+			// No dependencies at all
+			if (!dependency) {
+				answers.currentSectionId = newSectionId
+			}
+			// Found one or more dependencies
+			else {
+				const triggerQuestion = answers.responses[dependency.dependsOn]
+				const triggerAnswer = dependency.answer
+
+				if (
+					triggerQuestion &&
+					triggerQuestion.value === triggerAnswer
+				) {
+					answers.currentSectionId = newSectionId
+				} else {
+					proceedFrom(newSectionId)
+				}
+			}
+		}
+
+		// Proceed from the current section
+		proceedFrom(currentSectionId)
+
+		// If after saving we go to an undefined section,
+		// it means we either hit the first or the last section
+		// possible. Convey that information back to the component
+		if (!answers.currentSectionId) answers.moveOn = isNext
 
 		state.answers = answers
 	}
@@ -84,13 +121,13 @@ export const actions = {
 	},
 
 	async [types.questionnaire.action.SAVE_ANSWERS](
-		{ commit, state },
+		{ commit },
 		{ answers, isNext }
 	) {
 		try {
 			const result = await services.questionnaire.saveAnswers(answers)
 			commit(types.questionnaire.mutation.ANSWERS_WRITE_SUCCESS, {
-				answers,
+				answers: result.data,
 				isNext
 			})
 

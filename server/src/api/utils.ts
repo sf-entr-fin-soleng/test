@@ -45,6 +45,8 @@ function getWriteQuery(type, data, isInsert): string {
 		query = `INSERT INTO sfgc.mock_container__c (Heroku_Id__c, Type__c, Data__c, Heroku_Parent_Id__c)`
 		query += ` VALUES ('${data.id}', '${type}', '${parseData(data)}'`
 		query += `,'${data.parentId ? data.parentId : 'null'}')`
+		query +=
+			' RETURNING heroku_id__c as id, heroku_parent_id__c as parentId, type__c as type, data__c as data'
 	} else {
 		query = `UPDATE sfgc.mock_container__c SET Data__c = '${parseData(
 			data
@@ -52,6 +54,8 @@ function getWriteQuery(type, data, isInsert): string {
 		// eslint-disable-next-line prettier/prettier
 		query += `, Heroku_Parent_Id__c = '${data.parentId ? data.parentId : 'null'}'`
 		query += ` WHERE Heroku_Id__c = '${data.id}'`
+		query +=
+			' RETURNING heroku_id__c as id, heroku_parent_id__c as parentId, type__c as type, data__c as data'
 	}
 
 	console.log(`[${moment().toString()}][DB_WRITE]: ${query}`)
