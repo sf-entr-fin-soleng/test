@@ -36,15 +36,12 @@ async function fetchQuestionnaire(req, res) {
 
 async function fetchAnswers(req, res) {
 	try {
-		const questionnaireId = req.query.qid
 		const prospectId = req.query.pid
 
 		const query = utils.getBaseQuery(types.answers, null, prospectId)
-
 		const result = await db.query(query)
 
 		let answers = Object.assign({}, models.answers)
-
 		if (result.rows && result.rows.length) {
 			answers = Object.assign(answers, utils.parseObject(result.rows[0]))
 		}
@@ -71,9 +68,13 @@ async function saveAnswers(req, res) {
 		)
 
 		const result = await db.query(query)
+		let updated = Object.assign({}, models.answers)
+		if (result.rows && result.rows.length) {
+			updated = Object.assign(updated, utils.parseObject(result.rows[0]))
+		}
 
 		res.setHeader('Content-Type', 'application/json')
-		res.end(JSON.stringify(result, null, 2))
+		res.end(JSON.stringify(updated, null, 2))
 	} catch (err) {
 		console.error(err)
 

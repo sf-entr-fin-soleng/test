@@ -3,6 +3,10 @@
 		<Header title="Questionnaire"/>
 		<client-header/>
 
+		<section-title 
+			:section-title="currentSection.title" 
+			:show-skip="true"
+			@skip="parseForm($event, true)"/>
 		<div class="slds-grid slds-wrap slds-grid_align-center slds-size_1-of-1">
 			<div class="slds-grid slds-wrap slds-size_9-of-12 slds-grid_align-center slds-gutters igforms-utils__max-width--large">
 				<div 
@@ -71,7 +75,6 @@
 							</div>
 						</div>
 					</fieldset>
-					
 				</div>
 			</div>
 
@@ -85,16 +88,14 @@
 import Header from '~/components/Header.vue'
 import ClientHeader from '~/components/ClientHeader.vue'
 import NavBar from '~/components/NavBar.vue'
-import Form from '~/components/Form.vue'
-import FormField from '~/components/FormField.vue'
+import SectionTitle from '~/components/SectionTitle.vue'
 
 export default {
 	components: {
 		Header,
 		ClientHeader,
 		NavBar,
-		Form,
-		FormField
+		SectionTitle
 	},
 
 	async asyncData({ app, store, params }) {
@@ -110,6 +111,10 @@ export default {
 			qid: params.qid,
 			pid: params.pid
 		})
+
+		return {
+			actions
+		}
 	},
 
 	data: function() {
@@ -148,9 +153,6 @@ export default {
 			// defined, use fallback id (first section)
 			const state = this.$store.state.questionnaire
 			const sectionId = state.answers.currentSectionId
-				? state.answers.currentSectionId
-				: Object.keys(state.questionnaire.sections)[0]
-
 			const section = state.questionnaire.sections[sectionId]
 			return { ...section, sectionId }
 		},
@@ -176,10 +178,20 @@ export default {
 				answers.responses[key] = question.answer
 			}
 
+			// Save answers back to the server
 			await this.$store.dispatch('questionnaire/writeAnswers', {
 				answers,
 				isNext
 			})
+
+			// TODO: use nextModule as isNext in order to
+			// either proceed back to dashboard or go back to
+			// our goals and concerns module
+			const nextModule = this.$store.state.questionnaire.answers.moveOn
+			if (nextModule !== undefined)
+				this.$router.push(
+					`/dashboard/${this.$store.state.prospect.prospect.id}`
+				)
 		}
 	}
 }
