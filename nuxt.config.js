@@ -48,7 +48,8 @@ module.exports = {
 	modules: ['@nuxtjs/axios'],
 
 	axios: {
-		withCredentials: true
+		withCredentials: true,
+		baseUrl: process.env.API_URL
 	},
 
 	env: {
