@@ -19,10 +19,10 @@ function buildProspectURL(searchParams) {
 async function fetchProspects(searchParams) {
 	try {
 		const url = buildProspectURL(searchParams)
-		const { data } = await Api().get(url)
+		const data = await Api().$get(url)
 		return data
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 		return []
 	}
 }
@@ -34,7 +34,7 @@ async function fetchProspectById(id) {
 
 		return data
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 	}
 }
 

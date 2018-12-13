@@ -651,7 +651,7 @@ export default {
 	},
 
 	data: function() {
-		if (!this.$store.state.prospect.prospect.firstName) {
+		if (!this.$store.state.prospect.prospect.id) {
 			this.$router.push('/')
 		}
 

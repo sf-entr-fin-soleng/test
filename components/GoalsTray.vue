@@ -16,7 +16,8 @@
 					@start="drag=true"
 					@end="drag=false">
 					<div 
-						v-for="(detail,index) in details" 
+						v-for="(detail,index) in details"
+						v-if="detail !== undefined" 
 						:key="detail.goalId" 
 						class="igforms-priority__card igforms-priority__card--high slds-p-around-xxx-small slds-col slds-medium-size_2-of-12 slds-small-size_4-of-12"
 						@click="click($event, index)">

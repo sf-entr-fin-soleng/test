@@ -27,7 +27,7 @@ async function fetchQuestionnaire(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(questionnaire, null, 2))
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(err, null, 2))
@@ -49,7 +49,7 @@ async function fetchAnswers(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(answers, null, 2))
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(err, null, 2))
@@ -76,7 +76,7 @@ async function saveAnswers(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(updated, null, 2))
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(err, null, 2))

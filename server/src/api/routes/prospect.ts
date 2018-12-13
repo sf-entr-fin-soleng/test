@@ -6,7 +6,11 @@ import * as _ from 'lodash'
 async function fetchProspects(req, res) {
 	try {
 		const constraints = { ...req.query }
-		let query = utils.getBaseQuery(types.prospect)
+		let query = utils.getBaseQuery(
+			types.prospect,
+			undefined,
+			req.session.user.userId
+		)
 
 		const result = await db.query(query)
 		let prospects = result.rows.map(row => utils.parseObject(row))
@@ -52,7 +56,7 @@ async function fetchProspects(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(prospects, null, 2))
 	} catch (err) {
-		console.error(err.stack)
+		// Error logging goes here
 		res.setHeader('Content-Type', 'application/json')
 		res.status(500).end(JSON.stringify(err, null, 2))
 	}
@@ -62,7 +66,11 @@ async function fetchProspect(req, res) {
 	try {
 		// Get base SQL query and await for
 		// postgres promise to resolve
-		const query = utils.getBaseQuery(types.prospect, req.query.id)
+		const query = utils.getBaseQuery(
+			types.prospect,
+			req.query.id,
+			req.session.user.userId
+		)
 		const result = await db.query(query)
 
 		// Prospect container
@@ -78,7 +86,7 @@ async function fetchProspect(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(prospect, null, 2))
 	} catch (err) {
-		console.error(err.stack)
+		// Error logging goes here
 		res.status(500).setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(err, null, 2))
 	}
@@ -88,6 +96,8 @@ async function saveProspect(req, res) {
 	try {
 		// Fetch prospect data from POST body
 		const prospect = req.body
+		prospect.parentId = req.session.user.userId
+		if (!prospect.parentId) throw { message: 'NO' }
 
 		// If prospect has no ID assigned,
 		// generate unique ID and save it
@@ -105,6 +115,7 @@ async function saveProspect(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(result, null, 2))
 	} catch (err) {
+		// error log goes here
 		console.error(err)
 		res.setHeader('Content-Type', 'application/json')
 		res.status(502).end(JSON.stringify(err, null, 2))

@@ -31,7 +31,7 @@ async function fetchFamilyTree(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(familyTree, null, 2))
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(err, null, 2))
@@ -55,7 +55,7 @@ async function saveFamilyTree(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(result, null, 2))
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(err, null, 2))

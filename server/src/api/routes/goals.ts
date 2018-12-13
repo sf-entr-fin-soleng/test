@@ -17,7 +17,7 @@ async function fetchGoals(req, res) {
 			)
 		)
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(err, null, 2))
@@ -44,7 +44,7 @@ async function fetchGoalDetails(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(details, null, 2))
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 		res.setHeader('Content-Type', 'application/json')
 		res.status(err.code).end(JSON.stringify(err, null, 2))
 	}
@@ -81,7 +81,7 @@ async function saveDetails(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(details, null, 2))
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 		res.setHeader('Content-Type', 'application/json')
 		res.status(502).end(JSON.stringify(err, null, 2))
 	}

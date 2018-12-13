@@ -6,7 +6,7 @@ async function fetchGoals() {
 		const { data } = await Api().get(url)
 		return data
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 	}
 }
 

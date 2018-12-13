@@ -6,7 +6,7 @@ async function fetchQuestionnaire(questionnaireId) {
 		const { data } = await Api().get(url)
 		return data
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 	}
 }
 
@@ -17,7 +17,7 @@ async function fetchAnswers(qid, pid) {
 		const { data } = await Api().get(url)
 		return data
 	} catch (err) {
-		console.error(err)
+		// error log goes here
 	}
 }
 

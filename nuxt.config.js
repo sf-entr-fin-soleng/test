@@ -40,15 +40,20 @@ module.exports = {
 	/*
   ** Plugins to load before mounting the App
   */
-	plugins: ['~plugins/filters.js'],
+	plugins: ['~plugins/filters.js', '~plugins/axios-injector.js'],
 
 	/*
   ** Nuxt.js modules
   */
-	modules: [],
+	modules: ['@nuxtjs/axios'],
+
+	axios: {
+		withCredentials: true
+	},
 
 	env: {
-		BASE_URL: process.env.BASE_URL || 'http://localhost:8080'
+		API_URL: process.env.API_URL || 'http://localhost:8080',
+		API_URL_BROWSER: process.env.API_URL_BROWSER || 'http://localhost:8080'
 	},
 
 	/*

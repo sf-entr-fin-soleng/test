@@ -133,7 +133,7 @@ export default {
 					params: { command: result.data.command }
 				})
 			} catch (err) {
-				console.error(err)
+				// error log goes here
 			}
 		}
 	}

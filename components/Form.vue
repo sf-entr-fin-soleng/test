@@ -5,8 +5,8 @@
 		.checkValidity on each input target, so we need to do it manually. -->
 	<form
 		:id="id"
-		:class="this.class"
 		novalidate
+		class="slds-grid slds-wrap slds-size_10-of-12"
 		@submit.prevent="submit">
 		<slot/>
 		<input 
@@ -24,11 +24,7 @@
 export default {
 	components: {},
 	props: {
-		id: { type: String, default: 'form1' },
-		class: {
-			type: String,
-			default: 'slds-grid slds-wrap slds-size_10-of-12'
-		}
+		id: { type: String, default: 'form1' }
 	},
 	data: function() {
 		return {

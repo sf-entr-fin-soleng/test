@@ -7,7 +7,7 @@ async function connectToDB() {
 
 		return client
 	} catch (err) {
-		throw err
+		//// error log goes here
 	}
 }
 
@@ -19,15 +19,14 @@ async function query(query) {
 
 		return result
 	} catch (err) {
-		throw err
+		//// error log goes here
 	}
 }
 
 function instantiateClient(): Client {
 	const client = new Client({
-		connectionString: process.env.DATABASE_URL,
-		database: process.env.DATABASE_NAME
-		//ssl: process.env.LOCAL
+		connectionString: process.env.DATABASE_URL
+		//ssl: true
 	})
 
 	return client

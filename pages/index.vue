@@ -75,17 +75,18 @@ export default {
 		Paginator
 	},
 
-	async asyncData({ app, store }) {
-		try {
-			let prospects = await services.prospect.fetchProspects({
+	middleware: 'authenticated',
+
+	async asyncData({ app, store, $axios }) {
+		let prospects = await services.prospect.fetchProspects(
+			{
 				perPage: 5,
 				offset: 0
-			})
+			},
+			$axios
+		)
 
-			return { prospects }
-		} catch (err) {
-			console.error(err)
-		}
+		return { prospects }
 	},
 
 	data: function() {

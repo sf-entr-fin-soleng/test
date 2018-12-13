@@ -136,7 +136,7 @@ export default {
 				await this.$store.dispatch('goal/writeDetails')
 				this.$router.go(-1)
 			} catch (err) {
-				console.error(err)
+				// error log goes here
 			}
 		},
 

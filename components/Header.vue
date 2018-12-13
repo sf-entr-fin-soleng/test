@@ -19,7 +19,7 @@
 			<div class="igforms-header__menu slds-col slds-medium-size_4-of-12 slds-clearfix">
 				<ul class="slds-float_right">
 					<li class="slds-p-left_xx-large">
-						<a href="#">
+						<nuxt-link to="/">
 							<span>
 								<img 
 									src="~assets/images/Home.svg" 
@@ -27,16 +27,17 @@
 									class="home">
 							</span>
 							Home
-						</a>
+						</nuxt-link>
 					</li>
 					<li class="slds-p-left_xx-large">
 						<a href="#">
 							<span>
 								<img 
-									src="~assets/images/placeholder-profile-icon.svg" 
+									:src="$store.state.user.user.profileThumbnailUrl"
+									style="border-radius: 50%; max-height: 20px; width: auto" 
 									alternativeText="user icon" >
 							</span>
-							Kobe Bryant
+							{{ $store.state.user.user.firstName }}
 						</a>
 					</li>
 				</ul>
