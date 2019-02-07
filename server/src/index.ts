@@ -1,38 +1,27 @@
-;(function() {
-	var childProcess = require('child_process')
-	var oldSpawn = childProcess.spawn
-	function mySpawn() {
-		console.log('spawn called')
-		console.log(arguments)
-		var result = oldSpawn.apply(this, arguments)
-		return result
-	}
-	childProcess.spawn = mySpawn
-})()
-
 import router from './api'
 import auth from './auth'
 import { rateLimiter } from './middleware'
 
 require('dotenv').config()
-const express = require('express')
-const bodyParser = require('body-parser')
-const consola = require('consola')
-const { Nuxt, Builder } = require('nuxt')
+import * as express from 'express'
+import * as bodyParser from 'body-parser'
+import * as consola from 'consola'
+import * as morgan from 'morgan'
+import * as fs from 'fs'
+import * as https from 'https'
+import * as path from 'path'
+import * as session from 'express-session'
+import * as cors from 'cors'
+import * as helmet from 'helmet'
+import { Nuxt, Builder } from 'nuxt'
+
 const app = express()
 const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 8080
-const morgan = require('morgan')
-const path = require('path')
-const fs = require('fs')
-const https = require('https')
-const session = require('express-session')
 const pgSession = require('connect-pg-simple')(session)
-const cors = require('cors')
-const helmet = require('helmet')
 
 // Import and Set Nuxt.js options
-let config = require('../../nuxt.config.js')
+const config = require('../../nuxt.config.js')
 config.dev = !(process.env.NODE_ENV === 'production')
 
 async function start() {
@@ -54,17 +43,17 @@ async function start() {
 		// !!!!!!! AS IT IS A MAJOR SECURITY FLAW. USE FOR LOCALHOST
 		// !!!!!!! SSL CONNECTION ONLY
 		process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-
 		const options = {
 			key: fs.readFileSync(path.resolve('localhost-ssl/server.key')),
 			cert: fs.readFileSync(path.resolve('localhost-ssl/server.crt'))
 		}
 		https.createServer(options, app).listen(port)
 	} else {
-		app.listen(port, host)
+		app.listen(port as number, host)
 	}
 
-	consola.ready({
+	// Too lazy for a typings file right now
+	(consola as any).ready({
 		message: `Server listening on ${host}:${port}`,
 		badge: true
 	})

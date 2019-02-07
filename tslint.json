@@ -1,0 +1,15 @@
+{
+    "extends": [
+        "tslint:latest",
+        "tslint-eslint-rules"
+    ],
+    "rules": {
+        "no-var-requires": false,
+        "ordered-imports": false,
+        "semicolon": false,
+        "trailing-comma": false,
+        "indent": [true, "tabs", 4],
+        "object-literal-sort-keys": false,
+        "quotemark": [true, "single"]
+    }
+  }

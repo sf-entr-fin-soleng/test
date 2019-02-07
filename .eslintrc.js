@@ -12,7 +12,7 @@ module.exports = {
 	plugins: ['vue', 'prettier'],
 	// add your custom rules here
 	rules: {
-		indent: ['error', 'tab'],
+		'indent': ['error', 'tab'],
 		'vue/html-indent': ['error', 'tab'],
 		'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 		'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
