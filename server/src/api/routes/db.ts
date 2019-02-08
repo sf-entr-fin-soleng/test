@@ -11,10 +11,10 @@ async function connectToDB() {
 	}
 }
 
-async function query(query) {
+async function query(queryString: string) {
 	try {
 		const client = await connectToDB()
-		const result = await client.query(query)
+		const result = await client.query(queryString)
 		client.end()
 
 		return result

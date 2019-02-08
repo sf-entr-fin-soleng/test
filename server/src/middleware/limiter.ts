@@ -1,6 +1,5 @@
 import * as pg from 'pg'
 import { RateLimiterMemory, RateLimiterPostgres } from 'rate-limiter-flexible'
-const { Pool } = require('pg')
 
 const client = new pg.Pool({
 	connectionString: process.env.DATABASE_URL
@@ -31,6 +30,6 @@ const opts = {
 	)
 }
 
-const rateLimiter = new RateLimiterPostgres(opts, err => {})
+const rateLimiter = new RateLimiterPostgres(opts, (err) => {})
 
 export { rateLimiter }

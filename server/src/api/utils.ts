@@ -5,33 +5,34 @@ const alphabet =
 	'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
 function parseObject(row) {
-	return Object.assign(
-		{ ...JSON.parse(row.data) },
-		{
-			id: row['id'],
-			parentId: row['parentid'],
-			type: row['type'],
-			totalCount: row['full_count']
-		}
-	)
+	return {
+		...JSON.parse(row.data),
+		id: row.id,
+		parentId: row.parentid,
+		type: row.type,
+		totalCount: row.full_count
+	}
 }
 
 function getBaseQuery(type, id?, parentId?): string {
-	let query =
-		'SELECT Sfid as sfid, Heroku_Id__c as id, Heroku_Parent_Id__c as parentId, Type__c as type, Data__c as data, count(*) OVER() AS full_count'
+	let query = `SELECT Sfid as sfid, Heroku_Id__c as id,
+	Heroku_Parent_Id__c as parentId, Type__c as type,
+	Data__c as data, count(*) OVER() AS full_count`
+
 	query += ' FROM sfgc.mock_container__c'
 	query += ` WHERE Type__c='${type}'`
-	if (parentId) query += ` AND Heroku_Parent_Id__c='${parentId}'`
-	if (id) query += ` AND Heroku_Id__c = '${id}'`
+	if (parentId) { query += ` AND Heroku_Parent_Id__c='${parentId}'` }
+	if (id) { query += ` AND Heroku_Id__c = '${id}'` }
 
 	console.log(`[${moment().toString()}][DB_READ]: ${query}`)
 	return query
 }
 
-function getWriteQuery(type, data, isInsert): string {
-	const parseData = data => {
+function getWriteQuery(type: string, data, isInsert): string {
+
+	const parseData = (dataString: string) => {
 		return JSON.stringify(
-			data,
+			dataString,
 			(key, value) =>
 				value !== undefined && value !== null ? value : undefined,
 			0
@@ -51,7 +52,6 @@ function getWriteQuery(type, data, isInsert): string {
 		query = `UPDATE sfgc.mock_container__c SET Data__c = '${parseData(
 			data
 		)}'`
-		// eslint-disable-next-line prettier/prettier
 		query += `, Heroku_Parent_Id__c = '${data.parentId ? data.parentId : 'null'}'`
 		query += ` WHERE Heroku_Id__c = '${data.id}'`
 		query +=

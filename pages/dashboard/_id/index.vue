@@ -85,6 +85,13 @@ export default {
 			params.id
 		)
 
+		const score = await store.dispatch(
+			`prospect/fetchProspectScore`,
+			params.id
+		)
+
+		console.log('Gamme score is', score)
+
 		const modules = [
 			{
 				name: 'Family Tree',
@@ -99,6 +106,11 @@ export default {
 			{
 				name: 'Goals & Concerns',
 				href: '/goals/' + prospect.id,
+				lastUpdate: '2018-01-01'
+			},
+			{
+				name: 'IPQs',
+				href: `/ipqs/IPQ_01/${prospect.id}`,
 				lastUpdate: '2018-01-01'
 			}
 		]

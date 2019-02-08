@@ -8,7 +8,8 @@ const prospect = {
 
 	action: {
 		FETCH_PROSPECT: 'fetchProspect',
-		SAVE_PROSPECT: 'writeProspect'
+		SAVE_PROSPECT: 'writeProspect',
+		FETCH_PROSPECT_SCORE: 'fetchProspectScore'
 	}
 }
 

@@ -27,4 +27,9 @@ router.get('/questionnaire/getOne.json',  routes.questionnaire.fetchQuestionnair
 router.get('/questionnaire/answers/getOne.json',  routes.questionnaire.fetchAnswers)
 router.post('/questionnaire/answers/saveOne.json',  routes.questionnaire.saveAnswers)
 
+// IPQs routes
+router.get('/ipqs/getOne.json', routes.ipqs.fetchIPQs)
+router.get('/ipqs/answers/getOne.json', routes.ipqs.fetchIPQAnswers)
+router.post('/ipqs/answers/saveOne.json', routes.ipqs.saveIPQAnswers)
+
 export default router

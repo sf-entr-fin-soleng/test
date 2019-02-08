@@ -5,28 +5,28 @@ import * as models from '../models'
 import * as _ from 'lodash'
 import { Request, Response } from 'express'
 
-async function fetchQuestionnaire(req: Request, res: Response) {
+async function fetchIPQs(req: Request, res: Response) {
 	try {
-		const questionnaireId = req.query.id
+		const ipqId = req.query.id
 		const query = utils.getBaseQuery(
-			types.questionnaire,
-			questionnaireId,
+			types.ipq,
+			ipqId,
 			null
 		)
 
 		const result = await db.query(query)
 
-		let questionnaire = {...models.questionnaire}
+		let ipq = {...models.ipq}
 
 		if (result.rows && result.rows.length) {
-			questionnaire = {
-				...questionnaire,
+			ipq = {
+				...ipq,
 				...utils.parseObject(result.rows[0])
 			}
 		}
 
 		res.setHeader('Content-Type', 'application/json')
-		res.end(JSON.stringify(questionnaire, null, 2))
+		res.end(JSON.stringify(ipq, null, 2))
 	} catch (err) {
 		// error log goes here
 
@@ -35,14 +35,14 @@ async function fetchQuestionnaire(req: Request, res: Response) {
 	}
 }
 
-async function fetchAnswers(req: Request, res: Response) {
+async function fetchIPQAnswers(req: Request, res: Response) {
 	try {
 		const prospectId = req.query.pid
 
-		const query = utils.getBaseQuery(types.answers, null, prospectId)
+		const query = utils.getBaseQuery(types.ipqAnswers, null, prospectId)
 		const result = await db.query(query)
 
-		let answers = {...models.answers}
+		let answers = {...models.ipq}
 		if (result.rows && result.rows.length) {
 			answers = {...answers, ...utils.parseObject(result.rows[0])}
 		}
@@ -57,13 +57,13 @@ async function fetchAnswers(req: Request, res: Response) {
 	}
 }
 
-async function saveAnswers(req: Request, res: Response) {
+async function saveIPQAnswers(req: Request, res: Response) {
 	try {
 		const answers = req.body.answers
 		answers.parentId = answers.prospectId
 
 		const query = utils.getWriteQuery(
-			types.answers,
+			types.ipqAnswers,
 			answers,
 			answers.id === undefined
 		)
@@ -82,4 +82,4 @@ async function saveAnswers(req: Request, res: Response) {
 	}
 }
 
-export { fetchQuestionnaire, fetchAnswers, saveAnswers }
+export { fetchIPQs, fetchIPQAnswers, saveIPQAnswers }

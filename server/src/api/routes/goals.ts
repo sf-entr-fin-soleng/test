@@ -2,8 +2,9 @@ import * as db from './db'
 import * as utils from '../utils'
 import types from '../types'
 import * as _ from 'lodash'
+import { Request, Response } from 'express'
 
-async function fetchGoals(req, res) {
+async function fetchGoals(req: Request, res: Response) {
 	try {
 		const query = utils.getBaseQuery(types.goals)
 		const result = await db.query(query)
@@ -11,7 +12,7 @@ async function fetchGoals(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(
 			JSON.stringify(
-				result.rows.map(row => utils.parseObject(row)),
+				result.rows.map((row) => utils.parseObject(row)),
 				null,
 				2
 			)
@@ -24,7 +25,7 @@ async function fetchGoals(req, res) {
 	}
 }
 
-async function fetchGoalDetails(req, res) {
+async function fetchGoalDetails(req: Request, res: Response) {
 	try {
 		const prospectId = req.query.prospectId
 		let details = {}
@@ -44,13 +45,12 @@ async function fetchGoalDetails(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(details, null, 2))
 	} catch (err) {
-		// error log goes here
 		res.setHeader('Content-Type', 'application/json')
 		res.status(err.code).end(JSON.stringify(err, null, 2))
 	}
 }
 
-async function saveDetails(req, res) {
+async function saveDetails(req: Request, res: Response) {
 	try {
 		// Fetch details data from POST body
 		const details = req.body
@@ -81,7 +81,6 @@ async function saveDetails(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(details, null, 2))
 	} catch (err) {
-		// error log goes here
 		res.setHeader('Content-Type', 'application/json')
 		res.status(502).end(JSON.stringify(err, null, 2))
 	}

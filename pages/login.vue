@@ -10,7 +10,7 @@
 			<div 
 				class="sf-login" 
 				role="button"
-				@click="$router.push('/')">
+				@click="goToSalesforce()">
 				<h2>Login with Salesforce</h2>
 			</div>
 		</div>
@@ -106,6 +106,13 @@
 export default {
 	data: function() {
 		return {}
+	},
+
+	methods: {
+		goToSalesforce: () => {
+			window.location.href =
+				'https://na85.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJmb3JjZTpjYW52YXNBcHAiLCJhdHRyaWJ1dGVzIjp7ImNhbnZhc0lkIjoiY2FudmFzMU1vYmlsZU5hdiIsImRpc3BsYXlMb2NhdGlvbiI6Ik1vYmlsZU5hdiIsInJlZmVyZW5jZUlkIjoiMDlIMVUwMDAwMDA1OTgzVUFBIiwibWF4SGVpZ2h0IjoiaW5maW5pdGUiLCJtYXhXaWR0aCI6ImZpbmFsIiwiaGVpZ2h0IjoiMTAwJSIsIndpZHRoIjoiMTAwJSJ9LCJzdGF0ZSI6e319'
+		}
 	}
 }
 </script>

@@ -3,20 +3,21 @@ import * as utils from '../utils'
 import types from '../types'
 import * as models from '../models'
 import * as _ from 'lodash'
+import { Request, Response } from 'express';
 
-async function fetchFamilyTree(req, res) {
+async function fetchFamilyTree(req: Request, res: Response) {
 	try {
 		const prospectId = req.query.prospectId
 		const query = utils.getBaseQuery(types.familyTree, null, prospectId)
 		const result = await db.query(query)
 
-		let familyTree = Object.assign({}, models.familyTree)
+		let familyTree = {...models.familyTree}
 
 		if (result.rows.length > 0) {
-			familyTree = Object.assign(
-				familyTree,
-				utils.parseObject(result.rows[0])
-			)
+			familyTree = {
+				...familyTree,
+				...utils.parseObject(result.rows[0])
+			}
 		}
 
 		if (familyTree.self && familyTree.partner) {
@@ -31,14 +32,12 @@ async function fetchFamilyTree(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(familyTree, null, 2))
 	} catch (err) {
-		// error log goes here
-
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(err, null, 2))
 	}
 }
 
-async function saveFamilyTree(req, res) {
+async function saveFamilyTree(req: Request, res: Response) {
 	try {
 		const prospectId = req.body.prospectId
 		const tree = req.body.tree
@@ -55,8 +54,6 @@ async function saveFamilyTree(req, res) {
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(result, null, 2))
 	} catch (err) {
-		// error log goes here
-
 		res.setHeader('Content-Type', 'application/json')
 		res.end(JSON.stringify(err, null, 2))
 	}

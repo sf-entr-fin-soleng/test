@@ -4,5 +4,7 @@ export default {
 	goalDetails: 'Goal/Detail',
 	familyTree: 'FamilyTree',
 	questionnaire: 'Questionnaire',
-	answers: 'QuestionnaireResponses'
+	answers: 'QuestionnaireResponses',
+	ipq: 'IPQ',
+	ipqAnswers: 'IPQAnswers'
 }

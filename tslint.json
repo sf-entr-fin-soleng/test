@@ -10,6 +10,9 @@
         "trailing-comma": false,
         "indent": [true, "tabs", 4],
         "object-literal-sort-keys": false,
-        "quotemark": [true, "single"]
+        "quotemark": [true, "single"],
+        "comment-format": [false],
+        "no-console": false,
+        "no-submodule-imports": false
     }
   }
